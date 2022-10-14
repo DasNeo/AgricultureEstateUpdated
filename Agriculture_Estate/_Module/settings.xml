@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- prices -->
+	<PlotBuyPrice>800</PlotBuyPrice>
+	<PlotSellPrice>500</PlotSellPrice>
+	<UndevelopedPlotBuyPrice>200</UndevelopedPlotBuyPrice>
+	<UndevelopedPlotSellPrice>125</UndevelopedPlotSellPrice>
+	<ProjectCost>2000</ProjectCost>
+
+	<!-- scaling 1.00 is default -->
+	<LandRentScale>1.00</LandRentScale>
+	<SlaveProductionScale>1.00</SlaveProductionScale>
+</Settings>

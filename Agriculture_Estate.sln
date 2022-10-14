@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agriculture_Estate", "Agriculture_Estate\Agriculture_Estate.csproj", "{10230EC6-642F-441C-B3DF-68A7F1D55D38}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10230EC6-642F-441C-B3DF-68A7F1D55D38}.Debug|x64.ActiveCfg = Debug|x64
+		{10230EC6-642F-441C-B3DF-68A7F1D55D38}.Debug|x64.Build.0 = Debug|x64
+		{10230EC6-642F-441C-B3DF-68A7F1D55D38}.Release|x64.ActiveCfg = Release|x64
+		{10230EC6-642F-441C-B3DF-68A7F1D55D38}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {95C6C3D8-C8AE-44FB-9C56-5D23154BF513}
+	EndGlobalSection
+EndGlobal

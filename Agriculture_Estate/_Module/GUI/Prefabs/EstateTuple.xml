@@ -1,0 +1,87 @@
+<Prefab>
+  <Constants>
+	  <Constant Name="Kingdom.Item.Tuple.Height" BrushLayer="Default" BrushName="Kingdom.Item.Tuple" BrushValueType="Height" />
+
+	  <Constant Name="Kingdom.Clans.Sort.1.Width.WithMarginRight" Additive="-32" Value="!Kingdom.Clans.Sort.1.Width" />
+
+	  <Constant Name="Banner.Width" BrushLayer="Default" BrushName="Flat.Tuple.Banner.Small" BrushValueType="Width" />
+	  <Constant Name="Banner.Height" BrushLayer="Default" BrushName="Flat.Tuple.Banner.Small" BrushValueType="Height" />
+	  <Constant Name="Cell.Width" Value="200" />
+	  <Constant Name="Banner.Width.Scaled" MultiplyResult="0.43" Value="!Banner.Width" />
+	  <Constant Name="Banner.Height.Scaled" MultiplyResult="0.43" Value="!Banner.Height"/>
+  </Constants>
+  <Window>
+	  <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!Kingdom.Item.Tuple.Height" Brush="Kingdom.Item.Tuple" Command.Click="Click">
+      <Children>
+
+        <ListPanel DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+          <Children>
+
+            <!-- Name-->
+			  <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+              <Children> 
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@Name" />
+              </Children>
+            </Widget>
+
+			<!-- production -->
+			<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+				<Children>
+					<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@PrimaryProduction" />
+				</Children>
+			</Widget>
+
+			<!-- Plots -->
+			<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+				<Children>
+					<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@OwnedPlots" />
+				</Children>
+			</Widget>
+
+			<!-- Undeveloped Plots-->
+			<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+				<Children>
+					<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@OwnedUndevelopedPlots" />
+				</Children>
+			</Widget>
+
+			<!-- Slaves  -->
+			<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+				<Children>
+					<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@Slaves" />
+				</Children>
+			</Widget>
+
+			<!-- Stockpile  -->
+			<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+				<Children>
+					<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@Stockpile" />
+				</Children>
+			</Widget>
+
+			<!-- LastDayIncome  -->
+			<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+				<Children>
+					<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@LastDayIncome" />
+				</Children>
+			</Widget>
+
+			<!-- CurrentProject  -->
+			<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+				<Children>
+					<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@CurrentProject" />
+				</Children>
+			</Widget>
+
+			<!-- CurrentProjectProgress  -->
+			<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="!Cell.Width" VerticalAlignment="Center" IsEnabled="false">
+				<Children>
+					<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@CurrentProjectProgress" />
+				</Children>
+			</Widget>
+          </Children>
+        </ListPanel>
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

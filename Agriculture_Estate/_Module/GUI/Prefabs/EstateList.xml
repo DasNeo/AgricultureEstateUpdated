@@ -1,0 +1,70 @@
+<Prefab>
+	<Constants>
+		<Constant Name="Encyclopedia.Frame.Width" BrushLayer="Default" BrushName="Encyclopedia.Frame" BrushValueType="Width" />
+		<Constant Name="Encyclopedia.Frame.Height" BrushLayer="Default" BrushName="Encyclopedia.Frame" BrushValueType="Height" />
+
+		<Constant Name="Top.Height" Value="240" />
+		<Constant Name="Top.VerticalDivider.Height" Value="!Top.Height" />
+		<Constant Name="Top.VerticalDivider.Width" Value="15" />
+		<Constant Name="Top.VerticalDivider.Thin.Width" Value="7" />
+
+		<Constant Name="Reference.AlphaFactor" Value="0" />
+	</Constants>
+	<Window>
+		<Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#000000CC">
+			<Standard.PopupCloseButton HorizontalAlignment="Center" VerticalAlignment="Center" MarginTop="940" Command.Click="Close" Parameter.ButtonText="Leave" />
+			<Children>
+
+				<ListPanel Id="Title" DataSource="{Title}" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalBottomToTop" MarginTop="30">
+					<ItemTemplate>
+						<EstateTuple ButtonType="Radio" />
+					</ItemTemplate>
+				</ListPanel>
+				
+				<Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="7" HorizontalAlignment="Right" VerticalAlignment="Top" Sprite="TownManagement\title_divider" AlphaFactor="0.7" MarginTop="100" MarginLeft="10" MarginRight="10" />
+
+				<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent">
+					<Children>
+						<ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="110" MarginBottom="210" AutoHideScrollBars="true" ClipRect="EstateListClipRect" InnerPanel="EstateListClipRect\EstateList" VerticalScrollbar="..\EstateListScrollbar\Scrollbar">
+							<Children>
+								<Widget Id="EstateListClipRect" WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" ClipContents="true">
+									<Children>
+										<ListPanel Id="EstateList" DataSource="{Estates}" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalBottomToTop">
+											<ItemTemplate>
+												<EstateTuple ButtonType="Radio" />
+											</ItemTemplate>
+										</ListPanel>
+									</Children>
+								</Widget>
+
+							</Children>
+						</ScrollablePanel>
+
+						
+						
+						<Standard.VerticalScrollbar Id="EstateListScrollbar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginRight="2" MarginLeft="2" MarginBottom="3" />
+					</Children>
+				</ListPanel>
+
+				<Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Sprite="TownManagement\title_divider" AlphaFactor="0.7" MarginBottom="200" MarginLeft="10" MarginRight="10" />
+				
+				<!--Close Button-->
+				<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" MarginTop="950">
+					<Children>
+						<ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedHeight="48" SuggestedWidth="240" HorizontalAlignment="Center" VerticalAlignment="Bottom" Brush="ButtonBrush1" Command.Click="Close" IsEnabled="true">
+							<Children>
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText" Brush.FontSize="20" Text="Close" />
+							</Children>
+						</ButtonWidget>
+						<ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedHeight="48" SuggestedWidth="240" HorizontalAlignment="Center" VerticalAlignment="Bottom" Brush="ButtonBrush2" Command.Click="Sort" IsEnabled="true">
+							<Children>
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText" Brush.FontSize="20" Text="Sort" />
+							</Children>
+						</ButtonWidget>
+					</Children>
+				</ListPanel>
+
+			</Children>
+		</Widget>
+	</Window>
+</Prefab>
