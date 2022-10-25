@@ -24,6 +24,12 @@ namespace AgricultureEstate
 
         public MBBindingList<EstateEntryVM> Title { get; set; }
 
+
+        [DataSourceProperty]
+        public string CloseString => new TextObject("{=agricultureestate_ui_close}Close").ToString();
+        [DataSourceProperty]
+        public string SortString => new TextObject("{=agricultureestate_ui_sort}Sort").ToString();
+
         public EstateListVM()
         {
             this.Title = new MBBindingList<EstateEntryVM>();
@@ -112,7 +118,8 @@ namespace AgricultureEstate
             inquiryElementList.Add(new InquiryElement("Owned Undeveloped Plots", "Owned Undeveloped Plots", null));
             inquiryElementList.Add(new InquiryElement("Owned Plots", "Owned Plots", null));
             inquiryElementList.Add(new InquiryElement("Village Name", "Village Name", null));
-            MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Sort by", "", inquiryElementList, true, 1, "Continue", null, (args =>
+            MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData(
+                new TextObject("{=agricultureestate_ui_sort_by}Sort by").ToString(), "", inquiryElementList, true, 1, new TextObject("{=agricultureestate_ui_continue}Continue").ToString(), null, (args =>
             {
                 List<InquiryElement> source = args;
                 if (source != null && !(source).Any())

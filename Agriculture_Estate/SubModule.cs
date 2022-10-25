@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.GameComponents;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace Agriculture_Estate
+namespace AgricultureEstate
 {
     public class SubModule : MBSubModuleBase
     {
@@ -21,6 +22,7 @@ namespace Agriculture_Estate
         public static int ProjectCost;
         public static float LandRentScale;
         public static float SlaveProductionScale;
+        private Harmony harmony = new Harmony("AgricultureEstate");
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot() => base.OnBeforeInitialModuleScreenSetAsRoot();
 
@@ -28,14 +30,22 @@ namespace Agriculture_Estate
         {
             if (!(game.GameType is Campaign))
                 return;
+
             ((CampaignGameStarter)gameStarterObject).AddBehavior(new AgricultureEstateBehavior());
+        }
+
+        public override void OnAfterGameInitializationFinished(Game game, object starterObject)
+        {
+            base.OnAfterGameInitializationFinished(game, starterObject);
+            harmony.Patch(AccessTools.Method(Campaign.Current.Models.ClanFinanceModel.GetType(), "CalculateClanIncomeInternal"),
+                postfix: new HarmonyMethod(typeof(ClanFiancePatch), "Postfix"));
         }
 
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
             this.loadSettings();
-            new Harmony("AgricultureEstate").PatchAll();
+            harmony.PatchAll();
         }
 
         public static void ExecuteActionOnNextTick(Action action)

@@ -79,8 +79,8 @@
 						</ButtonWidget>
 
 						<!-- Slaves -->
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="180" PositionYOffset="590" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="Slaves"/>
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="30" PositionYOffset="650" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="Capacity : "/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="180" PositionYOffset="590" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="@SlavesTitle"/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="30" PositionYOffset="650" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@CapacityText"/>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="135" PositionYOffset="650" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@SlaveCapacityString" />
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="250" PositionYOffset="650" Command.HoverBegin="ExecuteBeginHint7"	Command.HoverEnd="ExecuteEndHint" Command.Click="ManageSlaves">
@@ -110,8 +110,8 @@
 						</ButtonWidget>
 
 						<!-- Stockpile -->
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="650" PositionYOffset="590" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="Stockpile"/>
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="530" PositionYOffset="650" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="Capacity : "/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="650" PositionYOffset="590" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="@StockpileTitle"/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="530" PositionYOffset="650" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@CapacityText"/>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="635" PositionYOffset="650" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@StockpileCapacityString" />
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="750" PositionYOffset="650" Command.HoverBegin="ExecuteBeginHint10"	Command.HoverEnd="ExecuteEndHint" Command.Click="ManageStockpile">
@@ -132,7 +132,7 @@
 						</ButtonWidget>
 
 						<!-- Current Project  -->
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1100" PositionYOffset="590" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="Current Project"/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1100" PositionYOffset="590" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="@CurrentProjectTitle"/>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1030" PositionYOffset="650" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@CurrentProjectString"/>
 
 						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="150" SuggestedHeight="150"  PositionXOffset="1040" PositionYOffset="710" HorizontalAlignment="Left" VerticalAlignment="Top" Sprite="@CurrentProjectIconSting" Command.HoverBegin="ExecuteBeginHint8" Command.HoverEnd="ExecuteEndHint">
@@ -144,7 +144,7 @@
 							</Children>
 						</ButtonWidget>
 
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1210" PositionYOffset="735" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="Progress : "/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1210" PositionYOffset="735" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@ProgressTitle"/>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1305" PositionYOffset="735" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@CurrentProjecProgressString"/>
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="1200" PositionYOffset="790" Command.HoverBegin="ExecuteBeginHint16"	Command.HoverEnd="ExecuteEndHint">
@@ -154,7 +154,7 @@
 						</ButtonWidget>
 
 						<!-- Upgrades -->
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="870" PositionYOffset="210" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="Upgrades" />
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="870" PositionYOffset="210" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="@UpgradesTitle" />
 
 						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="200"  PositionXOffset="540" PositionYOffset="290" HorizontalAlignment="Left" VerticalAlignment="Top" Sprite="building_daily_irrigation" Command.HoverBegin="ExecuteBeginHint12"	Command.HoverEnd="ExecuteEndHint">
 						</Widget>

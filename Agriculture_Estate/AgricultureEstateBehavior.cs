@@ -4,7 +4,6 @@
 // MVID: A4103D21-1273-439E-B48D-A11FAB56D6B9
 // Assembly location: C:\Users\andre\Downloads\AgricultureEstate\bin\Win64_Shipping_Client\AgricultureEstate.dll
 
-using Agriculture_Estate;
 using AgricultureEstate.l18n;
 using Helpers;
 using System;
@@ -23,6 +22,7 @@ using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.Network;
 using TaleWorlds.ObjectSystem;
 using TaleWorlds.ScreenSystem;
 
@@ -152,13 +152,6 @@ namespace AgricultureEstate
             this.CollectGoldTick();
             this.StartSlaveRebellionTick();
             this.RemoveInHostileTick();
-
-            float goldChange = 0f;
-            foreach (KeyValuePair<Settlement, VillageLand> villageLand1 in VillageLands)
-            {
-                goldChange += CalculateGold(villageLand1.Value);
-            }
-            GiveGoldAction.ApplyBetweenCharacters(null, Hero.MainHero, (int)goldChange, true);
         }
 
         private void HourlyTick()
@@ -173,6 +166,11 @@ namespace AgricultureEstate
             {
                 Village village = villageLand1.Key.Village;
                 VillageLand villageLand2 = villageLand1.Value;
+                InformationManager.DisplayMessage(new InformationMessage($"Village Owner: {village.Owner.Name}"));
+                InformationManager.DisplayMessage(new InformationMessage($"Owner Faction: {village.Owner.MapFaction.Name}"));
+                InformationManager.DisplayMessage(new InformationMessage($"Hero Faction:  {Hero.MainHero.MapFaction}"));
+                InformationManager.DisplayMessage(new InformationMessage($"OwnedPlots:    {villageLand2.OwnedPlots}"));
+                InformationManager.DisplayMessage(new InformationMessage($"OwnedUndevPlots: {villageLand2.OwnedUndevelopedPlots}"));
                 if (village.Owner.MapFaction.IsAtWarWith(Hero.MainHero.MapFaction) && (villageLand2.OwnedPlots > 0 || villageLand2.OwnedUndevelopedPlots > 0))
                 {
                     InformationManager.DisplayMessage(new InformationMessage(
@@ -293,8 +291,9 @@ namespace AgricultureEstate
             {
                 for (int index = 0; index < troopRosterElement.Number; ++index)
                 {
-                    if (this.rng.Next(1000) < (double)land.SlaveDeclineRate() * 10.0)
-                        land.Prisoners.AddToCounts(troopRosterElement.Character, -1, false, 0, 0, true, -1);
+                    if(troopRosterElement.Character != null && land.Prisoners != null)
+                        if (this.rng.Next(1000) < (double)land.SlaveDeclineRate() * 10.0)
+                            land.Prisoners.AddToCounts(troopRosterElement.Character, -1, false, 0, 0, true, -1);
                 }
             }
         }
@@ -305,20 +304,28 @@ namespace AgricultureEstate
             {
                 Village village = villageLand.Key.Village;
                 VillageLand land = villageLand.Value;
-                if (land.Prisoners.TotalManCount > 0 && village.VillageState != Village.VillageStates.BeingRaided && village.VillageState != Village.VillageStates.Looted)
+                try
                 {
-                    foreach ((ItemObject, float) production in (IEnumerable<(ItemObject, float)>)village.VillageType.Productions)
+                    if (land.Prisoners.TotalManCount > 0 && village.VillageState != Village.VillageStates.BeingRaided && village.VillageState != Village.VillageStates.Looted)
                     {
-                        float productionChance = production.Item2 * 10f;
-                        if ((village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("grain") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("olives") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("fish") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("date_fruit")) && Hero.MainHero.GetPerkValue(DefaultPerks.Trade.GranaryAccountant))
-                            this.produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
-                        else if ((village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("clay") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("iron") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("cotton") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("silver")) && Hero.MainHero.GetPerkValue(DefaultPerks.Trade.TradeyardForeman))
-                            this.produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
-                        else if (village.VillageType.PrimaryProduction.Type == ItemObject.ItemTypeEnum.Horse && Hero.MainHero.GetPerkValue(DefaultPerks.Riding.Breeder))
-                            this.produce(land.Prisoners.TotalManCount, production.Item1, 1.1f * productionChance, land);
-                        else
-                            this.produce(land.Prisoners.TotalManCount, production.Item1, productionChance, land);
+                        foreach ((ItemObject, float) production in (IEnumerable<(ItemObject, float)>)village.VillageType.Productions)
+                        {
+                            float productionChance = production.Item2 * 10f;
+                            if ((village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("grain") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("olives") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("fish") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("date_fruit")) && Hero.MainHero.GetPerkValue(DefaultPerks.Trade.GranaryAccountant))
+                                this.produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
+                            else if ((village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("clay") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("iron") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("cotton") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("silver")) && Hero.MainHero.GetPerkValue(DefaultPerks.Trade.TradeyardForeman))
+                                this.produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
+                            else if (village.VillageType.PrimaryProduction.Type == ItemObject.ItemTypeEnum.Horse && Hero.MainHero.GetPerkValue(DefaultPerks.Riding.Breeder))
+                                this.produce(land.Prisoners.TotalManCount, production.Item1, 1.1f * productionChance, land);
+                            else
+                                this.produce(land.Prisoners.TotalManCount, production.Item1, productionChance, land);
+                        }
                     }
+                } catch(Exception ex)
+                {
+                    InformationManager.DisplayMessage(new InformationMessage($"village: {village.Name}"));
+                    InformationManager.DisplayMessage(new InformationMessage($"village.VillageType: {village.VillageType}"));
+                    InformationManager.DisplayMessage(new InformationMessage($"village.VillageType.Productions: {village.VillageType.Productions}"));
                 }
             }
         }
@@ -348,7 +355,11 @@ namespace AgricultureEstate
         }
 
         private void MenuItems(CampaignGameStarter campaignGameStarter) => campaignGameStarter.AddGameMenuOption("village", "village_land", new TextObject("{=agricultureestate_gamemenu_land_management}Land Management").ToString(),
-            null, (args) => CreateVMLayer(), false, 1, false);
+            (args) =>
+            {
+                args.optionLeaveType = TaleWorlds.CampaignSystem.GameMenus.GameMenuOption.LeaveType.Manage;
+                return true;
+            }, (args) => CreateVMLayer(), false, 1, false);
 
         public static void CreateVMLayer()
         {
@@ -438,6 +449,10 @@ namespace AgricultureEstate
             return villageLand2;
         }
 
-        public override void SyncData(IDataStore dataStore) => dataStore.SyncData<Dictionary<Settlement, VillageLand>>("_village_land", ref VillageLands);
+        public override void SyncData(IDataStore dataStore)
+        {
+            if (!dataStore.SyncData<Dictionary<Settlement, VillageLand>>("_village_land", ref VillageLands))
+                VillageLands.Clear();
+        }
     }
 }

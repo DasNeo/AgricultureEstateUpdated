@@ -1,94 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
-    <tags>
-        <tag language="English" />
-    </tags>
-    <strings>
-        <string id="agricultureestate_gamemenu_land_management" text="Land Management" />
-        <string id="agricultureestate_ui_buy" text="Buy" />
-        <string id="agricultureestate_ui_sell" text="Sell" />
-        <string id="agricultureestate_ui_manage" text="Manage" />
-        <string id="agricultureestate_ui_landmanagement" text="Land Management" />
-        <string id="agricultureestate_ui_ledger" text="Ledger" />
-        <string id="agricultureestate_ui_landplots" text="Land Plots" />
-        <string id="agricultureestate_ui_undev_landplots" text="Undeveloped Land Plots" />
-        <string id="agricultureestate_ui_owned_landplots" text="Owned : " />
-        <string id="agricultureestate_ui_availablelandplots" text="Available : " />
-        <string id="agricultureestate_ui_slave_decline" text="Slave Decline : " />
-        <string id="agricultureestate_ui_revolt_risk" text="Revolt Risk : " />
-        <string id="agricultureestate_ui_land_usage" text="Land Usage : " />
-        <string id="agricultureestate_ui_buy_slaves" text="Buy Slaves :" />
-        <string id="agricultureestate_ui_production_details" text="Production Details" />
-        <string id="agricultureestate_ui_sell_to_market" text="Sell to Market : " />
-        <string id="agricultureestate_ui_cancel" text="Cancel" />
-        <string id="agricultureestate_ui_project_queue" text="Project Queue" />
-        <string id="agricultureestate_ui_land_clearance" text="Land Clearance" />
-        <string id="agricultureestate_ui_upgrade_storehouse" text="Expand Storehouse" />
-        <string id="agricultureestate_ui_upgrade_patrols" text="Increase Patrols" />
-        <string id="agricultureestate_ui_close" text="Close" />
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <string id="agricultureestate_gamemenu_land_management" text="Land Management" />
+    <string id="agricultureestate_ui_buy" text="Buy" />
+    <string id="agricultureestate_ui_sell" text="Sell" />
+    <string id="agricultureestate_ui_manage" text="Manage" />
+    <string id="agricultureestate_ui_landmanagement" text="Land Management" />
+    <string id="agricultureestate_ui_ledger" text="Ledger" />
+    <string id="agricultureestate_ui_landplots" text="Land Plots" />
+    <string id="agricultureestate_ui_undev_landplots" text="Undeveloped Land Plots" />
+    <string id="agricultureestate_ui_owned_landplots" text="Owned : " />
+    <string id="agricultureestate_ui_availablelandplots" text="Available : " />
+    <string id="agricultureestate_ui_slave_decline" text="Slave Decline : " />
+    <string id="agricultureestate_ui_revolt_risk" text="Revolt Risk : " />
+    <string id="agricultureestate_ui_land_usage" text="Land Usage : " />
+    <string id="agricultureestate_ui_buy_slaves" text="Buy Slaves :" />
+    <string id="agricultureestate_ui_production_details" text="Production Details" />
+    <string id="agricultureestate_ui_sell_to_market" text="Sell to Market : " />
+    <string id="agricultureestate_ui_cancel" text="Cancel" />
+    <string id="agricultureestate_ui_project_queue" text="Project Queue" />
+    <string id="agricultureestate_ui_land_clearance" text="Land Clearance" />
+    <string id="agricultureestate_ui_upgrade_storehouse" text="Expand Storehouse" />
+    <string id="agricultureestate_ui_upgrade_patrols" text="Increase Patrols" />
+    <string id="agricultureestate_ui_close" text="Close" />
 
-        <string id="agricultureestate_boughtslaves" text="Your estate in {SETTLEMENT_NAME} bought a load of {SLAVE_BOUGHT_AMOUNT} slaves from {SELLER_LORD_NAME} in the markets of {SELLER_SETTLEMENT_NAME} at a cost of {PRICE}{GOLD_ICON} gold" />
-        <string id="agricultureestate_on" text="On" />
-        <string id="agricultureestate_off" text="Off" />
-        <string id="agricultureestate_none" text="None" />
-        <string id="agricultureestate_upgrade_string" text="Upgrade" />
-        <string id="agricultureestate_add_to_queue" text="Add to Queue" />
-        <string id="agricultureestate_no_current_project" text="No current Project" />
-        <string id="agricultureestate_slave_capacity_exceeded" text="Slave Capacity of {SLAVE_CAPACITY} exceeded" />
-        <string id="agricultureestate_slave_capacity_exceed_when_land_sold" text="Selling land will cause slaves to exceede capacity. Remove slaves before selling" />
-        <string id="agricultureestate_tried_selling_clearing_land" text="All owned land is being cleared.\nCancel land clearance project before selling" />
-        <string id="agricultureestate_not_enough_gold" text="Not enough gold" />
-        <string id="agricultureestate_project_queue_limit" text="Project queue limit {QUEUE_LIMIT}\nIncrease steward skill to increase project queue limit" />
-        <string id="agricultureestate_not_enough_undev_plots" text="Not enough owned undeveloped plots" />
-        <string id="agricultureestate_max_patrol_upgrade" text="Can only be upgraded a max of 8 times" />
-        <string id="agricultureestate_build_queue_empty" text="Build Queue Empty" />
+    <string id="agricultureestate_boughtslaves" text="Your estate in {SETTLEMENT_NAME} bought a load of {SLAVE_BOUGHT_AMOUNT} slaves from {SELLER_LORD_NAME} in the markets of {SELLER_SETTLEMENT_NAME} at a cost of {PRICE}{GOLD_ICON} gold" />
+    <string id="agricultureestate_on" text="On" />
+    <string id="agricultureestate_off" text="Off" />
+    <string id="agricultureestate_none" text="None" />
+    <string id="agricultureestate_upgrade_string" text="Upgrade" />
+    <string id="agricultureestate_add_to_queue" text="Add to Queue" />
+    <string id="agricultureestate_no_current_project" text="No current Project" />
+    <string id="agricultureestate_slave_capacity_exceeded" text="Slave Capacity of {SLAVE_CAPACITY} exceeded" />
+    <string id="agricultureestate_slave_capacity_exceed_when_land_sold" text="Selling land will cause slaves to exceede capacity. Remove slaves before selling" />
+    <string id="agricultureestate_tried_selling_clearing_land" text="All owned land is being cleared.\nCancel land clearance project before selling" />
+    <string id="agricultureestate_not_enough_gold" text="Not enough gold" />
+    <string id="agricultureestate_project_queue_limit" text="Project queue limit {QUEUE_LIMIT}\nIncrease steward skill to increase project queue limit" />
+    <string id="agricultureestate_not_enough_undev_plots" text="Not enough owned undeveloped plots" />
+    <string id="agricultureestate_max_patrol_upgrade" text="Can only be upgraded a max of 8 times" />
+    <string id="agricultureestate_build_queue_empty" text="Build Queue Empty" />
 
-        <string id="agricultureestate_hint_land_suitable" text="Land suitable to agriculture and resource extraction" />
-        <string id="agricultureestate_hint_land_needs_clearing" text="Land that needs to be cleared before it can be put to use" />
-        <string id="agricultureestate_hint_buy_land" text="Buy for {PLOT_BUY_PRICE}{GOLD_ICON} gold" />
-        <string id="agricultureestate_hint_sell_land" text="Sell for {PLOT_SELL_PRICE}{GOLD_ICON} gold" />
-        <string id="agricultureestate_hint_buy_undev_land" text="Buy for {PLOT_UNDEV_BUY_PRICE}{GOLD_ICON} gold" />
-        <string id="agricultureestate_hint_sell_undev_land" text="Sell for {PLOT_UNDEV_SELL_PRICE}{GOLD_ICON} gold" />
-        <string id="agricultureestate_hint_prisoner_as_slaves" text="Bandits prisoners can be used as labor.\nCapacity for slaves determined by number of owned plots\nShift click to quick deposit" />
-        <string id="agricultureestate_hint_slave_decline" text="Slave decline is daily chance for each slaves to escape.\nRevolt risk is daily chance for slaves to violently rebel in mass.\nRevolt risk is increase if slaves outnumber the village militia\nBuilding upgrades can improve these number.\nLand not used by slave labor will generate a small amount of land rent every day" />
-        <string id="agricultureestate_hint_production" text="Goods produced will be added to the stockpile and can be withdrawn at a later time.\n  If storage capacity is exceeded, then production will stop.\nShift click to quick withdrawl all" />
-        <string id="agricultureestate_hint_sell_goods_to_village" text="Goods produce can be set to be automatically sold to the village market.\nBe aware the the village market tend to pay less for goods than town markets\nClick to turn " /> <!-- After "Click to turn" the translation for on/off is automaticially added -->
-        <string id="agricultureestate_hint_land_clearing" text="Land Clearance will convert 1 owned undeveloped plot into a normal plot\nCost: {LAND_CLEARING_COST}{GOLD_ICON}\nEach additional plot of land cleared provides a small increase to village growth rate\nTime: 240 hours" />
-        <string id="agricultureestate_hint_patrol_upgrade" text="Increasing patrol decreases escape chance by 0.5% and revolt risk by 0.1% per level.  This Upgrade can be done a max of 8 times\nCost: {PATROL_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours" />
-        <string id="agricultureestate_hint_storehouse_upgrade" text="Expanding Storehouse increases storage capacity by 500\nCost: {STOREHOUSE_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours" />
-        <string id="agricultureestate_hint_abort_upgrade" text="All progress will be lost and gold cost will not be refunded" />
-        <string id="agricultureestate_hint_auto_buy_prisoners" text="Automatically buy bandits prisoners from any party that visits this village\nClick to turn \nShift click will set all estates" /> <!-- After "Click to turn" the translation for on/off is automaticially added -->
-        <string id="agricultureestate_hint_show_ledger" text="Open bussiness ledger that show stats of all owned estates" />
+    <string id="agricultureestate_hint_land_suitable" text="Land suitable to agriculture and resource extraction" />
+    <string id="agricultureestate_hint_land_needs_clearing" text="Land that needs to be cleared before it can be put to use" />
+    <string id="agricultureestate_hint_buy_land" text="Buy for {PLOT_BUY_PRICE}{GOLD_ICON} gold" />
+    <string id="agricultureestate_hint_sell_land" text="Sell for {PLOT_SELL_PRICE}{GOLD_ICON} gold" />
+    <string id="agricultureestate_hint_buy_undev_land" text="Buy for {PLOT_UNDEV_BUY_PRICE}{GOLD_ICON} gold" />
+    <string id="agricultureestate_hint_sell_undev_land" text="Sell for {PLOT_UNDEV_SELL_PRICE}{GOLD_ICON} gold" />
+    <string id="agricultureestate_hint_prisoner_as_slaves" text="Bandits prisoners can be used as labor.\nCapacity for slaves determined by number of owned plots\nShift click to quick deposit" />
+    <string id="agricultureestate_hint_slave_decline" text="Slave decline is daily chance for each slaves to escape.\nRevolt risk is daily chance for slaves to violently rebel in mass.\nRevolt risk is increase if slaves outnumber the village militia\nBuilding upgrades can improve these number.\nLand not used by slave labor will generate a small amount of land rent every day" />
+    <string id="agricultureestate_hint_production" text="Goods produced will be added to the stockpile and can be withdrawn at a later time.\n  If storage capacity is exceeded, then production will stop.\nShift click to quick withdrawl all" />
+    <string id="agricultureestate_hint_sell_goods_to_village" text="Goods produce can be set to be automatically sold to the village market.\nBe aware the the village market tend to pay less for goods than town markets\nClick to turn " />
+    <!-- After "Click to turn" the translation for on/off is automaticially added -->
+    <string id="agricultureestate_hint_land_clearing" text="Land Clearance will convert 1 owned undeveloped plot into a normal plot\nCost: {LAND_CLEARING_COST}{GOLD_ICON}\nEach additional plot of land cleared provides a small increase to village growth rate\nTime: 240 hours" />
+    <string id="agricultureestate_hint_patrol_upgrade" text="Increasing patrol decreases escape chance by 0.5% and revolt risk by 0.1% per level.  This Upgrade can be done a max of 8 times\nCost: {PATROL_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours" />
+    <string id="agricultureestate_hint_storehouse_upgrade" text="Expanding Storehouse increases storage capacity by 500\nCost: {STOREHOUSE_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours" />
+    <string id="agricultureestate_hint_abort_upgrade" text="All progress will be lost and gold cost will not be refunded" />
+    <string id="agricultureestate_hint_auto_buy_prisoners" text="Automatically buy bandits prisoners from any party that visits this village\nClick to turn \nShift click will set all estates" />
+    <!-- After "Click to turn" the translation for on/off is automaticially added -->
+    <string id="agricultureestate_hint_show_ledger" text="Open bussiness ledger that show stats of all owned estates" />
 
-        <string id="agricultureestate_estimated_daily_output" text="Estimated Daily Output" />
-        <string id="agricultureestate_estimated_daily_output_rent" text="{GOLD_ICON} X Land Rent" />
+    <string id="agricultureestate_estimated_daily_output" text="Estimated Daily Output" />
+    <string id="agricultureestate_estimated_daily_output_rent" text="{GOLD_ICON} X Land Rent" />
 
-        <string id="agricultureestate_perk_mountedpatrols" text="Agriculture Estate : Slave escape chance reduced by 20%" />
-        <string id="agricultureestate_perk_forcedlabor" text="Agriculture Estate : Allows use of non bandit prisoners for slave labor" />
-        <string id="agricultureestate_perk_slavetrader" text="Agriculture Estate : Estates buy slaves at 20% reduced cost" />
-        <string id="agricultureestate_perk_insuranceplans" text="Agriculture Estate : Half of the cost of land siezed durring war is returned" />
-        <string id="agricultureestate_perk_rapiddevelopment" text="Agriculture Estate : Half of the cost of land siezed durring war is returned" />
-        <string id="agricultureestate_perk_tradeyardforeman" text="Agriculture Estate : Estates in villages that have primary production clay, iron, cotton, or silver has 20% increased slave output" />
-        <string id="agricultureestate_perk_granaryaccountant" text="Agriculture Estate : Estates in villages that have primary production grain, olives, fish, date has 20% increased slave output" />
-        <string id="agricultureestate_perk_breeder" text="Agriculture Estate : Estates in villages that have primary production horses has 10% increased slave output" />
-        <string id="agricultureestate_perk_contractors" text="Agriculture Estate : Upgrades in estates cost 15% less" />
-        <string id="agricultureestate_perk_foreman" text="Agriculture Estate : Completing a land clearance project adds 30 hearths to the village" />
+    <string id="agricultureestate_perk_mountedpatrols" text="Agriculture Estate : Slave escape chance reduced by 20%" />
+    <string id="agricultureestate_perk_forcedlabor" text="Agriculture Estate : Allows use of non bandit prisoners for slave labor" />
+    <string id="agricultureestate_perk_slavetrader" text="Agriculture Estate : Estates buy slaves at 20% reduced cost" />
+    <string id="agricultureestate_perk_insuranceplans" text="Agriculture Estate : Half of the cost of land siezed durring war is returned" />
+    <string id="agricultureestate_perk_rapiddevelopment" text="Agriculture Estate : Half of the cost of land siezed durring war is returned" />
+    <string id="agricultureestate_perk_tradeyardforeman" text="Agriculture Estate : Estates in villages that have primary production clay, iron, cotton, or silver has 20% increased slave output" />
+    <string id="agricultureestate_perk_granaryaccountant" text="Agriculture Estate : Estates in villages that have primary production grain, olives, fish, date has 20% increased slave output" />
+    <string id="agricultureestate_perk_breeder" text="Agriculture Estate : Estates in villages that have primary production horses has 10% increased slave output" />
+    <string id="agricultureestate_perk_contractors" text="Agriculture Estate : Upgrades in estates cost 15% less" />
+    <string id="agricultureestate_perk_foreman" text="Agriculture Estate : Completing a land clearance project adds 30 hearths to the village" />
 
-        <string id="agricultureestate_lord_brought_prisoners" text="{LORD_NAME} transfered {PRIOSNER_COUNT} prisoners to your estate in {SETTLEMENT_NAME}" />
-        <string id="agricultureestate_lord_sold_prisoners" text="{LORD_NAME} sold {PRISONER_COUNT} prisoners to your estate in {SETTLEMENT_NAME} for {SELL_PRICE}{GOLD_ICON} gold" />
-        <string id="agricultureestate_land_lost_due_to_war" text="Your lands in the village of {SETTLEMENT_NAME} has been siezed due to war with {WAR_TARGET}" />
+    <string id="agricultureestate_lord_brought_prisoners" text="{LORD_NAME} transfered {PRIOSNER_COUNT} prisoners to your estate in {SETTLEMENT_NAME}" />
+    <string id="agricultureestate_lord_sold_prisoners" text="{LORD_NAME} sold {PRISONER_COUNT} prisoners to your estate in {SETTLEMENT_NAME} for {SELL_PRICE}{GOLD_ICON} gold" />
+    <string id="agricultureestate_land_lost_due_to_war" text="Your lands in the village of {SETTLEMENT_NAME} has been siezed due to war with {WAR_TARGET}" />
 
-        
-        <string id="agricultureestate_slave_revolt_title" text="Slave Revolt" />
-        <string id="agricultureestate_slave_revolt_description" text="The slave at your estate in the village of {SETTLEMENT_NAME} have revolted." />
-        <string id="agricultureestate_slave_revolt_button_text" text="Not Good" />
 
-        <string id="agricultureestate_estate_village" text="Village" />
-        <string id="agricultureestate_owned_plots" text="Owned Plots" />
-        <string id="agricultureestate_owned_undev_plots" text="Owned Undeveloped Plots" />
-        <string id="agricultureestate_last_day_income" text="Last Day Income" />
-        <string id="agricultureestate_primary_production" text="Primary Production" />
-        <string id="agricultureestate_current_project" text="Current Project" />
-        <string id="agricultureestate_current_project_progress" text="Current Project Progress" />
-    </strings>
+    <string id="agricultureestate_slave_revolt_title" text="Slave Revolt" />
+    <string id="agricultureestate_slave_revolt_description" text="The slave at your estate in the village of {SETTLEMENT_NAME} have revolted." />
+    <string id="agricultureestate_slave_revolt_button_text" text="Not Good" />
+
+    <string id="agricultureestate_estate_village" text="Village" />
+    <string id="agricultureestate_owned_plots" text="Owned Plots" />
+    <string id="agricultureestate_owned_undev_plots" text="Owned Undeveloped Plots" />
+    <string id="agricultureestate_last_day_income" text="Last Day Income" />
+    <string id="agricultureestate_primary_production" text="Primary Production" />
+    <string id="agricultureestate_current_project" text="Current Project" />
+    <string id="agricultureestate_current_project_progress" text="Current Project Progress" />
+
+
+    <string id="agricultureestate_ui_sort" text="Sort" />
+    <string id="agricultureestate_ui_upgrades" text="Upgrades" />
+    <string id="agricultureestate_ui_slaves" text="Slaves" />
+    <string id="agricultureestate_ui_capacity" text="Capacity : " />
+    <string id="agricultureestate_ui_stockpile" text="Stockpile" />
+    <string id="agricultureestate_ui_current_project" text="Current Project" />
+    <string id="agricultureestate_ui_progress" text="Progress : " />
+  </strings>
 </base>

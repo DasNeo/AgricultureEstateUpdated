@@ -4,7 +4,7 @@
 // MVID: A4103D21-1273-439E-B48D-A11FAB56D6B9
 // Assembly location: C:\Users\andre\Downloads\AgricultureEstate\bin\Win64_Shipping_Client\AgricultureEstate.dll
 
-using Agriculture_Estate;
+using AgricultureEstate;
 using AgricultureEstate.l18n;
 using System;
 using System.Collections.Generic;
@@ -130,7 +130,7 @@ namespace AgricultureEstate
         [DataSourceProperty]
         public string AvailableLandPlotsString => new TextObject("{=agricultureestate_ui_availablelandplots}Available : ").ToString();
         [DataSourceProperty]
-        public string OwnedLandPlotsString => new TextObject("{=agricultureestate_ui_ownedlandplots}Owned : ").ToString();
+        public string OwnedLandPlotsString => new TextObject("{=agricultureestate_ui_owned_landplots}Owned : ").ToString();
         [DataSourceProperty]
         public string LandPlotsString => new TextObject("{=agricultureestate_ui_landplots}Land Plots").ToString();
         [DataSourceProperty]
@@ -159,6 +159,21 @@ namespace AgricultureEstate
         public string SellToMarketButton => this.SellToMarket ? "ButtonBrush1" : "ButtonBrush2";
         [DataSourceProperty]
         public string BuySlavesButton => this.BuySlaves ? "ButtonBrush1" : "ButtonBrush2";
+        [DataSourceProperty]
+        public string UpgradesTitle => new TextObject("{=agricultureestate_ui_upgrades}Upgrades").ToString();
+        [DataSourceProperty]
+        public string SlavesTitle => new TextObject("{=agricultureestate_ui_slaves}Slaves").ToString();
+        [DataSourceProperty]
+        public string CapacityText => new TextObject("{=agricultureestate_ui_capacity}Capacity : ").ToString();
+        [DataSourceProperty]
+        public string StockpileTitle => new TextObject("{=agricultureestate_ui_stockpile}Stockpile").ToString();
+        [DataSourceProperty]
+        public string CurrentProjectTitle => new TextObject("{=agricultureestate_ui_current_project}Current Project").ToString();
+        [DataSourceProperty]
+        public string ProgressTitle => new TextObject("{=agricultureestate_ui_progress}Progress : ").ToString();
+
+
+        
         [DataSourceProperty]
         public string SettlementImageID
         {

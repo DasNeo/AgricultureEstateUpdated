@@ -13,18 +13,17 @@ using TaleWorlds.Localization;
 
 namespace AgricultureEstate
 {
-    [HarmonyPatch(typeof(DefaultClanFinanceModel), "CalculateClanIncomeInternal")]
     class ClanFiancePatch
     {
-        private static void Postfix(Clan clan, ref ExplainedNumber goldChange, bool applyWithdrawals = false)
+        private static void Postfix(Clan clan, ref ExplainedNumber result, bool applyWithdrawals = false)
         {
             float num1 = 0.0f;
             foreach (KeyValuePair<Settlement, VillageLand> villageLand1 in AgricultureEstateBehavior.VillageLands)
             {
                 num1 += AgricultureEstateBehavior.CalculateGold(villageLand1.Value);
             }
-            goldChange.Add(num1, new TextObject("Rent from unused owned land"));
-            goldChange.Add(AgricultureEstateBehavior.LastDayTotalSales);
+            result.Add(num1, new TextObject("Rent from unused owned land"));
+            result.Add(AgricultureEstateBehavior.LastDayTotalSales);
         }
     }
 }
