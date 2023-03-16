@@ -47,7 +47,7 @@ namespace AgricultureEstate
                     }
                     if (num1 > 0)
                     {
-                        if (Hero.MainHero.GetPerkValue(DefaultPerks.Roguery.SlaveTrader))
+                        if (Hero.MainHero.GetPerkValue(DefaultPerks.Roguery.Manhunter))
                             num2 = (int)(0.8 * num2);
                         GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, sellerParty.LeaderHero, num2, false);
                         InformationManager.DisplayMessage(new InformationMessage(

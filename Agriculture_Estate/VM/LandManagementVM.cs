@@ -140,7 +140,7 @@ namespace AgricultureEstate
         [DataSourceProperty]
         public string LedgerString => new TextObject("{=agricultureestate_ui_ledger}Ledger").ToString();
         [DataSourceProperty]
-        public string CurrentProjecProgressString => this._village_land.CurrentProject == "None" ? "0/0" : this._village_land.ProjectProgress.ToString() + "/240";
+        public string CurrentProjecProgressString => this._village_land.CurrentProject == "None" ? "0/0" : this._village_land.ProjectProgress.ToString() + "/" + (Settings.Instance.ProjectTime * 24);
         [DataSourceProperty]
         public string UpgradeString => this._village_land.CurrentProject == "None" ? $"      {new TextObject("{=agricultureestate_upgrade_string}Upgrade")}      " : $"  {new TextObject("{=agricultureestate_add_to_queue}Add to Queue")}  ";
         [DataSourceProperty]
@@ -675,12 +675,12 @@ namespace AgricultureEstate
 
         public void ExecuteBeginHint5() => MBInformationManager.ShowHint(
             Localization.SetTextVariables("{=agricultureestate_hint_buy_undev_land}Buy for {PLOT_UNDEV_BUY_PRICE}{GOLD_ICON} gold",
-                new KeyValuePair<string, string?>("PLOT_BUY_PRICE", UndevelopedPlotBuyPrice.ToString()),
+                new KeyValuePair<string, string?>("PLOT_UNDEV_BUY_PRICE", UndevelopedPlotBuyPrice.ToString()),
                 new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
 
         public void ExecuteBeginHint6() => MBInformationManager.ShowHint(
             Localization.SetTextVariables("{=agricultureestate_hint_sell_undev_land}Sell for {PLOT_UNDEV_SELL_PRICE}{GOLD_ICON} gold",
-                new KeyValuePair<string, string?>("PLOT_BUY_PRICE", UndevelopedPlotSellPrice.ToString()),
+                new KeyValuePair<string, string?>("PLOT_UNDEV_SELL_PRICE", UndevelopedPlotSellPrice.ToString()),
                 new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
 
         public void ExecuteBeginHint7() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_prisoner_as_slaves}Bandits prisoners can be used as labor.\nCapacity for slaves determined by number of owned plots\nShift click to quick deposit").ToString());

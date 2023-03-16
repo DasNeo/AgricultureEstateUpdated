@@ -7,6 +7,7 @@
 using AgricultureEstate.l18n;
 using Helpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -46,14 +47,20 @@ namespace AgricultureEstate
             CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(this.MenuItems));
             CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTick));
             CampaignEvents.HourlyTickEvent.AddNonSerializedListener(this, new Action(this.HourlyTick));
+            CampaignEvents.OnNewGameCreatedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(OnNewGameCreated));
             this.setAdditionalPerkDescriptions();
+        }
+
+        private void OnNewGameCreated(CampaignGameStarter campaignGameStarter)
+        {
+            VillageLands.Clear();
         }
 
         private void setAdditionalPerkDescriptions()
         {
             this.AddPerkDescription(DefaultPerks.Riding.MountedPatrols, new TextObject("{=agricultureestate_perk_mountedpatrols}Agriculture Estate : Slave escape chance reduced by 20%").ToString());
             this.AddPerkDescription(DefaultPerks.Steward.ForcedLabor, new TextObject("{=agricultureestate_perk_forcedlabor}Agriculture Estate : Allows use of non bandit prisoners for slave labor").ToString());
-            this.AddPerkDescription(DefaultPerks.Roguery.SlaveTrader, new TextObject("{=agricultureestate_perk_slavetrader}Agriculture Estate : Estates buy slaves at 20% reduced cost").ToString());
+            this.AddPerkDescription(DefaultPerks.Roguery.Manhunter, new TextObject("{=agricultureestate_perk_slavetrader}Agriculture Estate : Estates buy slaves at 20% reduced cost").ToString());
             this.AddPerkDescription(DefaultPerks.Trade.InsurancePlans, new TextObject("{=agricultureestate_perk_insuranceplans}Agriculture Estate : Half of the cost of land siezed durring war is returned").ToString());
             this.AddPerkDescription(DefaultPerks.Trade.RapidDevelopment, new TextObject("{=agricultureestate_perk_rapiddevelopment}Agriculture Estate : Half of the cost of land siezed durring war is returned").ToString());
             this.AddPerkDescription(DefaultPerks.Trade.TradeyardForeman, new TextObject("{=agricultureestate_perk_tradeyardforeman}Agriculture Estate : Estates in villages that have primary production clay, iron, cotton, or silver has 20% increased slave output").ToString());
@@ -120,7 +127,7 @@ namespace AgricultureEstate
                 }
                 if (num3 > 0)
                 {
-                    if (Hero.MainHero.GetPerkValue(DefaultPerks.Roguery.SlaveTrader))
+                    if (Hero.MainHero.GetPerkValue(DefaultPerks.Roguery.Manhunter))
                         num4 = (int)(0.8 * num4);
                     GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, hero, num4, false);
                     InformationManager.DisplayMessage(new InformationMessage(
@@ -166,11 +173,6 @@ namespace AgricultureEstate
             {
                 Village village = villageLand1.Key.Village;
                 VillageLand villageLand2 = villageLand1.Value;
-                InformationManager.DisplayMessage(new InformationMessage($"Village Owner: {village.Owner.Name}"));
-                InformationManager.DisplayMessage(new InformationMessage($"Owner Faction: {village.Owner.MapFaction.Name}"));
-                InformationManager.DisplayMessage(new InformationMessage($"Hero Faction:  {Hero.MainHero.MapFaction}"));
-                InformationManager.DisplayMessage(new InformationMessage($"OwnedPlots:    {villageLand2.OwnedPlots}"));
-                InformationManager.DisplayMessage(new InformationMessage($"OwnedUndevPlots: {villageLand2.OwnedUndevelopedPlots}"));
                 if (village.Owner.MapFaction.IsAtWarWith(Hero.MainHero.MapFaction) && (villageLand2.OwnedPlots > 0 || villageLand2.OwnedUndevelopedPlots > 0))
                 {
                     InformationManager.DisplayMessage(new InformationMessage(
@@ -214,8 +216,8 @@ namespace AgricultureEstate
                         true, false, new TextObject("{=agricultureestate_slave_revolt_button_text}Not Good").ToString(), "", null, null), false);
                     //InformationManager.DisplayMessage(new InformationMessage(Localization.SetTextVariables("{=agricultureestate_slave_revolt_description}The slave at your estate in the village of {SETTLEMENT_NAME} have revolted.",
                     //    new KeyValuePair<string, string?>("SETTLEMENT_NAME", village.Name.ToString())).ToString()));
-                    banditParty.SetMoveRaidSettlement(village.Settlement);
-                    banditParty.Ai.SetAIState((AIState)13, null);
+                    
+                    banditParty.Ai.SetMoveRaidSettlement(village.Settlement);
                 }
             }
         }
@@ -229,7 +231,7 @@ namespace AgricultureEstate
                 if (villageLand2.CurrentProject != "None")
                 {
                     ++villageLand2.ProjectProgress;
-                    if (villageLand2.ProjectProgress >= 240)
+                    if (villageLand2.ProjectProgress >= (Settings.Instance.ProjectTime * 24))
                     {
                         if (villageLand2.CurrentProject == "Land Clearance")
                         {
@@ -291,8 +293,10 @@ namespace AgricultureEstate
             {
                 for (int index = 0; index < troopRosterElement.Number; ++index)
                 {
+                    if (Settings.Instance.SlaveDeclineModifier == 0)
+                        return;
                     if(troopRosterElement.Character != null && land.Prisoners != null)
-                        if (this.rng.Next(1000) < (double)land.SlaveDeclineRate() * 10.0)
+                        if (this.rng.Next(1000) < ((double)land.SlaveDeclineRate() * Settings.Instance.SlaveDeclineModifier) * 10.0)
                             land.Prisoners.AddToCounts(troopRosterElement.Character, -1, false, 0, 0, true, -1);
                 }
             }
@@ -453,6 +457,15 @@ namespace AgricultureEstate
         {
             if (!dataStore.SyncData<Dictionary<Settlement, VillageLand>>("_village_land", ref VillageLands))
                 VillageLands.Clear();
+
+            Dictionary<Settlement, VillageLand> newVillageLands = new Dictionary<Settlement, VillageLand>();
+            
+            foreach (var vil in VillageLands)
+            {
+                if (!(vil.Value?.Village?.Owner is null))
+                    newVillageLands.Add(vil.Key, vil.Value);
+            }
+            VillageLands = newVillageLands;
         }
     }
 }

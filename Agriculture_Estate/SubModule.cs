@@ -2,12 +2,8 @@
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.CampaignSystem.GameComponents;
 using TaleWorlds.Core;
-using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
 namespace AgricultureEstate
@@ -15,13 +11,13 @@ namespace AgricultureEstate
     public class SubModule : MBSubModuleBase
     {
         private static readonly List<Action> ActionsToExecuteNextTick = new List<Action>();
-        public static int PlotBuyPrice;
-        public static int PlotSellPrice;
-        public static int UndevelopedPlotBuyPrice;
-        public static int UndevelopedPlotSellPrice;
-        public static int ProjectCost;
-        public static float LandRentScale;
-        public static float SlaveProductionScale;
+        public static int PlotBuyPrice => Settings.Instance?.PlotBuyPrice ?? 800;
+        public static int PlotSellPrice => Settings.Instance?.PlotSellPrice ?? 200;
+        public static int UndevelopedPlotBuyPrice => Settings.Instance?.UndevelopedPlotBuyPrice ?? 400;
+        public static int UndevelopedPlotSellPrice => Settings.Instance?.UndevelopedPlotSellPrice ?? 100;
+        public static int ProjectCost => Settings.Instance?.ProjectCost ?? 20000;
+        public static float LandRentScale => Settings.Instance?.LandRentScale ?? 1;
+        public static float SlaveProductionScale => Settings.Instance?.SlaveProductionScale ?? 1;
         private Harmony harmony = new Harmony("AgricultureEstate");
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot() => base.OnBeforeInitialModuleScreenSetAsRoot();
@@ -30,12 +26,14 @@ namespace AgricultureEstate
         {
             if (!(game.GameType is Campaign))
                 return;
-
             ((CampaignGameStarter)gameStarterObject).AddBehavior(new AgricultureEstateBehavior());
         }
 
         public override void OnAfterGameInitializationFinished(Game game, object starterObject)
         {
+            harmony.Unpatch(AccessTools.Method(Campaign.Current.Models.ClanFinanceModel.GetType(), "CalculateClanIncomeInternal"), 
+                HarmonyPatchType.Postfix, "AgricultureEstate"); // Unpatch as otherwise we add multiple postfixes
+
             base.OnAfterGameInitializationFinished(game, starterObject);
             harmony.Patch(AccessTools.Method(Campaign.Current.Models.ClanFinanceModel.GetType(), "CalculateClanIncomeInternal"),
                 postfix: new HarmonyMethod(typeof(ClanFiancePatch), "Postfix"));
@@ -44,7 +42,6 @@ namespace AgricultureEstate
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
-            this.loadSettings();
             harmony.PatchAll();
         }
 
@@ -61,21 +58,6 @@ namespace AgricultureEstate
             foreach (Action action in ActionsToExecuteNextTick)
                 action();
             ActionsToExecuteNextTick.Clear();
-        }
-
-        private void loadSettings()
-        {
-            Settings? settings = new XmlSerializer(typeof(Settings)).Deserialize(File.OpenRead(Path.Combine(BasePath.Name, "Modules/AgricultureEstate/settings.xml"))) as Settings;
-            if (settings is not null)
-            {
-                PlotBuyPrice = settings.PlotBuyPrice;
-                PlotSellPrice = settings.PlotSellPrice;
-                UndevelopedPlotBuyPrice = settings.UndevelopedPlotBuyPrice;
-                UndevelopedPlotSellPrice = settings.UndevelopedPlotSellPrice;
-                ProjectCost = settings.ProjectCost;
-                LandRentScale = settings.LandRentScale;
-                SlaveProductionScale = settings.SlaveProductionScale;
-            }
         }
     }
 }
