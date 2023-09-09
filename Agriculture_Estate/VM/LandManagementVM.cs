@@ -290,7 +290,7 @@ namespace AgricultureEstate
                     bandit = this.getBandit(MobileParty.MainParty);
                 }
                 AgricultureEstateBehavior.DeleteVMLayer();
-                AgricultureEstateBehavior.CreateVMLayer();
+                AgricultureEstateBehavior.CreateVMLayer(_village_land);
             }
             else
             {
@@ -405,7 +405,7 @@ namespace AgricultureEstate
                 }
                 this._village_land.Stockpile = new ItemRoster();
                 AgricultureEstateBehavior.DeleteVMLayer();
-                AgricultureEstateBehavior.CreateVMLayer();
+                AgricultureEstateBehavior.CreateVMLayer(_village_land);
             }
             else
             {
@@ -425,7 +425,7 @@ namespace AgricultureEstate
             if (_village_land?.OwnedPlots is not null)
                 ++this._village_land.OwnedPlots;
             AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer();
+            AgricultureEstateBehavior.CreateVMLayer(_village_land);
         }
 
         public void Click2()
@@ -447,7 +447,7 @@ namespace AgricultureEstate
                     --_village_land.OwnedPlots;
 
                 AgricultureEstateBehavior.DeleteVMLayer();
-                AgricultureEstateBehavior.CreateVMLayer();
+                AgricultureEstateBehavior.CreateVMLayer(_village_land);
             }
         }
 
@@ -463,7 +463,7 @@ namespace AgricultureEstate
                 ++this._village_land.OwnedUndevelopedPlots;
 
             AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer();
+            AgricultureEstateBehavior.CreateVMLayer(_village_land);
         }
 
         public void Click4()
@@ -493,15 +493,21 @@ namespace AgricultureEstate
                     --this._village_land.OwnedUndevelopedPlots;
 
                 AgricultureEstateBehavior.DeleteVMLayer();
-                AgricultureEstateBehavior.CreateVMLayer();
+                AgricultureEstateBehavior.CreateVMLayer(_village_land);
             }
         }
 
         public void Click5()
         {
-            this.SellToMarket = !this.SellToMarket;
+            if (Input.IsKeyDown(InputKey.LeftShift))
+            {
+                foreach (var land in AgricultureEstateBehavior.VillageLands)
+                    land.Value.SellToMarket = !SellToMarket;
+            }
+            else
+                SellToMarket = !SellToMarket;
             AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer();
+            AgricultureEstateBehavior.CreateVMLayer(_village_land);
         }
 
         public void Click6()
@@ -542,7 +548,7 @@ namespace AgricultureEstate
                             this._village_land.ProjectQueue.Enqueue("Land Clearance");
                         GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, _village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
                         AgricultureEstateBehavior.DeleteVMLayer();
-                        AgricultureEstateBehavior.CreateVMLayer();
+                        AgricultureEstateBehavior.CreateVMLayer(_village_land);
                     }
                 }
             }
@@ -585,7 +591,7 @@ namespace AgricultureEstate
                             this._village_land.ProjectQueue.Enqueue("Increase Patrols");
                         GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
                         AgricultureEstateBehavior.DeleteVMLayer();
-                        AgricultureEstateBehavior.CreateVMLayer();
+                        AgricultureEstateBehavior.CreateVMLayer(_village_land);
                     }
                 }
             }
@@ -614,7 +620,7 @@ namespace AgricultureEstate
                         this._village_land.ProjectQueue.Enqueue("Expand Storehouse");
                     GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
                     AgricultureEstateBehavior.DeleteVMLayer();
-                    AgricultureEstateBehavior.CreateVMLayer();
+                    AgricultureEstateBehavior.CreateVMLayer(_village_land);
                 }
             }
         }
@@ -625,7 +631,7 @@ namespace AgricultureEstate
             if (!TaleWorlds.Core.Extensions.IsEmpty<string>(_village_land.ProjectQueue))
                 this._village_land.CurrentProject = this._village_land.ProjectQueue.Dequeue();
             AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer();
+            AgricultureEstateBehavior.CreateVMLayer(_village_land);
         }
 
         public void Click10()
@@ -648,7 +654,7 @@ namespace AgricultureEstate
             else
                 this.BuySlaves = true;
             AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer();
+            AgricultureEstateBehavior.CreateVMLayer(_village_land);
         }
 
         public void Click11()
@@ -689,7 +695,7 @@ namespace AgricultureEstate
 
         public void ExecuteBeginHint9()
         {
-            string str = new TextObject("{=}Estimated Daily Output").ToString();
+            string str = new TextObject("{=agricultureestate_ui_hint_estimated_income}Estimated Daily Output").ToString();
             if (_village_land.Village is not null)
             {
                 foreach ((ItemObject, float) production in (IEnumerable<(ItemObject, float)>)_village_land.Village.VillageType.Productions)

@@ -6,6 +6,7 @@
 
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Base.Global;
+using TaleWorlds.Localization;
 
 namespace AgricultureEstate
 {

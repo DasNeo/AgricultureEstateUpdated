@@ -70,7 +70,8 @@ namespace AgricultureEstate
         {
             AgricultureEstateBehavior.DeleteVMLayer();
             AgricultureEstateBehavior.DeleteVMLayer2();
-            Campaign.Current.EncyclopediaManager.GoToLink(_village_land?.Village?.Settlement.EncyclopediaLink);
+            AgricultureEstateBehavior.CreateVMLayer(this._village_land);
+            //Campaign.Current.EncyclopediaManager.GoToLink(_village_land?.Village?.Settlement.EncyclopediaLink);
         }
     }
 }
