@@ -107,7 +107,18 @@
     <string id="agricultureestate_ui_stockpile" text="Stockpile" />
     <string id="agricultureestate_ui_current_project" text="Current Project" />
     <string id="agricultureestate_ui_progress" text="Progress : " />
-
     <string id="agricultureestate_build_queue_hint" text="{ORDER}-{BUILDING}{NEWLINE}" />
+
+
+  	<string id="agricultureestate_mcm_dev_buy" text="Developed Plot Buy Price" />
+	  <string id="agricultureestate_mcm_dev_sell" text="Developed Plot Sell Price" />
+	  <string id="agricultureestate_mcm_undev_buy" text="Undeveloped Plot Buy Price" />
+	  <string id="agricultureestate_mcm_undev_sell" text="Undeveloped Plot Sell Price" />
+	  <string id="agricultureestate_mcm_proj_cost" text="Project Cost" />
+	  <string id="agricultureestate_mcm_proj_time" text="Project Time" />
+	  <string id="agricultureestate_mcm_scale_rent" text="Scaling of rent for plots" />
+	  <string id="agricultureestate_mcm_scale_production" text="Scaling of slave production" />
+	  <string id="agricultureestate_mcm_slave_decline" text="Slave decline rate modifier" />
+	  
   </strings>
 </base>
