@@ -24,6 +24,8 @@ namespace AgricultureEstate
 
         public MBBindingList<EstateEntryVM> Title { get; set; }
 
+        private string _currentSort = "";
+
 
         [DataSourceProperty]
         public string CloseString => new TextObject("{=agricultureestate_ui_close}Close").ToString();
@@ -54,6 +56,9 @@ namespace AgricultureEstate
                     estateEntryVmList.Add(new EstateEntryVM(land, false));
             }
             estateEntryVmList.Sort(new Comparison<EstateEntryVM>(Compare));
+            if(_currentSort == SortType)
+                estateEntryVmList.Reverse();
+            _currentSort = SortType;
             foreach (EstateEntryVM estateEntryVm in estateEntryVmList)
                 Estates.Add(estateEntryVm);
         }
@@ -99,9 +104,9 @@ namespace AgricultureEstate
 
         private static int IntCompare(int x, int y)
         {
-            if (x > y)
+            if (y > x)
                 return 1;
-            return y > x ? -1 : 0;
+            return x > y ? -1 : 0;
         }
 
         public void Close() => AgricultureEstateBehavior.DeleteVMLayer2();
@@ -121,7 +126,7 @@ namespace AgricultureEstate
                 new InquiryElement("Village Name", new TextObject("{=agricultureestate_village_name}Village Name").ToString(), null)
             };
             MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData(
-                new TextObject("{=agricultureestate_ui_sort_by}Sort by").ToString(), "", inquiryElementList, true, 1, 1, new TextObject("{=agricultureestate_ui_continue}Continue").ToString(), null, (args =>
+                new TextObject("{=agricultureestate_ui_sort_by}Sort by").ToString(), "", inquiryElementList, true, 1, 1, new TextObject("{=agricultureestate_ui_continue}Continue").ToString(),"", negativeAction: null, affirmativeAction: (args =>
             {
                 List<InquiryElement> source = args;
                 if (source != null && !(source).Any())
@@ -131,7 +136,7 @@ namespace AgricultureEstate
                 if (AgricultureEstateBehavior.estateListVM == null)
                     return;
                 AgricultureEstateBehavior.estateListVM.sort();
-            }), null, ""), false);
+            })), false);
         }
     }
 }

@@ -28,7 +28,7 @@
 						<!-- Ledger -->
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionYOffset="95" Command.Click="Click11" Command.HoverBegin="ExecuteBeginHint18"	Command.HoverEnd="ExecuteEndHint">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="42" Text="@LedgerString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@LedgerString" />
 							</Children>
 						</ButtonWidget>
 
@@ -40,18 +40,18 @@
 
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="200" PositionYOffset="200" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="@LandPlotsString" />
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="200" PositionYOffset="250" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@OwnedLandPlotsString" />
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="285" PositionYOffset="250" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@OwnedPlotsString" />
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="310" PositionYOffset="250" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@OwnedPlotsString" />
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="200" PositionYOffset="300" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@AvailableLandPlotsString" />
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="290" PositionYOffset="300" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@AvaliblePlotsString" />
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="310" PositionYOffset="300" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@AvaliblePlotsString" />
 
-						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="350" PositionYOffset="250" Command.HoverBegin="ExecuteBeginHint3"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click1">
+						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="370" PositionYOffset="250" Command.HoverBegin="ExecuteBeginHint3"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click1">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@BuyString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@BuyString" />
 							</Children>
 						</ButtonWidget>
-						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush2" IsEnabled="true" PositionXOffset="350" PositionYOffset="300" Command.HoverBegin="ExecuteBeginHint4"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click2">
+						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush2" IsEnabled="true" PositionXOffset="370" PositionYOffset="300" Command.HoverBegin="ExecuteBeginHint4"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click2">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@SellString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@SellString" />
 							</Children>
 						</ButtonWidget>
 
@@ -63,18 +63,18 @@
 
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="200" PositionYOffset="380" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="@UndevLandPlotsString" />
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="200" PositionYOffset="430" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@OwnedLandPlotsString" />
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="285" PositionYOffset="430" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@OwnedUndevelopedPlotsString" />
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="310" PositionYOffset="430" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@OwnedUndevelopedPlotsString" />
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="200" PositionYOffset="480" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@AvailableLandPlotsString" />
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="290" PositionYOffset="480" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@AvalibleUndevelopedPlotsString" />
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="310" PositionYOffset="480" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@AvalibleUndevelopedPlotsString" />
 
-						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="350" PositionYOffset="430" Command.HoverBegin="ExecuteBeginHint5"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click3">
+						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="370" PositionYOffset="430" Command.HoverBegin="ExecuteBeginHint5"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click3">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@BuyString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@BuyString" />
 							</Children>
 						</ButtonWidget>
-						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush2" IsEnabled="true" PositionXOffset="350" PositionYOffset="480" Command.HoverBegin="ExecuteBeginHint6"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click4">
+						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush2" IsEnabled="true" PositionXOffset="370" PositionYOffset="480" Command.HoverBegin="ExecuteBeginHint6"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click4">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@SellString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@SellString" />
 							</Children>
 						</ButtonWidget>
 
@@ -85,27 +85,27 @@
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="250" PositionYOffset="650" Command.HoverBegin="ExecuteBeginHint7"	Command.HoverEnd="ExecuteEndHint" Command.Click="ManageSlaves">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@ManageString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@ManageString" />
 							</Children>
 						</ButtonWidget>
 
 						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="150" SuggestedHeight="150"  PositionXOffset="40" PositionYOffset="710" HorizontalAlignment="Left" VerticalAlignment="Top" Sprite="building_gardens" Command.HoverBegin="ExecuteBeginHint8" Command.HoverEnd="ExecuteEndHint">
 						</Widget>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="210" PositionYOffset="710" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@SlaveDeclineTitleString"/>
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="355" PositionYOffset="710" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@SlaveDeclineString"/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="360" PositionYOffset="710" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@SlaveDeclineString"/>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="210" PositionYOffset="740" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@RevoltRiskTitleString"/>
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="330" PositionYOffset="740" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@RevoltRiskString"/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="360" PositionYOffset="740" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@RevoltRiskString"/>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="210" PositionYOffset="770" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@LandUsageTitleString"/>
-						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="335" PositionYOffset="770" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@LandUsageString"/>
+						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="360" PositionYOffset="770" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@LandUsageString"/>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="210" PositionYOffset="810" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@BuySlavesTitleString"/>
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="@BuySlavesButton" IsEnabled="true" PositionXOffset="340" PositionYOffset="810" Command.HoverBegin="ExecuteBeginHint17"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click10">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@BuySlavesString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@BuySlavesString" />
 							</Children>
 						</ButtonWidget>
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="20" PositionYOffset="870" Command.HoverBegin="ExecuteBeginHint9"	Command.HoverEnd="ExecuteEndHint">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@ProductionDetailsString"/>
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@ProductionDetailsString"/>
 							</Children>
 						</ButtonWidget>
 
@@ -116,7 +116,7 @@
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="750" PositionYOffset="650" Command.HoverBegin="ExecuteBeginHint10"	Command.HoverEnd="ExecuteEndHint" Command.Click="ManageStockpile">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@ManageString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@ManageString" />
 							</Children>
 						</ButtonWidget>
 
@@ -127,7 +127,7 @@
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="@SellToMarketButton" IsEnabled="true" PositionXOffset="760" PositionYOffset="790" Command.HoverBegin="ExecuteBeginHint11"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click5">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@SellToMarketString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@SellToMarketString" />
 							</Children>
 						</ButtonWidget>
 
@@ -140,7 +140,7 @@
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush2" IsEnabled="true" PositionXOffset="1250" PositionYOffset="650" Command.HoverBegin="ExecuteBeginHint15"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click9">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@CancelString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@CancelString" />
 							</Children>
 						</ButtonWidget>
 
@@ -149,7 +149,7 @@
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="1200" PositionYOffset="790" Command.HoverBegin="ExecuteBeginHint16"	Command.HoverEnd="ExecuteEndHint">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="32" Text="@ProjectQueueString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@ProjectQueueString" />
 							</Children>
 						</ButtonWidget>
 
@@ -161,7 +161,7 @@
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="565" PositionYOffset="485" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@LandClearanceString"/>
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="565" PositionYOffset="520" Command.Click="Click6">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="24" Text="@UpgradeString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@UpgradeString" />
 							</Children>
 						</ButtonWidget>
 
@@ -170,7 +170,7 @@
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="875" PositionYOffset="485" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@UpgradePatrolsString"/>
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="865" PositionYOffset="520" Command.Click="Click7">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="24" Text="@UpgradeString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@UpgradeString" />
 							</Children>
 						</ButtonWidget>
 
@@ -179,13 +179,13 @@
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1155" PositionYOffset="485" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@UpgradeStorehouseString"/>
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush1" IsEnabled="true" PositionXOffset="1165" PositionYOffset="520" Command.Click="Click8">
 							<Children>
-								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="24" Text="@UpgradeString" />
+								<RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="OverlayPopup.ButtonText"	Brush.FontSize="22" Text="@UpgradeString" />
 							</Children>
 						</ButtonWidget>
-						
+
 					</Children>
 				</BrushWidget>
-				
+
 				<!--Close Button-->
 				<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" MarginTop="950">
 					<Children>

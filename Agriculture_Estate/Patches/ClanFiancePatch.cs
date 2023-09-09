@@ -26,8 +26,8 @@ namespace AgricultureEstate
                     num1 += AgricultureEstateBehavior.CalculateGold(villageLand1.Value);
                     slaveIncome += villageLand1.Value.LastDayIncome;
                 }
-                goldChange.Add(num1, new TextObject("Rent from unused owned land"));
-                goldChange.Add(slaveIncome, new TextObject("Sales from slave production"));
+                goldChange.Add(num1, new TextObject("{=agricultureestate_ui_income_unused_land}Rent from unused owned land"));
+                goldChange.Add(slaveIncome, new TextObject("{=agricultureestate_ui_income_slave_production}Sales from slave production"));
             }
         }
     }
