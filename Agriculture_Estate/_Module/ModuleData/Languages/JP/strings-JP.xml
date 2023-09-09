@@ -98,5 +98,17 @@
   <string id="agricultureestate_estimated_daily_output_rent" text="土地の賃料{GOLD_ICON}"/>
   <string id="agricultureestate_lord_sold_prisoners" text="{LORD_NAME}が、{SETTLEMENT_NAME}のあなたの荘園に{SETTLEMENT_NAME}の囚人を{SELL_PRICE}{GOLD_ICON} で売却した"/>
   <string id="agricultureestate_lord_brought_prisoners" text="{LORD_NAME}が{SETTLEMENT_NAME}のあなたの荘園に{PRIOSNER_COUNT}人の囚人を提供した。"/>
+  <string id="agricultureestate_stockpile" text="保管所"/>
+  <string id="agricultureestate_slaves" text="奴隷"/>
+  <string id="agricultureestate_mcm_dev_buy" text="開拓地の購入価格" />
+  <string id="agricultureestate_mcm_dev_sell" text="開拓地の売却価格" />
+  <string id="agricultureestate_mcm_undev_buy" text="未開拓地の購入価格" />
+  <string id="agricultureestate_mcm_undev_sell" text="未開拓地の売却価格" />
+  <string id="agricultureestate_mcm_proj_cost" text="建設費用" />
+  <string id="agricultureestate_mcm_proj_time" text="建設時間" />
+  <string id="agricultureestate_mcm_scale_rent" text="地代の倍率" />
+  <string id="agricultureestate_mcm_scale_production" text="奴隷の生産性" />
+  <string id="agricultureestate_mcm_slave_decline" text="奴隷の減少率の修正" />
+  <string id="agricultureestate_mcm_slave_decline_hint" text="0にすると奴隷が減少しなくなります。" />
  </strings>
 </base>
