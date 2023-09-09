@@ -167,17 +167,28 @@ namespace AgricultureEstate
 
         public TextObject CurrentProjectL18N
         {
-            get 
+            get => new (this.ProjectName2L18N(this._current_project));
+        }
+        public TextObject[] GetProjectQueueArrayL18N()
+        {
+            string[] strArray = this._project_queue.ToArray();
+            TextObject[] TOArray = new TextObject[strArray.Length];
+            for (int i = 0; i < strArray.Length; i++)
             {
-                return this._current_project switch
-                {
-                    "Increase Patrols" => new TextObject("{=agricultureestate_ui_upgrade_patrols}Increase Patrols"),
-                    "Land Clearance" => new TextObject("{=agricultureestate_ui_land_clearance}Land Clearance"),
-                    "Expand Storehouse" => new TextObject("{=agricultureestate_ui_upgrade_storehouse}Expand Storehouse"),
-                    "None" => new TextObject("{=agricultureestate_no_current_project}No Current Project"),
-                    _ => new TextObject("{=agricultureestate_none}None")
-                };
+                TOArray[i] = new TextObject(this.ProjectName2L18N(strArray[i]));
             }
+            return TOArray;
+        }
+        public string ProjectName2L18N(string projectName)
+        {
+            return projectName switch
+            {
+                "Increase Patrols" => "{=agricultureestate_ui_upgrade_patrols}Increase Patrols",
+                "Land Clearance" => "{=agricultureestate_ui_land_clearance}Land Clearance",
+                "Expand Storehouse" => "{=agricultureestate_ui_upgrade_storehouse}Expand Storehouse",
+                "None" => "{=agricultureestate_no_current_project}No Current Project",
+                _ => ""
+            };
         }
     }
 }
