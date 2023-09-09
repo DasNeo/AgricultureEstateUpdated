@@ -29,6 +29,7 @@
   <string id="agricultureestate_ui_capacity" text="容量:"/>
   <string id="agricultureestate_ui_close" text="閉じる"/>
   <string id="agricultureestate_current_project" text="現在の計画"/>
+  <string id="agricultureestate_ui_current_project" text="現在の計画"/>
   <string id="agricultureestate_current_project_progress" text="現在の進捗"/>
   <string id="agricultureestate_mcm_dev_buy_price" text="開拓済みの土地の購入価格"/>
   <string id="agricultureestate_mcm_dev_sell_price" text="開拓済みの土地の売却価格"/>
