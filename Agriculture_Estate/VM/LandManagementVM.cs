@@ -144,7 +144,7 @@ namespace AgricultureEstate
         [DataSourceProperty]
         public string UpgradeString => this._village_land.CurrentProject == "None" ? $"      {new TextObject("{=agricultureestate_upgrade_string}Upgrade")}      " : $"  {new TextObject("{=agricultureestate_add_to_queue}Add to Queue")}  ";
         [DataSourceProperty]
-        public string CurrentProjectString => this._village_land.CurrentProject == "None" ? new TextObject("{=agricultureestate_no_current_project}No Current Project").ToString() : this._village_land.CurrentProject;
+        public string CurrentProjectString => this._village_land.CurrentProjectL18N.ToString();
         [DataSourceProperty]
         public string SellToMarketString => this.SellToMarket ? new TextObject("{=agricultureestate_on}On").ToString() : new TextObject("{=agricultureestate_off}Off").ToString();
         [DataSourceProperty]

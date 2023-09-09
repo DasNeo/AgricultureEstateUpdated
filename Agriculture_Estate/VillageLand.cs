@@ -10,6 +10,7 @@ using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.SaveSystem;
+using TaleWorlds.Localization;
 
 namespace AgricultureEstate
 {
@@ -163,5 +164,20 @@ namespace AgricultureEstate
         public float SlaveDeclineRate() => (float)((5.0 - 0.5 * PatrolLevel) * (Hero.MainHero.GetPerkValue(DefaultPerks.Riding.MountedPatrols) ? 0.800000011920929 : 1.0));
 
         public float SlaveRevoltRisk => Prisoners.TotalManCount < 5.0 * ((double?)this.Village?.Militia ?? 0d) ? 0.0f : (10.0 * ((double?)this.Village?.Militia ?? 0d) < Prisoners.TotalManCount ? 3f : 1f) * (float)(1.0 - 0.10000000149011612 * PatrolLevel);
+
+        public TextObject CurrentProjectL18N
+        {
+            get 
+            {
+                return this._current_project switch
+                {
+                    "Increase Patrols" => new TextObject("{=agricultureestate_ui_upgrade_patrols}Increase Patrols"),
+                    "Land Clearance" => new TextObject("{=agricultureestate_ui_land_clearance}Land Clearance"),
+                    "Expand Storehouse" => new TextObject("{=agricultureestate_ui_upgrade_storehouse}Expand Storehouse"),
+                    "None" => new TextObject("{=agricultureestate_no_current_project}No Current Project"),
+                    _ => new TextObject("{=agricultureestate_none}None")
+                };
+            }
+        }
     }
 }
