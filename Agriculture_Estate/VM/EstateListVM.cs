@@ -108,18 +108,20 @@ namespace AgricultureEstate
 
         public void Sort()
         {
-            List<InquiryElement> inquiryElementList = new List<InquiryElement>();
-            inquiryElementList.Add(new InquiryElement("Current Project Progress", "Current Project Progress", null));
-            inquiryElementList.Add(new InquiryElement("Current Project", "Current Project", null));
-            inquiryElementList.Add(new InquiryElement("Primary Production", "Primary Production", null));
-            inquiryElementList.Add(new InquiryElement("Stockpile", "Stockpile", null));
-            inquiryElementList.Add(new InquiryElement("Slaves", "Slaves", null));
-            inquiryElementList.Add(new InquiryElement("Last Day Income", "Last Day Income", null));
-            inquiryElementList.Add(new InquiryElement("Owned Undeveloped Plots", "Owned Undeveloped Plots", null));
-            inquiryElementList.Add(new InquiryElement("Owned Plots", "Owned Plots", null));
-            inquiryElementList.Add(new InquiryElement("Village Name", "Village Name", null));
+            List<InquiryElement> inquiryElementList = new List<InquiryElement>
+            {
+                new InquiryElement("Current Project Progress", new TextObject("{=agricultureestate_current_project_progress}Current Project Progress").ToString(), null),
+                new InquiryElement("Current Project", new TextObject("{=agricultureestate_current_project}Current Project").ToString(), null),
+                new InquiryElement("Primary Production", new TextObject("{=agricultureestate_primary_production}Primary Production").ToString(), null),
+                new InquiryElement("Stockpile", new TextObject("{=agricultureestate_stockpile}Stockpile").ToString(), null),
+                new InquiryElement("Slaves", new TextObject("{=agricultureestate_slaves}Slaves").ToString(), null),
+                new InquiryElement("Last Day Income", new TextObject("{=agricultureestate_last_day_income}Last Day Income").ToString(), null),
+                new InquiryElement("Owned Undeveloped Plots", new TextObject("{=agricultureestate_owned_undev_plots}Owned Undeveloped Plots").ToString(), null),
+                new InquiryElement("Owned Plots", new TextObject("{=agricultureestate_owned_plots}Owned Plots").ToString(), null),
+                new InquiryElement("Village Name", new TextObject("{=agricultureestate_village_name}Village Name").ToString(), null)
+            };
             MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData(
-                new TextObject("{=agricultureestate_ui_sort_by}Sort by").ToString(), "", inquiryElementList, true, 1, new TextObject("{=agricultureestate_ui_continue}Continue").ToString(), null, (args =>
+                new TextObject("{=agricultureestate_ui_sort_by}Sort by").ToString(), "", inquiryElementList, true, 1, 1, new TextObject("{=agricultureestate_ui_continue}Continue").ToString(), null, (args =>
             {
                 List<InquiryElement> source = args;
                 if (source != null && !(source).Any())
