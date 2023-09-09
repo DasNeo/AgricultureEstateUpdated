@@ -45,7 +45,7 @@
   <string id="agricultureestate_ui_land_clearance" text="土地の開拓"/>
   <string id="agricultureestate_hint_land_clearing" text="土地の開墾により未使用地を1つ得られます。{newline}{LAND_CLEARING_COST}{GOLD_ICON}の費用{newline}未使用地の増加は村の成長率を少し増加させます{newline}240時間の工期"/>
   <string id="agricultureestate_gamemenu_land_management" text="農園の管理"/>
-  <string id="agricultureestate_ui_landplots" text="土地の権利書"/>
+  <string id="agricultureestate_ui_landplots" text="開拓地の権利書"/>
   <string id="agricultureestate_ui_land_usage" text="農園の用途:"/>
   <string id="agricultureestate_hint_land_suitable" text="農業または資源採掘に適した土地です"/>
   <string id="agricultureestate_hint_land_needs_clearing" text="使用する前に開墾が必要な土地です"/>
