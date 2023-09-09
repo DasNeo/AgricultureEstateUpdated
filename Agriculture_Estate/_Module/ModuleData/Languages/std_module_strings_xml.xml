@@ -119,6 +119,7 @@
 	  <string id="agricultureestate_mcm_scale_rent" text="Scaling of rent for plots" />
 	  <string id="agricultureestate_mcm_scale_production" text="Scaling of slave production" />
 	  <string id="agricultureestate_mcm_slave_decline" text="Slave decline rate modifier" />
+	  <string id="agricultureestate_mcm_slave_decline_hint" text="Setting the modifier to 0 disables slave decline." />
 	  
   </strings>
 </base>
