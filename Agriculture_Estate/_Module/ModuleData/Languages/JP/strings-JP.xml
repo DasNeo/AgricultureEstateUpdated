@@ -20,7 +20,7 @@
   <string id="agricultureestate_tried_selling_clearing_land" text="全ての土地が開墾中です。土地の開墾を中止してから売却してください。"/>
   <string id="agricultureestate_hint_abort_upgrade" text="進捗は全て失われ、資金が返金されます"/>
   <string id="agricultureestate_hint_auto_buy_prisoners" text="この村を訪れた部隊から盗賊の囚人を自動的に購入します{newline}クリックで切り替えます{newline}Shift + クリックで全てを同時に切り替えられます"/>
-  <string id="agricultureestate_ui_availablelandplots" text="有効:"/>
+  <string id="agricultureestate_ui_availablelandplots" text="購入可能:"/>
   <string id="agricultureestate_hint_prisoner_as_slaves" text="捕虜にした盗賊は労働力として使用できます{newline}使役できる奴隷の上限は所有地の数で決まります。{newline}Shift + クリックで素早く配置できます"/>
   <string id="agricultureestate_build_queue_empty" text="建設予定はありません"/>
   <string id="agricultureestate_build_queue_hint" text="{ORDER} - {BUILDING}{NEWLINE}" />
