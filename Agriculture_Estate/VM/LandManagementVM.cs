@@ -689,7 +689,7 @@ namespace AgricultureEstate
 
         public void ExecuteBeginHint9()
         {
-            string str = new TextObject("{=}Estimated Daily Output").ToString();
+            string str = new TextObject("{=agricultureestate_estimated_daily_output}Estimated Daily Output").ToString();
             if (_village_land.Village is not null)
             {
                 foreach ((ItemObject, float) production in (IEnumerable<(ItemObject, float)>)_village_land.Village.VillageType.Productions)
