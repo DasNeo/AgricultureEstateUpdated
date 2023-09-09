@@ -35,7 +35,7 @@ namespace AgricultureEstate
             get
             {
                 if (this._is_title)
-                    return nameof(Slaves);
+                    return new TextObject("{=agricultureestate_slaves}Slaves").ToString();
                 int num = this._village_land?.Prisoners.TotalManCount ?? 0;
                 string str1 = num.ToString();
                 num = (this._village_land?.OwnedPlots ?? 0) * 10;
@@ -49,7 +49,7 @@ namespace AgricultureEstate
             get
             {
                 if (this._is_title)
-                    return nameof(Stockpile);
+                    return new TextObject("{=agricultureestate_stockpile}Stockpile").ToString();
                 int num = 0;
                 if (_village_land is not null)
                 {
@@ -62,7 +62,7 @@ namespace AgricultureEstate
 
         public string PrimaryProduction => this._is_title ? new TextObject("{=agricultureestate_primary_production}Primary Production").ToString() : (_village_land?.Village?.VillageType.PrimaryProduction.Name ?? new TextObject()).ToString();
 
-        public string CurrentProject => this._is_title ? new TextObject("{=agricultureestate_current_project}Current Project").ToString() : _village_land?.CurrentProject ?? "";
+        public string CurrentProject => this._is_title ? new TextObject("{=agricultureestate_current_project}Current Project").ToString() : _village_land?.CurrentProjectL18N.ToString() ?? "";
 
         public string CurrentProjectProgress => this._is_title ? new TextObject("{=agricultureestate_current_project_progress}Current Project Progress").ToString() : this._village_land?.ProjectProgress.ToString() + "/240";
 

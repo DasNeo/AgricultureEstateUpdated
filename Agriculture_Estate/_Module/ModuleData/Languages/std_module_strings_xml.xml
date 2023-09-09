@@ -64,7 +64,8 @@
     <string id="agricultureestate_hint_show_ledger" text="Open bussiness ledger that show stats of all owned estates" />
 
     <string id="agricultureestate_estimated_daily_output" text="Estimated Daily Output" />
-    <string id="agricultureestate_estimated_daily_output_rent" text="{GOLD_ICON} X Land Rent" />
+    <string id="agricultureestate_estimated_daily_output_entry" text="{NEWLINE}{MULTIPLIER} X {ITEM}" />
+    <string id="agricultureestate_estimated_daily_output_rent" text="{MULTIPLIER}{GOLD_ICON} X Land Rent" />
 
     <string id="agricultureestate_perk_mountedpatrols" text="Agriculture Estate : Slave escape chance reduced by 20%" />
     <string id="agricultureestate_perk_forcedlabor" text="Agriculture Estate : Allows use of non bandit prisoners for slave labor" />
@@ -92,6 +93,11 @@
     <string id="agricultureestate_primary_production" text="Primary Production" />
     <string id="agricultureestate_current_project" text="Current Project" />
     <string id="agricultureestate_current_project_progress" text="Current Project Progress" />
+	  <string id="agricultureestate_village_name" text="Villege Name" />
+	  <string id="agricultureestate_slaves" text="Slaves" />
+	  <string id="agricultureestate_stockpile" text="Stockpile" />
+	  <string id="agricultureestate_ui_sort_by" text="Sort by" />
+	  <string id="agricultureestate_ui_continue" text="Continue" />
 
     <string id="agricultureestate_ui_sort" text="Sort" />
     <string id="agricultureestate_ui_upgrades" text="Upgrades" />
@@ -101,20 +107,20 @@
     <string id="agricultureestate_ui_current_project" text="Current Project" />
     <string id="agricultureestate_ui_progress" text="Progress : " />
 
+    <string id="agricultureestate_build_queue_hint" text="{ORDER}-{BUILDING}{NEWLINE}" />
+
+  	<string id="agricultureestate_mcm_dev_buy" text="Developed Plot Buy Price" />
+	  <string id="agricultureestate_mcm_dev_sell" text="Developed Plot Sell Price" />
+	  <string id="agricultureestate_mcm_undev_buy" text="Undeveloped Plot Buy Price" />
+	  <string id="agricultureestate_mcm_undev_sell" text="Undeveloped Plot Sell Price" />
+	  <string id="agricultureestate_mcm_proj_cost" text="Project Cost" />
+	  <string id="agricultureestate_mcm_proj_time" text="Project Time" />
+	  <string id="agricultureestate_mcm_scale_rent" text="Scaling of rent for plots" />
+	  <string id="agricultureestate_mcm_scale_production" text="Scaling of slave production" />
+	  <string id="agricultureestate_mcm_slave_decline" text="Slave decline rate modifier" />
+	  <string id="agricultureestate_mcm_slave_decline_hint" text="Setting the modifier to 0 disables slave decline." />
+
     <string id="agricultureestate_ui_income_unused_land" text="Rent from unused owned land" />
     <string id="agricultureestate_ui_income_slave_production" text="Sales from slave production" />
-
-    <string id="agricultureestate_ui_hint_estimated_income" text="Estimated Daily Output" />
-    
-    <string id="agricultureestate_mcm_dev_buy_price" text="Developed Plot Buy Price" />
-    <string id="agricultureestate_mcm_dev_sell_price" text="Developed Plot Sell Price" />
-    <string id="agricultureestate_mcm_project_cost" text="Project Cost" />
-    <string id="agricultureestate_mcm_project_time" text="Project Time" />
-    <string id="agricultureestate_mcm_scale_rent" text="Scaling of rent for plots" />
-    <string id="agricultureestate_mcm_scale_production" text="Scaling of slave production" />
-    <string id="agricultureestate_mcm_slave_decline" text="Slave decline rate modifier" />
-    <string id="agricultureestate_mcm_undev_buy_price" text="Undeveloped Plot Buy Price" />
-    <string id="agricultureestate_mcm_undev_sell_price" text="Undeveloped Plot Sell Price" />
-
   </strings>
 </base>

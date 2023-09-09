@@ -144,7 +144,7 @@ namespace AgricultureEstate
         [DataSourceProperty]
         public string UpgradeString => this._village_land.CurrentProject == "None" ? $"      {new TextObject("{=agricultureestate_upgrade_string}Upgrade")}      " : $"  {new TextObject("{=agricultureestate_add_to_queue}Add to Queue")}  ";
         [DataSourceProperty]
-        public string CurrentProjectString => this._village_land.CurrentProject == "None" ? new TextObject("{=agricultureestate_no_current_project}No Current Project").ToString() : this._village_land.CurrentProject;
+        public string CurrentProjectString => this._village_land.CurrentProjectL18N.ToString();
         [DataSourceProperty]
         public string SellToMarketString => this.SellToMarket ? new TextObject("{=agricultureestate_on}On").ToString() : new TextObject("{=agricultureestate_off}Off").ToString();
         [DataSourceProperty]
@@ -695,7 +695,7 @@ namespace AgricultureEstate
 
         public void ExecuteBeginHint9()
         {
-            string str = new TextObject("{=agricultureestate_ui_hint_estimated_income}Estimated Daily Output").ToString();
+            string str = new TextObject("{=agricultureestate_estimated_daily_output}Estimated Daily Output").ToString();
             if (_village_land.Village is not null)
             {
                 foreach ((ItemObject, float) production in (IEnumerable<(ItemObject, float)>)_village_land.Village.VillageType.Productions)
@@ -709,11 +709,20 @@ namespace AgricultureEstate
                             num = 1.2f;
                         else if (this._village_land.Village.VillageType.PrimaryProduction.Type == ItemObject.ItemTypeEnum.Horse && Hero.MainHero.GetPerkValue(DefaultPerks.Riding.Breeder))
                             num = 1.1f;
-                        str = str + "\n" + string.Format("{0:0.00}", (float)((double)num * 24.0 * SubModule.SlaveProductionScale * _village_land.Prisoners.TotalManCount * production.Item2 / 1000.0)) + " X " + production.Item1.Name.ToString();
+                        str += new TextObject("{=agricultureestate_estimated_daily_output_entry}{NEWLINE}{MULTIPLIER} X {ITEM}",
+                            new Dictionary<string, object>()
+                            {
+                                { "MULTIPLIER", string.Format("{0:0.00}", (float)((double)num * 24.0 * SubModule.SlaveProductionScale * _village_land.Prisoners.TotalManCount * production.Item2 / 1000.0)) },
+                                { "ITEM",  production.Item1.Name }
+                            }).ToString();
                     }
                 }
                 float num1 = (float)(_village_land.Village.TradeTaxAccumulated * (this._village_land.OwnedPlots == 0 ? 0.0 : (double)Math.Max(0.0f, (float)((10.0 * _village_land.OwnedPlots - _village_land.Prisoners.TotalManCount) / (10.0 * _village_land.OwnedPlots)))) / 100.0) * _village_land.OwnedPlots * SubModule.LandRentScale;
-                MBInformationManager.ShowHint(str + "\n" + string.Format("{0:0.00}", num1) + Localization.SetTextVariables("{=agricultureestate_estimated_daily_output_rent}{GOLD_ICON} X Land Rent", new KeyValuePair<string, string?>("GOLD_ICON", null)));
+                MBInformationManager.ShowHint(str + "\n" + new TextObject(
+                    "{=agricultureestate_estimated_daily_output_rent}{MULTIPLIER}{GOLD_ICON} X Land Rent",
+                    new Dictionary<string, object>() {
+                        { "MULTIPLIER", string.Format("{0:0.00}", num1) }
+                    }));
             }
         }
 
@@ -749,9 +758,9 @@ namespace AgricultureEstate
             }
             else
             {
-                string[] array = this._village_land.ProjectQueue.ToArray();
+                TextObject[] array = this._village_land.GetProjectQueueArrayL18N();
                 for (int index = 0; index < array.Length; ++index)
-                    str = str + (index + 1).ToString() + "-" + array[index] + "\n";
+                    str += new TextObject("{=agricultureestate_build_queue_hint}{ORDER}-{BUILDING}{NEWLINE}", new Dictionary<string, object>() { { "ORDER", (index + 1).ToString() }, { "BUILDING", array[index] } }).ToString();
             }
             MBInformationManager.ShowHint(str);
         }

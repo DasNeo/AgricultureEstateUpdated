@@ -10,6 +10,7 @@ using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.SaveSystem;
+using TaleWorlds.Localization;
 
 namespace AgricultureEstate
 {
@@ -163,5 +164,31 @@ namespace AgricultureEstate
         public float SlaveDeclineRate() => (float)((5.0 - 0.5 * PatrolLevel) * (Hero.MainHero.GetPerkValue(DefaultPerks.Riding.MountedPatrols) ? 0.800000011920929 : 1.0));
 
         public float SlaveRevoltRisk => Prisoners.TotalManCount < 5.0 * ((double?)this.Village?.Militia ?? 0d) ? 0.0f : (10.0 * ((double?)this.Village?.Militia ?? 0d) < Prisoners.TotalManCount ? 3f : 1f) * (float)(1.0 - 0.10000000149011612 * PatrolLevel);
+
+        public TextObject CurrentProjectL18N
+        {
+            get => new (this.ProjectName2L18N(this._current_project));
+        }
+        public TextObject[] GetProjectQueueArrayL18N()
+        {
+            string[] strArray = this._project_queue.ToArray();
+            TextObject[] TOArray = new TextObject[strArray.Length];
+            for (int i = 0; i < strArray.Length; i++)
+            {
+                TOArray[i] = new TextObject(this.ProjectName2L18N(strArray[i]));
+            }
+            return TOArray;
+        }
+        public string ProjectName2L18N(string projectName)
+        {
+            return projectName switch
+            {
+                "Increase Patrols" => "{=agricultureestate_ui_upgrade_patrols}Increase Patrols",
+                "Land Clearance" => "{=agricultureestate_ui_land_clearance}Land Clearance",
+                "Expand Storehouse" => "{=agricultureestate_ui_upgrade_storehouse}Expand Storehouse",
+                "None" => "{=agricultureestate_no_current_project}No Current Project",
+                _ => ""
+            };
+        }
     }
 }
