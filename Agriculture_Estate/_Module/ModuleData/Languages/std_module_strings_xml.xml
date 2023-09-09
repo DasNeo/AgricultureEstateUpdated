@@ -53,6 +53,7 @@
     <string id="agricultureestate_hint_slave_decline" text="Slave decline is daily chance for each slaves to escape.\nRevolt risk is daily chance for slaves to violently rebel in mass.\nRevolt risk is increase if slaves outnumber the village militia\nBuilding upgrades can improve these number.\nLand not used by slave labor will generate a small amount of land rent every day" />
     <string id="agricultureestate_hint_production" text="Goods produced will be added to the stockpile and can be withdrawn at a later time.\n  If storage capacity is exceeded, then production will stop.\nShift click to quick withdrawl all" />
     <string id="agricultureestate_hint_sell_goods_to_village" text="Goods produce can be set to be automatically sold to the village market.\nBe aware the the village market tend to pay less for goods than town markets\nClick to turn " />
+    <string id="agricultureestate_hint_sell_goods_to_village_quick_action" text="Hold Left Shift while clicking to change this for ALL owned Villages." />
     <!-- After "Click to turn" the translation for on/off is automaticially added -->
     <string id="agricultureestate_hint_land_clearing" text="Land Clearance will convert 1 owned undeveloped plot into a normal plot\nCost: {LAND_CLEARING_COST}{GOLD_ICON}\nEach additional plot of land cleared provides a small increase to village growth rate\nTime: 240 hours" />
     <string id="agricultureestate_hint_patrol_upgrade" text="Increasing patrol decreases escape chance by 0.5% and revolt risk by 0.1% per level.  This Upgrade can be done a max of 8 times\nCost: {PATROL_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours" />
@@ -80,7 +81,6 @@
     <string id="agricultureestate_lord_sold_prisoners" text="{LORD_NAME} sold {PRISONER_COUNT} prisoners to your estate in {SETTLEMENT_NAME} for {SELL_PRICE}{GOLD_ICON} gold" />
     <string id="agricultureestate_land_lost_due_to_war" text="Your lands in the village of {SETTLEMENT_NAME} has been siezed due to war with {WAR_TARGET}" />
 
-
     <string id="agricultureestate_slave_revolt_title" text="Slave Revolt" />
     <string id="agricultureestate_slave_revolt_description" text="The slave at your estate in the village of {SETTLEMENT_NAME} have revolted." />
     <string id="agricultureestate_slave_revolt_button_text" text="Not Good" />
@@ -93,7 +93,6 @@
     <string id="agricultureestate_current_project" text="Current Project" />
     <string id="agricultureestate_current_project_progress" text="Current Project Progress" />
 
-
     <string id="agricultureestate_ui_sort" text="Sort" />
     <string id="agricultureestate_ui_upgrades" text="Upgrades" />
     <string id="agricultureestate_ui_slaves" text="Slaves" />
@@ -101,5 +100,21 @@
     <string id="agricultureestate_ui_stockpile" text="Stockpile" />
     <string id="agricultureestate_ui_current_project" text="Current Project" />
     <string id="agricultureestate_ui_progress" text="Progress : " />
+
+    <string id="agricultureestate_ui_income_unused_land" text="Rent from unused owned land" />
+    <string id="agricultureestate_ui_income_slave_production" text="Sales from slave production" />
+
+    <string id="agricultureestate_ui_hint_estimated_income" text="Estimated Daily Output" />
+    
+    <string id="agricultureestate_mcm_dev_buy_price" text="Developed Plot Buy Price" />
+    <string id="agricultureestate_mcm_dev_sell_price" text="Developed Plot Sell Price" />
+    <string id="agricultureestate_mcm_project_cost" text="Project Cost" />
+    <string id="agricultureestate_mcm_project_time" text="Project Time" />
+    <string id="agricultureestate_mcm_scale_rent" text="Scaling of rent for plots" />
+    <string id="agricultureestate_mcm_scale_production" text="Scaling of slave production" />
+    <string id="agricultureestate_mcm_slave_decline" text="Slave decline rate modifier" />
+    <string id="agricultureestate_mcm_undev_buy_price" text="Undeveloped Plot Buy Price" />
+    <string id="agricultureestate_mcm_undev_sell_price" text="Undeveloped Plot Sell Price" />
+
   </strings>
 </base>

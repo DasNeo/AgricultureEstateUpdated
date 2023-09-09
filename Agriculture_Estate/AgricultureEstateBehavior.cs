@@ -214,8 +214,6 @@ namespace AgricultureEstate
                         Localization.SetTextVariables("{=agricultureestate_slave_revolt_description}The slave at your estate in the village of {SETTLEMENT_NAME} have revolted.",
                         new KeyValuePair<string, string?>("SETTLEMENT_NAME", village.Name.ToString())).ToString(),
                         true, false, new TextObject("{=agricultureestate_slave_revolt_button_text}Not Good").ToString(), "", null, null), false);
-                    //InformationManager.DisplayMessage(new InformationMessage(Localization.SetTextVariables("{=agricultureestate_slave_revolt_description}The slave at your estate in the village of {SETTLEMENT_NAME} have revolted.",
-                    //    new KeyValuePair<string, string?>("SETTLEMENT_NAME", village.Name.ToString())).ToString()));
                     
                     banditParty.Ai.SetMoveRaidSettlement(village.Settlement);
                 }
@@ -365,15 +363,17 @@ namespace AgricultureEstate
                 return true;
             }, (args) => CreateVMLayer(), false, 1, false);
 
-        public static void CreateVMLayer()
+        public static void CreateVMLayer(VillageLand? village = null)
         {
+            if (village is null)
+                village = GetVillageLand(Settlement.CurrentSettlement);
             try
             {
                 if (layer != null)
                     return;
                 layer = new GauntletLayer(1000, "GauntletLayer", false);
                 if (landManagementVM == null)
-                    landManagementVM = new LandManagementVM(GetVillageLand(Settlement.CurrentSettlement));
+                    landManagementVM = new LandManagementVM(village);
                 landManagementVM.RefreshValues();
                 gauntletMovie = (GauntletMovie)layer.LoadMovie("LandManagement", landManagementVM);
                 layer.InputRestrictions.SetInputRestrictions(true, (InputUsageMask)7);
