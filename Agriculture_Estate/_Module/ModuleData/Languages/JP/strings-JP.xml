@@ -19,7 +19,7 @@
   <string id="agricultureestate_perk_rapiddevelopment" text="農園経営: 戦争中に接収された土地の半額分が返金される" />
   <string id="agricultureestate_tried_selling_clearing_land" text="全ての土地が開墾中です。土地の開墾を中止してから売却してください。"/>
   <string id="agricultureestate_hint_abort_upgrade" text="進捗は全て失われ、資金が返金されます"/>
-  <string id="agricultureestate_hint_auto_buy_prisoners" text="この村を訪れた部隊から盗賊の囚人を自動的に購入します{newline}クリックで切り替えます{newline}Shift + クリックで全てを同時に切り替えられます"/>
+  <string id="agricultureestate_hint_auto_buy_prisoners" text="この村を訪れた部隊から盗賊の囚人を自動的に購入します{newline}クリックで{STATUS}に切り替えます{newline}"/>
   <string id="agricultureestate_ui_availablelandplots" text="購入可能:"/>
   <string id="agricultureestate_hint_prisoner_as_slaves" text="捕虜にした盗賊は労働力として使用できます{newline}使役できる奴隷の上限は所有地の数で決まります。{newline}Shift + クリックで素早く配置できます"/>
   <string id="agricultureestate_build_queue_empty" text="建設予定はありません"/>
@@ -38,7 +38,7 @@
   <string id="agricultureestate_estimated_daily_output" text="毎日の予想生産量"/>
   <string id="agricultureestate_ui_upgrade_storehouse" text="貯蔵庫の拡張"/>
   <string id="agricultureestate_hint_storehouse_upgrade" text="貯蔵庫を拡張し、容量 +500{newline}{STOREHOUSE_UPGRADE_COST}{GOLD_ICON}の費用{newline}240時間の工期"/>
-  <string id="agricultureestate_hint_sell_goods_to_village" text="生産物が自動的に村の市場で売却されます。{newline}村で販売するより都市で販売するほうが高値がつきやすいことに注意してください{newline}クリックで切り替えます"/>
+  <string id="agricultureestate_hint_sell_goods_to_village" text="生産物が自動的に村の市場で売却されます。{newline}村で販売するより都市で販売するほうが高値がつきやすいことに注意してください{newline}クリックで{STATUS}にします"/>
   <string id="agricultureestate_hint_production" text="生産物は一時的に保管され、しばらくすると消えます{newline}貯蔵庫の容量を超えた場合、生産活動は停止します。{newline}Shift + クリックですぐに撤回できます"/>
   <string id="agricultureestate_ui_upgrade_patrols" text="巡回の強化"/>
   <string id="agricultureestate_hint_patrol_upgrade" text="警備の増加により逃亡確率-0.5%{newline}最高8レベルまで、1レベルごとに反乱発生確率-0.1%{newline}{PATROL_UPGRADE_COST}{GOLD_ICON}の費用{newline}240時間の工期"/>

@@ -728,7 +728,7 @@ namespace AgricultureEstate
 
         public void ExecuteBeginHint10() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_production}Goods produced will be added to the stockpile and can be withdrawn at a later time.\n  If storage capacity is exceeded, then production will stop.\nShift click to quick withdrawl all").ToString());
 
-        public void ExecuteBeginHint11() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_sell_goods_to_village}Goods produce can be set to be automatically sold to the village market.\nBe aware the the village market tend to pay less for goods than town markets\nClick to turn ").ToString() + (this.SellToMarket ? new TextObject("{=agricultureestate_off}Off").ToString() : new TextObject("{=agricultureestate_on}On").ToString()));
+        public void ExecuteBeginHint11() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_sell_goods_to_village}Goods produce can be set to be automatically sold to the village market.\nBe aware the the village market tend to pay less for goods than town markets\nClick to turn {STATUS}").SetTextVariable("STATUS", (this.SellToMarket ? new TextObject("{=agricultureestate_off}Off").ToString() : new TextObject("{=agricultureestate_on}On").ToString())).ToString());
 
         public void ExecuteBeginHint12() => MBInformationManager.ShowHint(
             Localization.SetTextVariables("{=agricultureestate_hint_land_clearing}Land Clearance will convert 1 owned undeveloped plot into a normal plot\nCost: {LAND_CLEARING_COST}{GOLD_ICON}\nEach additional plot of land cleared provides a small increase to village growth rate\nTime: 240 hours",
@@ -765,7 +765,9 @@ namespace AgricultureEstate
             MBInformationManager.ShowHint(str);
         }
 
-        public void ExecuteBeginHint17() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_auto_buy_prisoners}Automatically buy bandits prisoners from any party that visits this village\nClick to turn " + (this.BuySlaves ? new TextObject("{=agricultureestate_off}Off").ToString() : new TextObject("{=agricultureestate_on}On").ToString()) + new TextObject("{=agricultureestate_shift_click_hint}{NEWLINE}Shift click will set all estates")).ToString());
+        public void ExecuteBeginHint17() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_auto_buy_prisoners}Automatically buy bandits prisoners from any party that visits this village\nClick to turn {STATUS}")
+          .SetTextVariable("STATUS", (this.BuySlaves ? new TextObject("{=agricultureestate_off}Off").ToString() : new TextObject("{=agricultureestate_on}On").ToString())).ToString()
+          + new TextObject("{=agricultureestate_shift_click_hint}{NEWLINE}Shift click will set all estates").ToString());
 
         public void ExecuteBeginHint18() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_show_ledger}Open bussiness ledger that show stats of all owned estates").ToString());
 
