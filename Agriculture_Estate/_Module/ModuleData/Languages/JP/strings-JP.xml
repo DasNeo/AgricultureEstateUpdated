@@ -106,5 +106,6 @@
   <string id="agricultureestate_mcm_scale_production" text="奴隷の生産性" />
   <string id="agricultureestate_mcm_slave_decline" text="奴隷の減少率の修正" />
   <string id="agricultureestate_mcm_slave_decline_hint" text="0にすると奴隷が減少しなくなります。" />
+  <string id="agricultureestate_shift_click_hint" text="{NEWLINE}Shift+クリックで全ての農園に設定します" />
  </strings>
 </base>

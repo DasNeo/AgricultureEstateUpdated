@@ -122,5 +122,6 @@
 
     <string id="agricultureestate_ui_income_unused_land" text="Rent from unused owned land" />
     <string id="agricultureestate_ui_income_slave_production" text="Sales from slave production" />
+    <string id="agricultureestate_shift_click_hint" text="{NEWLINE}Shift click will set all estates" />
   </strings>
 </base>

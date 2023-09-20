@@ -765,7 +765,7 @@ namespace AgricultureEstate
             MBInformationManager.ShowHint(str);
         }
 
-        public void ExecuteBeginHint17() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_auto_buy_prisoners}Automatically buy bandits prisoners from any party that visits this village\nClick to turn " + (this.BuySlaves ? new TextObject("{=agricultureestate_off}Off").ToString() : new TextObject("{=agricultureestate_on}On").ToString()) + "\nShift click will set all estates").ToString());
+        public void ExecuteBeginHint17() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_auto_buy_prisoners}Automatically buy bandits prisoners from any party that visits this village\nClick to turn " + (this.BuySlaves ? new TextObject("{=agricultureestate_off}Off").ToString() : new TextObject("{=agricultureestate_on}On").ToString()) + new TextObject("{=agricultureestate_shift_click_hint}{NEWLINE}Shift click will set all estates")).ToString());
 
         public void ExecuteBeginHint18() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_show_ledger}Open bussiness ledger that show stats of all owned estates").ToString());
 
