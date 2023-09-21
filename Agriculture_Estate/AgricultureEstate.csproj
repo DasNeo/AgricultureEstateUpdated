@@ -28,9 +28,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Bannerlord.BLSE.LauncherEx">
-        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Bannerlord.BLSE.LauncherEx.exe</HintPath>
-      </Reference>
       <Reference Include="Newtonsoft.Json">
         <HintPath>..\..\BannerlordVersionSwitcher\Current\Newtonsoft.Json.dll</HintPath>
         <Private>False</Private>
