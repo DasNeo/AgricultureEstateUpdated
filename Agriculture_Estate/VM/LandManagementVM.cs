@@ -341,7 +341,7 @@ namespace AgricultureEstate
                     FieldInfo field2 = PartyScreenManager.Instance.GetType().GetField("_partyScreenLogic", BindingFlags.Instance | BindingFlags.NonPublic);
                     if (field2 != null)
                         field2.SetValue(PartyScreenManager.Instance, partyScreenLogic);
-                    Game.Current.GameStateManager.PushState(state, 0);
+                    Game.Current.GameStateManager.PushState(state);
                 }
                 catch (Exception ex)
                 {
@@ -387,7 +387,6 @@ namespace AgricultureEstate
                 return false;
             }
             this._village_land.Prisoners = leftPrisonRoster;
-            AgricultureEstateBehavior.DeleteVMLayer();
             return true;
         }
 
@@ -410,7 +409,6 @@ namespace AgricultureEstate
             else
             {
                 InventoryManager.OpenScreenAsStash(this._village_land.Stockpile);
-                AgricultureEstateBehavior.DeleteVMLayer();
             }
         }
 
