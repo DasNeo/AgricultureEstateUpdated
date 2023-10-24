@@ -120,7 +120,7 @@
 							</Children>
 						</ButtonWidget>
 
-						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="150" SuggestedHeight="150"  PositionXOffset="540" PositionYOffset="710" HorizontalAlignment="Left" VerticalAlignment="Top" Sprite="building_granary" Command.HoverBegin="ExecuteBeginHint8" Command.HoverEnd="ExecuteEndHint">
+						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="150" SuggestedHeight="150"  PositionXOffset="540" PositionYOffset="710" HorizontalAlignment="Left" VerticalAlignment="Top" Sprite="building_granary" Command.HoverBegin="ExecuteBeginHint10" Command.HoverEnd="ExecuteEndHint">
 						</Widget>
 
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="710" PositionYOffset="735" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@SellToMarketTitleString "/>
