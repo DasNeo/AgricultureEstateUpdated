@@ -17,18 +17,18 @@
   <string id="agricultureestate_perk_mountedpatrols" text="農園経営: 奴隷の逃亡確率-20%"/>
   <string id="agricultureestate_perk_contractors" text="農園経営: 農園のアップグレード費用-15%"/>
   <string id="agricultureestate_perk_rapiddevelopment" text="農園経営: 戦争中に接収された土地の半額分が返金される" />
-  <string id="agricultureestate_tried_selling_clearing_land" text="全ての土地が開墾中です。土地の開墾を中止してから売却してください。"/>
-  <string id="agricultureestate_hint_abort_upgrade" text="進捗は全て失われ、資金が返金されます"/>
-  <string id="agricultureestate_hint_auto_buy_prisoners" text="この村を訪れた部隊から盗賊の囚人を自動的に購入します{newline}クリックで{STATUS}に切り替えます{newline}"/>
+  <string id="agricultureestate_tried_selling_clearing_land" text="全ての土地が開墾中だ。土地の開墾を中止してから売却しよう。"/>
+  <string id="agricultureestate_hint_abort_upgrade" text="進捗は全て失われ、資金が返金される"/>
+  <string id="agricultureestate_hint_auto_buy_prisoners" text="この村を訪れた部隊から盗賊の囚人を自動的に購入する{newline}クリックで{STATUS}に切り替えられる{newline}"/>
   <string id="agricultureestate_ui_availablelandplots" text="購入可能:"/>
-  <string id="agricultureestate_hint_prisoner_as_slaves" text="捕虜にした盗賊は労働力として使用できます{newline}使役できる奴隷の上限は所有地の数で決まります。{newline}Shift + クリックで素早く配置できます"/>
+  <string id="agricultureestate_hint_prisoner_as_slaves" text="捕虜にした盗賊は労働力として使用できる{newline}使役できる奴隷の上限は所有地の数で決まる。{newline}Shift + クリックで素早く配置できる"/>
   <string id="agricultureestate_build_queue_empty" text="建設予定はありません"/>
   <string id="agricultureestate_build_queue_hint" text="{ORDER} - {BUILDING}{NEWLINE}" />
   <string id="agricultureestate_ui_buy" text="購入"/>
   <string id="agricultureestate_ui_buy_slaves" text="奴隷を購入:"/>
-  <string id="agricultureestate_hint_buy_land" text=" {PLOT_BUY_PRICE}{GOLD_ICON}で購入します"/>
-  <string id="agricultureestate_hint_buy_undev_land" text="{PLOT_UNDEV_BUY_PRICE}{GOLD_ICON}で購入します"/>
-  <string id="agricultureestate_max_patrol_upgrade" text="最大8回のアップグレードが可能です"/>
+  <string id="agricultureestate_hint_buy_land" text=" {PLOT_BUY_PRICE}{GOLD_ICON}で購入する"/>
+  <string id="agricultureestate_hint_buy_undev_land" text="{PLOT_UNDEV_BUY_PRICE}{GOLD_ICON}で購入する"/>
+  <string id="agricultureestate_max_patrol_upgrade" text="最大8回のアップグレードが可能だ"/>
   <string id="agricultureestate_ui_cancel" text="やめる"/>
   <string id="agricultureestate_ui_capacity" text="容量:"/>
   <string id="agricultureestate_ui_close" text="閉じる"/>
@@ -38,28 +38,28 @@
   <string id="agricultureestate_estimated_daily_output" text="毎日の予想生産量"/>
   <string id="agricultureestate_ui_upgrade_storehouse" text="貯蔵庫の拡張"/>
   <string id="agricultureestate_hint_storehouse_upgrade" text="貯蔵庫を拡張し、容量 +500{newline}{STOREHOUSE_UPGRADE_COST}{GOLD_ICON}の費用{newline}240時間の工期"/>
-  <string id="agricultureestate_hint_sell_goods_to_village" text="生産物が自動的に村の市場で売却されます。{newline}村で販売するより都市で販売するほうが高値がつきやすいことに注意してください{newline}クリックで{STATUS}にします"/>
-  <string id="agricultureestate_hint_production" text="生産物は一時的に保管され、しばらくすると消えます{newline}貯蔵庫の容量を超えた場合、生産活動は停止します。{newline}Shift + クリックですぐに撤回できます"/>
+  <string id="agricultureestate_hint_sell_goods_to_village" text="生産物が自動的に村の市場で売却される。{newline}村で販売するより都市で販売するほうが高値がつきやすいことに注意しよう{newline}クリックで{STATUS}にできる"/>
+  <string id="agricultureestate_hint_production" text="生産物は一時的に保管され、しばらくすると消える{newline}貯蔵庫の容量を超えた場合、生産活動は停止する。{newline}Shift + クリックですぐに撤回できる"/>
   <string id="agricultureestate_ui_upgrade_patrols" text="巡回の強化"/>
   <string id="agricultureestate_hint_patrol_upgrade" text="警備の増加により逃亡確率-0.5%{newline}最高8レベルまで、1レベルごとに反乱発生確率-0.1%{newline}{PATROL_UPGRADE_COST}{GOLD_ICON}の費用{newline}240時間の工期"/>
   <string id="agricultureestate_ui_land_clearance" text="土地の開拓"/>
-  <string id="agricultureestate_hint_land_clearing" text="土地の開墾により未使用地を1つ得られます。{newline}{LAND_CLEARING_COST}{GOLD_ICON}の費用{newline}未使用地の増加は村の成長率を少し増加させます{newline}240時間の工期"/>
+  <string id="agricultureestate_hint_land_clearing" text="土地の開墾により未使用の開拓地を1つ得られる。{newline}{LAND_CLEARING_COST}{GOLD_ICON}の費用{newline}未使用開拓地の増加は村の成長率を少し増加させる{newline}240時間の工期"/>
   <string id="agricultureestate_gamemenu_land_management" text="農園の管理"/>
   <string id="agricultureestate_ui_landplots" text="開拓地の権利書"/>
   <string id="agricultureestate_ui_land_usage" text="農園の用途:"/>
-  <string id="agricultureestate_hint_land_suitable" text="農業または資源採掘に適した土地です"/>
-  <string id="agricultureestate_hint_land_needs_clearing" text="使用する前に開墾が必要な土地です"/>
+  <string id="agricultureestate_hint_land_suitable" text="農業または資源採掘に適した土地だ"/>
+  <string id="agricultureestate_hint_land_needs_clearing" text="使用する前に開墾が必要な土地だ"/>
   <string id="agricultureestate_last_day_income" text="最後の収入"/>
   <string id="agricultureestate_ui_ledger" text="帳簿"/>
   <string id="agricultureestate_ui_manage" text="管理"/>
   <string id="agricultureestate_no_current_project" text="建設予定なし"/>
   <string id="agricultureestate_none" text="なし"/>
   <string id="agricultureestate_slave_revolt_button_text" text="悪い"/>
-  <string id="agricultureestate_not_enough_gold" text="資金が足りません"/>
-  <string id="agricultureestate_not_enough_undev_plots" text="未開拓地が足りません"/>
+  <string id="agricultureestate_not_enough_gold" text="資金が足りない"/>
+  <string id="agricultureestate_not_enough_undev_plots" text="未開拓地が足りない"/>
   <string id="agricultureestate_off" text="オフ"/>
   <string id="agricultureestate_on" text="オン"/>
-  <string id="agricultureestate_hint_show_ledger" text="所持する全農園の統計情報を表す帳簿を開きます"/>
+  <string id="agricultureestate_hint_show_ledger" text="所持する全農園の統計情報を表す帳簿を開く"/>
   <string id="agricultureestate_ui_owned_landplots" text="所有:"/>
   <string id="agricultureestate_owned_plots" text="所有地"/>
   <string id="agricultureestate_owned_undev_plots" text="所有する未開拓地"/>
@@ -67,17 +67,17 @@
   <string id="agricultureestate_ui_production_details" text="生産物の詳細"/>
   <string id="agricultureestate_ui_progress" text="進捗:"/>
   <string id="agricultureestate_ui_project_queue" text="建設予定"/>
-  <string id="agricultureestate_project_queue_limit" text="建設予定にできるのは{QUEUE_LIMIT}個までです。「宰領」スキルによって上限を増やすことができます。"/>
+  <string id="agricultureestate_project_queue_limit" text="建設予定にできるのは{QUEUE_LIMIT}個までだ。「宰領」スキルによって上限を増やせる。"/>
   <string id="agricultureestate_ui_revolt_risk" text="反乱の可能性:"/>
   <string id="agricultureestate_ui_sell" text="売却"/>
-  <string id="agricultureestate_hint_sell_land" text="{PLOT_SELL_PRICE}{GOLD_ICON}で売却します"/>
-  <string id="agricultureestate_hint_sell_undev_land" text="{PLOT_UNDEV_SELL_PRICE}{GOLD_ICON}で売却します"/>
+  <string id="agricultureestate_hint_sell_land" text="{PLOT_SELL_PRICE}{GOLD_ICON}で売却する"/>
+  <string id="agricultureestate_hint_sell_undev_land" text="{PLOT_UNDEV_SELL_PRICE}{GOLD_ICON}で売却する"/>
   <string id="agricultureestate_ui_sell_to_market" text="市場での販売:"/>
-  <string id="agricultureestate_slave_capacity_exceed_when_land_sold" text="農園の売却によって奴隷の上限を超えてしまいます。まず奴隷を減らしてください"/>
-  <string id="agricultureestate_slave_capacity_exceeded" text="奴隷の上限である{SLAVE_CAPACITY}人を超えています"/>
+  <string id="agricultureestate_slave_capacity_exceed_when_land_sold" text="農園の売却によって奴隷の上限を超えてしまう。まず奴隷を減らそう"/>
+  <string id="agricultureestate_slave_capacity_exceeded" text="奴隷の上限である{SLAVE_CAPACITY}人を超えている"/>
   <string id="agricultureestate_ui_slave_decline" text="奴隷の減少:"/>
   <string id="agricultureestate_slave_revolt_title" text="奴隷の反乱"/>
-  <string id="agricultureestate_hint_slave_decline" text="奴隷は、毎日一定確率で発生する脱走することで減少します。{newline}反乱の可能性は多数の奴隷が武力蜂起する確率を表します。{newline}反乱の可能性は奴隷の数が村の民兵の数を上回っていると増加します。{newline}建物のアップグレードでも増加します。{newline}未使用地は毎日、少額の地代収入をもたらします。"/>
+  <string id="agricultureestate_hint_slave_decline" text="奴隷は、毎日一定確率で発生する脱走することで減少する。{newline}反乱の可能性は多数の奴隷が武力蜂起する確率を表す。{newline}反乱の可能性は奴隷の数が村の民兵の数を上回っていると増加する。{newline}建物のアップグレードでも増加する。{newline}未使用地は毎日、少額の地代収入をもたらす。"/>
   <string id="agricultureestate_ui_slaves" text="奴隷"/>
   <string id="agricultureestate_ui_sort" text="ソート"/>
   <string id="agricultureestate_ui_sort_by" text="ソート" />
@@ -105,7 +105,10 @@
   <string id="agricultureestate_mcm_scale_rent" text="地代の倍率" />
   <string id="agricultureestate_mcm_scale_production" text="奴隷の生産性" />
   <string id="agricultureestate_mcm_slave_decline" text="奴隷の減少率の修正" />
-  <string id="agricultureestate_mcm_slave_decline_hint" text="0にすると奴隷が減少しなくなります。" />
-  <string id="agricultureestate_shift_click_hint" text="{NEWLINE}Shift+クリックで全ての農園に設定します" />
+  <string id="agricultureestate_mcm_slave_decline_hint" text="0にすると奴隷が減少しなくなる。" />
+  <string id="agricultureestate_shift_click_hint" text="{NEWLINE}Shift+クリックで全ての農園に設定できる" />
+  <string id="agricultureestate_ui_income_unused_land" text="未使用開拓地からの地代収入" />
+  <string id="agricultureestate_ui_income_slave_production" text="奴隷の生産物の売上" />
+  <string id="agricultureestate_shift_click_hint" text="{NEWLINE}Shift+クリックで全ての土地を選択できる。" />
  </strings>
 </base>
