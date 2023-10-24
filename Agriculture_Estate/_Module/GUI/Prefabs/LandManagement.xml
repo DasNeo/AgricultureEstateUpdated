@@ -135,7 +135,7 @@
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1100" PositionYOffset="590" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="32" IsDisabled="true" Text="@CurrentProjectTitle"/>
 						<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" PositionXOffset="1030" PositionYOffset="650" Brush="Recruitment.Popup.Title.Text" Brush.FontSize="24" IsDisabled="true" Text="@CurrentProjectString"/>
 
-						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="150" SuggestedHeight="150"  PositionXOffset="1040" PositionYOffset="710" HorizontalAlignment="Left" VerticalAlignment="Top" Sprite="@CurrentProjectIconSting" Command.HoverBegin="ExecuteBeginHint8" Command.HoverEnd="ExecuteEndHint">
+						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="150" SuggestedHeight="150"  PositionXOffset="1040" PositionYOffset="710" HorizontalAlignment="Left" VerticalAlignment="Top" Sprite="@CurrentProjectIconSting" Command.HoverBegin="ExecuteBeginHint16" Command.HoverEnd="ExecuteEndHint">
 						</Widget>
 
 						<ButtonWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top"	Brush="ButtonBrush2" IsEnabled="true" PositionXOffset="1250" PositionYOffset="650" Command.HoverBegin="ExecuteBeginHint15"	Command.HoverEnd="ExecuteEndHint" Command.Click="Click9">
