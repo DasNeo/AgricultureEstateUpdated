@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.Settlements;
@@ -56,7 +57,7 @@ namespace AgricultureEstate
                     estateEntryVmList.Add(new EstateEntryVM(land, false));
             }
             estateEntryVmList.Sort(new Comparison<EstateEntryVM>(Compare));
-            if(_currentSort == SortType)
+            if (_currentSort == SortType)
                 estateEntryVmList.Reverse();
             _currentSort = SortType;
             foreach (EstateEntryVM estateEntryVm in estateEntryVmList)
@@ -126,17 +127,26 @@ namespace AgricultureEstate
                 new InquiryElement("Village Name", new TextObject("{=agricultureestate_village_name}Village Name").ToString(), null)
             };
             MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData(
-                new TextObject("{=agricultureestate_ui_sort_by}Sort by").ToString(), "", inquiryElementList, true, 1, 1, new TextObject("{=agricultureestate_ui_continue}Continue").ToString(),"", negativeAction: null, affirmativeAction: (args =>
-            {
-                List<InquiryElement> source = args;
-                if (source != null && !(source).Any())
-                    return;
-                InformationManager.HideInquiry();
-                SortType = (args).Select(element => element?.Identifier.ToString() ?? "").First<string>();
-                if (AgricultureEstateBehavior.estateListVM == null)
-                    return;
-                AgricultureEstateBehavior.estateListVM.sort();
-            })), false);
+                new TextObject("{=agricultureestate_ui_sort_by}Sort by").ToString(),
+                "",
+                inquiryElementList,
+                true,
+                minSelectableOptionCount: 1,
+                maxSelectableOptionCount: 1,
+                affirmativeText: new TextObject("{=agricultureestate_ui_continue}Continue").ToString(),
+                negativeText: "",
+                negativeAction: null, 
+                affirmativeAction: (args =>
+                {
+                    List<InquiryElement> source = args;
+                    if (source != null && !(source).Any())
+                        return;
+                    InformationManager.HideInquiry();
+                    SortType = (args).Select(element => element?.Identifier.ToString() ?? "").First<string>();
+                    if (AgricultureEstateBehavior.estateListVM == null)
+                        return;
+                    AgricultureEstateBehavior.estateListVM.sort();
+                })), false);
         }
     }
 }
