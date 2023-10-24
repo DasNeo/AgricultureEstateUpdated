@@ -52,14 +52,14 @@
     <string id="agricultureestate_hint_prisoner_as_slaves" text="Bandits prisoners can be used as labor.\nCapacity for slaves determined by number of owned plots\nShift click to quick deposit" />
     <string id="agricultureestate_hint_slave_decline" text="Slave decline is daily chance for each slaves to escape.\nRevolt risk is daily chance for slaves to violently rebel in mass.\nRevolt risk is increase if slaves outnumber the village militia\nBuilding upgrades can improve these number.\nLand not used by slave labor will generate a small amount of land rent every day" />
     <string id="agricultureestate_hint_production" text="Goods produced will be added to the stockpile and can be withdrawn at a later time.\n  If storage capacity is exceeded, then production will stop.\nShift click to quick withdrawl all" />
-    <string id="agricultureestate_hint_sell_goods_to_village" text="Goods produce can be set to be automatically sold to the village market.\nBe aware the the village market tend to pay less for goods than town markets\nClick to turn " />
+    <string id="agricultureestate_hint_sell_goods_to_village" text="Goods produce can be set to be automatically sold to the village market.\nBe aware the the village market tend to pay less for goods than town markets\nClick to turn {STATUS}" />
     <string id="agricultureestate_hint_sell_goods_to_village_quick_action" text="Hold Left Shift while clicking to change this for ALL owned Villages." />
     <!-- After "Click to turn" the translation for on/off is automaticially added -->
     <string id="agricultureestate_hint_land_clearing" text="Land Clearance will convert 1 owned undeveloped plot into a normal plot\nCost: {LAND_CLEARING_COST}{GOLD_ICON}\nEach additional plot of land cleared provides a small increase to village growth rate\nTime: 240 hours" />
     <string id="agricultureestate_hint_patrol_upgrade" text="Increasing patrol decreases escape chance by 0.5% and revolt risk by 0.1% per level.  This Upgrade can be done a max of 8 times\nCost: {PATROL_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours" />
     <string id="agricultureestate_hint_storehouse_upgrade" text="Expanding Storehouse increases storage capacity by 500\nCost: {STOREHOUSE_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours" />
     <string id="agricultureestate_hint_abort_upgrade" text="All progress will be lost and gold cost will not be refunded" />
-    <string id="agricultureestate_hint_auto_buy_prisoners" text="Automatically buy bandits prisoners from any party that visits this village\nClick to turn \nShift click will set all estates" />
+    <string id="agricultureestate_hint_auto_buy_prisoners" text="Automatically buy bandits prisoners from any party that visits this village\nClick to turn {STATUS}" />
     <!-- After "Click to turn" the translation for on/off is automaticially added -->
     <string id="agricultureestate_hint_show_ledger" text="Open bussiness ledger that show stats of all owned estates" />
 
@@ -122,5 +122,6 @@
 
     <string id="agricultureestate_ui_income_unused_land" text="Rent from unused owned land" />
     <string id="agricultureestate_ui_income_slave_production" text="Sales from slave production" />
+    <string id="agricultureestate_shift_click_hint" text="{NEWLINE}Shift click will set all estates" />
   </strings>
 </base>
