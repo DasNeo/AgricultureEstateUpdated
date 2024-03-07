@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
+using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.CampaignSystem.GameComponents;
 
 namespace AgricultureEstate
 {
@@ -31,12 +33,18 @@ namespace AgricultureEstate
 
         public override void OnAfterGameInitializationFinished(Game game, object starterObject)
         {
-            harmony.Unpatch(AccessTools.Method(Campaign.Current.Models.ClanFinanceModel.GetType(), "CalculateClanIncomeInternal"), 
-                HarmonyPatchType.Postfix, "AgricultureEstate"); // Unpatch as otherwise we add multiple postfixes
+            MBReadOnlyList<GameModel> gameModels = Campaign.Current.Models.GetGameModels();
+            for (int num = gameModels.Count - 1; num >= 0; num--) {
+                if (gameModels[num] is DefaultClanFinanceModel) {
+                    harmony.Unpatch(AccessTools.Method(gameModels[num].GetType(), "CalculateClanIncomeInternal"),
+                        HarmonyPatchType.Postfix, "AgricultureEstate"); // Unpatch as otherwise we add multiple postfixes
 
-            base.OnAfterGameInitializationFinished(game, starterObject);
-            harmony.Patch(AccessTools.Method(Campaign.Current.Models.ClanFinanceModel.GetType(), "CalculateClanIncomeInternal"),
-                postfix: new HarmonyMethod(typeof(ClanFiancePatch), "Postfix"));
+                    base.OnAfterGameInitializationFinished(game, starterObject);
+                    harmony.Patch(AccessTools.Method(gameModels[num].GetType(), "CalculateClanIncomeInternal"),
+                        postfix: new HarmonyMethod(typeof(ClanFiancePatch), "Postfix"));
+                    return;
+                }
+            }
         }
 
         protected override void OnSubModuleLoad()
