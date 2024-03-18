@@ -1,13 +1,6 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: AgricultureEstate.AgricultureEstateBehavior
-// Assembly: AgricultureEstate, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: A4103D21-1273-439E-B48D-A11FAB56D6B9
-// Assembly location: C:\Users\andre\Downloads\AgricultureEstate\bin\Win64_Shipping_Client\AgricultureEstate.dll
-
-using AgricultureEstate.l18n;
+﻿using AgricultureEstate.l18n;
 using Helpers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,7 +16,6 @@ using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.Network;
 using TaleWorlds.ObjectSystem;
 using TaleWorlds.ScreenSystem;
 
@@ -229,7 +221,7 @@ namespace AgricultureEstate
                 if (villageLand2.CurrentProject != "None")
                 {
                     ++villageLand2.ProjectProgress;
-                    if (villageLand2.ProjectProgress >= (Settings.Instance.ProjectTime * 24))
+                    if (villageLand2.ProjectProgress >= (Settings.Instance?.ProjectTime * 24))
                     {
                         if (villageLand2.CurrentProject == "Land Clearance")
                         {
@@ -291,10 +283,10 @@ namespace AgricultureEstate
             {
                 for (int index = 0; index < troopRosterElement.Number; ++index)
                 {
-                    if (Settings.Instance.SlaveDeclineModifier == 0)
+                    if (Settings.Instance?.SlaveDeclineModifier == 0)
                         return;
                     if(troopRosterElement.Character != null && land.Prisoners != null)
-                        if (this.rng.Next(1000) < ((double)land.SlaveDeclineRate() * Settings.Instance.SlaveDeclineModifier) * 10.0)
+                        if (this.rng.Next(1000) < ((double)land.SlaveDeclineRate() * Settings.Instance?.SlaveDeclineModifier) * 10.0)
                             land.Prisoners.AddToCounts(troopRosterElement.Character, -1, false, 0, 0, true, -1);
                 }
             }
@@ -323,7 +315,7 @@ namespace AgricultureEstate
                                 this.produce(land.Prisoners.TotalManCount, production.Item1, productionChance, land);
                         }
                     }
-                } catch(Exception ex)
+                } catch(Exception)
                 {
                     InformationManager.DisplayMessage(new InformationMessage($"village: {village.Name}"));
                     InformationManager.DisplayMessage(new InformationMessage($"village.VillageType: {village.VillageType}"));

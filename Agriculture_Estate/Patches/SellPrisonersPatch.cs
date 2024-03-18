@@ -1,10 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: AgricultureEstate.SellPrisonersPatch
-// Assembly: AgricultureEstate, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: A4103D21-1273-439E-B48D-A11FAB56D6B9
-// Assembly location: C:\Users\andre\Downloads\AgricultureEstate\bin\Win64_Shipping_Client\AgricultureEstate.dll
-
-using AgricultureEstate.l18n;
+﻿using AgricultureEstate.l18n;
 using HarmonyLib;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
@@ -13,7 +7,6 @@ using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.Settlements;
-using TaleWorlds.Core;
 using TaleWorlds.Library;
 
 namespace AgricultureEstate
