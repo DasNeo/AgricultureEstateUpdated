@@ -1,10 +1,12 @@
-﻿using AgricultureEstate;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
+using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.CampaignSystem.GameComponents;
+using System.Linq;
 
 namespace AgricultureEstate
 {
@@ -31,11 +33,11 @@ namespace AgricultureEstate
 
         public override void OnAfterGameInitializationFinished(Game game, object starterObject)
         {
-            harmony.Unpatch(AccessTools.Method(Campaign.Current.Models.ClanFinanceModel.GetType(), "CalculateClanIncomeInternal"), 
-                HarmonyPatchType.Postfix, "AgricultureEstate"); // Unpatch as otherwise we add multiple postfixes
+            harmony.Unpatch(AccessTools.Method(typeof(DefaultClanFinanceModel), "CalculateClanIncomeInternal"),
+                    HarmonyPatchType.Postfix, "AgricultureEstate"); // Unpatch as otherwise we add multiple postfixes
 
             base.OnAfterGameInitializationFinished(game, starterObject);
-            harmony.Patch(AccessTools.Method(Campaign.Current.Models.ClanFinanceModel.GetType(), "CalculateClanIncomeInternal"),
+            harmony.Patch(AccessTools.Method(typeof(DefaultClanFinanceModel), "CalculateClanIncomeInternal"),
                 postfix: new HarmonyMethod(typeof(ClanFiancePatch), "Postfix"));
         }
 

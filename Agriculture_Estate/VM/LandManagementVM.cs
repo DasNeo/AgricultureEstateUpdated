@@ -1,11 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: AgricultureEstate.LandManagementVM
-// Assembly: AgricultureEstate, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: A4103D21-1273-439E-B48D-A11FAB56D6B9
-// Assembly location: C:\Users\andre\Downloads\AgricultureEstate\bin\Win64_Shipping_Client\AgricultureEstate.dll
-
-using AgricultureEstate;
-using AgricultureEstate.l18n;
+﻿using AgricultureEstate.l18n;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -140,7 +133,7 @@ namespace AgricultureEstate
         [DataSourceProperty]
         public string LedgerString => new TextObject("{=agricultureestate_ui_ledger}Ledger").ToString();
         [DataSourceProperty]
-        public string CurrentProjecProgressString => this._village_land.CurrentProject == "None" ? "0/0" : this._village_land.ProjectProgress.ToString() + "/" + (Settings.Instance.ProjectTime * 24);
+        public string CurrentProjecProgressString => this._village_land.CurrentProject == "None" ? "0/0" : this._village_land.ProjectProgress.ToString() + "/" + (Settings.Instance?.ProjectTime * 24);
         [DataSourceProperty]
         public string UpgradeString => this._village_land.CurrentProject == "None" ? $"      {new TextObject("{=agricultureestate_upgrade_string}Upgrade")}      " : $"  {new TextObject("{=agricultureestate_add_to_queue}Add to Queue")}  ";
         [DataSourceProperty]
@@ -343,7 +336,7 @@ namespace AgricultureEstate
                         field2.SetValue(PartyScreenManager.Instance, partyScreenLogic);
                     Game.Current.GameStateManager.PushState(state);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
             }
