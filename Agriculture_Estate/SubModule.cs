@@ -33,17 +33,12 @@ namespace AgricultureEstate
 
         public override void OnAfterGameInitializationFinished(Game game, object starterObject)
         {
-            MBReadOnlyList<GameModel> gameModels = Campaign.Current.Models.GetGameModels();
-            var defaultModel = gameModels.FirstOrDefault(r => r is DefaultClanFinanceModel);
-            if(defaultModel != null)
-            {
-                harmony.Unpatch(AccessTools.Method(typeof(DefaultClanFinanceModel), "CalculateClanIncomeInternal"),
-                        HarmonyPatchType.Postfix, "AgricultureEstate"); // Unpatch as otherwise we add multiple postfixes
+            harmony.Unpatch(AccessTools.Method(typeof(DefaultClanFinanceModel), "CalculateClanIncomeInternal"),
+                    HarmonyPatchType.Postfix, "AgricultureEstate"); // Unpatch as otherwise we add multiple postfixes
 
-                base.OnAfterGameInitializationFinished(game, starterObject);
-                harmony.Patch(AccessTools.Method(typeof(DefaultClanFinanceModel), "CalculateClanIncomeInternal"),
-                    postfix: new HarmonyMethod(typeof(ClanFiancePatch), "Postfix"));
-            }
+            base.OnAfterGameInitializationFinished(game, starterObject);
+            harmony.Patch(AccessTools.Method(typeof(DefaultClanFinanceModel), "CalculateClanIncomeInternal"),
+                postfix: new HarmonyMethod(typeof(ClanFiancePatch), "Postfix"));
         }
 
         protected override void OnSubModuleLoad()
