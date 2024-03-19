@@ -15,12 +15,13 @@ namespace AgricultureEstate
     class SellPrisonersPatch
     {
         private static bool Prefix(
-          MobileParty sellerParty,
-          ref TroopRoster prisoners,
-          Settlement currentSettlement,
-          bool applyGoldChange = true)
+          PartyBase sellerParty,
+          PartyBase buyerParty)
         {
-            if (sellerParty == null || sellerParty == MobileParty.MainParty || sellerParty.LeaderHero == null || currentSettlement == null || !currentSettlement.IsTown && !currentSettlement.IsCastle)
+            var currentSettlement = sellerParty.MobileParty.CurrentSettlement;
+            var prisoners = sellerParty.PrisonRoster;
+            if (sellerParty == null || sellerParty.MobileParty == MobileParty.MainParty || sellerParty.LeaderHero == null 
+                || currentSettlement == null || !currentSettlement.IsTown && !currentSettlement.IsCastle)
                 return true;
             foreach (Village boundVillage in currentSettlement.BoundVillages)
             {
