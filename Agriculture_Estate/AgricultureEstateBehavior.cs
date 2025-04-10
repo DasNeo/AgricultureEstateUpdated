@@ -35,12 +35,12 @@ namespace AgricultureEstate
 
         public override void RegisterEvents()
         {
-            CampaignEvents.SettlementEntered.AddNonSerializedListener(this, new Action<MobileParty, Settlement, Hero>(this.OnSettlementEntered));
-            CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(this.MenuItems));
-            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTick));
-            CampaignEvents.HourlyTickEvent.AddNonSerializedListener(this, new Action(this.HourlyTick));
-            CampaignEvents.OnNewGameCreatedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(OnNewGameCreated));
-            this.setAdditionalPerkDescriptions();
+            CampaignEvents.SettlementEntered.AddNonSerializedListener(this, OnSettlementEntered);
+            CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, MenuItems);
+            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, DailyTick);
+            CampaignEvents.HourlyTickEvent.AddNonSerializedListener(this, HourlyTick);
+            CampaignEvents.OnNewGameCreatedEvent.AddNonSerializedListener(this, OnNewGameCreated);
+            SetAdditionalPerkDescriptions();
         }
 
         private void OnNewGameCreated(CampaignGameStarter campaignGameStarter)
@@ -48,18 +48,18 @@ namespace AgricultureEstate
             VillageLands.Clear();
         }
 
-        private void setAdditionalPerkDescriptions()
+        private void SetAdditionalPerkDescriptions()
         {
-            this.AddPerkDescription(DefaultPerks.Riding.MountedPatrols, new TextObject("{=agricultureestate_perk_mountedpatrols}Agriculture Estate : Slave escape chance reduced by 20%").ToString());
-            this.AddPerkDescription(DefaultPerks.Steward.ForcedLabor, new TextObject("{=agricultureestate_perk_forcedlabor}Agriculture Estate : Allows use of non bandit prisoners for slave labor").ToString());
-            this.AddPerkDescription(DefaultPerks.Roguery.Manhunter, new TextObject("{=agricultureestate_perk_slavetrader}Agriculture Estate : Estates buy slaves at 20% reduced cost").ToString());
-            this.AddPerkDescription(DefaultPerks.Trade.InsurancePlans, new TextObject("{=agricultureestate_perk_insuranceplans}Agriculture Estate : Half of the cost of land siezed durring war is returned").ToString());
-            this.AddPerkDescription(DefaultPerks.Trade.RapidDevelopment, new TextObject("{=agricultureestate_perk_rapiddevelopment}Agriculture Estate : Half of the cost of land siezed durring war is returned").ToString());
-            this.AddPerkDescription(DefaultPerks.Trade.TradeyardForeman, new TextObject("{=agricultureestate_perk_tradeyardforeman}Agriculture Estate : Estates in villages that have primary production clay, iron, cotton, or silver has 20% increased slave output").ToString());
-            this.AddPerkDescription(DefaultPerks.Trade.GranaryAccountant, new TextObject("{=agricultureestate_perk_granaryaccountant}Agriculture Estate : Estates in villages that have primary production grain, olives, fish, date has 20% increased slave output").ToString());
-            this.AddPerkDescription(DefaultPerks.Riding.Breeder, new TextObject("{=agricultureestate_perk_breeder}Agriculture Estate : Estates in villages that have primary production horses has 10% increased slave output").ToString());
-            this.AddPerkDescription(DefaultPerks.Steward.Contractors, new TextObject("{=agricultureestate_perk_contractors}Agriculture Estate : Upgrades in estates cost 15% less").ToString());
-            this.AddPerkDescription(DefaultPerks.Engineering.Foreman, new TextObject("{=agricultureestate_perk_foreman}Agriculture Estate : Completing a land clearance project adds 30 hearths to the village").ToString());
+            AddPerkDescription(DefaultPerks.Riding.MountedPatrols, new TextObject("{=agricultureestate_perk_mountedpatrols}Agriculture Estate : Slave escape chance reduced by 20%").ToString());
+            AddPerkDescription(DefaultPerks.Steward.ForcedLabor, new TextObject("{=agricultureestate_perk_forcedlabor}Agriculture Estate : Allows use of non bandit prisoners for slave labor").ToString());
+            AddPerkDescription(DefaultPerks.Roguery.Manhunter, new TextObject("{=agricultureestate_perk_slavetrader}Agriculture Estate : Estates buy slaves at 20% reduced cost").ToString());
+            AddPerkDescription(DefaultPerks.Trade.InsurancePlans, new TextObject("{=agricultureestate_perk_insuranceplans}Agriculture Estate : Half of the cost of land siezed durring war is returned").ToString());
+            AddPerkDescription(DefaultPerks.Trade.RapidDevelopment, new TextObject("{=agricultureestate_perk_rapiddevelopment}Agriculture Estate : Half of the cost of land siezed durring war is returned").ToString());
+            AddPerkDescription(DefaultPerks.Trade.TradeyardForeman, new TextObject("{=agricultureestate_perk_tradeyardforeman}Agriculture Estate : Estates in villages that have primary production clay, iron, cotton, or silver has 20% increased slave output").ToString());
+            AddPerkDescription(DefaultPerks.Trade.GranaryAccountant, new TextObject("{=agricultureestate_perk_granaryaccountant}Agriculture Estate : Estates in villages that have primary production grain, olives, fish, date has 20% increased slave output").ToString());
+            AddPerkDescription(DefaultPerks.Riding.Breeder, new TextObject("{=agricultureestate_perk_breeder}Agriculture Estate : Estates in villages that have primary production horses has 10% increased slave output").ToString());
+            AddPerkDescription(DefaultPerks.Steward.Contractors, new TextObject("{=agricultureestate_perk_contractors}Agriculture Estate : Upgrades in estates cost 15% less").ToString());
+            AddPerkDescription(DefaultPerks.Engineering.Foreman, new TextObject("{=agricultureestate_perk_foreman}Agriculture Estate : Completing a land clearance project adds 30 hearths to the village").ToString());
         }
 
         private void AddPerkDescription(PerkObject perk, string description)
@@ -81,7 +81,7 @@ namespace AgricultureEstate
 
         private void OnSettlementEntered(MobileParty party, Settlement settlement, Hero hero)
         {
-            CharacterObject? bandit = this.getBandit(party);
+            CharacterObject? bandit = GetBandit(party);
             VillageLand villageLand;
             if (bandit == null || !VillageLands.TryGetValue(settlement, out villageLand))
                 return;
@@ -93,7 +93,7 @@ namespace AgricultureEstate
                 {
                     party.PrisonRoster.AddToCounts(bandit, -1, false, 0, 0, true, -1);
                     villageLand.Prisoners.AddToCounts(bandit, 1, false, 0, 0, true, -1);
-                    bandit = this.getBandit(party);
+                    bandit = GetBandit(party);
                     --num2;
                     ++num1;
                 }
@@ -109,7 +109,7 @@ namespace AgricultureEstate
             {
                 int num3 = 0;
                 int num4 = 0;
-                for (int index = villageLand.OwnedPlots * 10 - villageLand.Prisoners.TotalManCount; bandit != null && index > 0 && num4 + Campaign.Current.Models.RansomValueCalculationModel.PrisonerRansomValue(bandit, hero) <= Hero.MainHero.Gold; bandit = this.getBandit(party))
+                for (int index = villageLand.OwnedPlots * 10 - villageLand.Prisoners.TotalManCount; bandit != null && index > 0 && num4 + Campaign.Current.Models.RansomValueCalculationModel.PrisonerRansomValue(bandit, hero) <= Hero.MainHero.Gold; bandit = GetBandit(party))
                 {
                     num4 += Campaign.Current.Models.RansomValueCalculationModel.PrisonerRansomValue(bandit, hero);
                     party.PrisonRoster.AddToCounts(bandit, -1, false, 0, 0, true, -1);
@@ -133,7 +133,7 @@ namespace AgricultureEstate
             }
         }
 
-        private CharacterObject? getBandit(MobileParty party)
+        private CharacterObject? GetBandit(MobileParty party)
         {
             if (party == null || Equals(party.PrisonRoster, null))
                 return null;
@@ -147,20 +147,23 @@ namespace AgricultureEstate
 
         private void DailyTick()
         {
-            this.SlaveDeclineTick();
-            this.CollectGoldTick();
-            this.StartSlaveRebellionTick();
-            this.RemoveInHostileTick();
+            SlaveDeclineTick();
+            CollectGoldTick();
+            StartSlaveRebellionTick();
+            RemoveInHostileTick();
         }
 
         private void HourlyTick()
         {
-            this.productionTick();
-            this.projectProgressTick();
+            productionTick();
+            projectProgressTick();
         }
 
         private void RemoveInHostileTick()
         {
+            if (!Settings.Instance?.DestroyPlotsOnWar ?? false)
+                return;
+            
             foreach (KeyValuePair<Settlement, VillageLand> villageLand1 in VillageLands)
             {
                 Village village = villageLand1.Key.Village;
@@ -191,7 +194,7 @@ namespace AgricultureEstate
             {
                 Village village = villageLand1.Key.Village;
                 VillageLand villageLand2 = villageLand1.Value;
-                if (villageLand2.Prisoners.TotalManCount >= 20 && this.rng.Next(1000) <= 10.0 * (double)villageLand2.SlaveRevoltRisk)
+                if (villageLand2.Prisoners.TotalManCount >= 20 && rng.Next(1000) <= 10.0 * (double)villageLand2.SlaveRevoltRisk)
                 {
                     MobileParty banditParty = BanditPartyComponent.CreateBanditParty(village.Name.ToString() + " slave revolt", Clan.BanditFactions.First<Clan>(), SettlementHelper.FindNearestHideout(x => x.IsActive).Hideout, false);
                     banditParty.InitializeMobilePartyAroundPosition(new TroopRoster(banditParty.Party), new TroopRoster(banditParty.Party), village.Settlement.Position2D, 1f, 0.0f);
@@ -273,7 +276,7 @@ namespace AgricultureEstate
                 Village village = villageLand.Key.Village;
                 VillageLand land = villageLand.Value;
                 if (land.Prisoners.TotalManCount > 0 && village.VillageState != Village.VillageStates.BeingRaided && village.VillageState != Village.VillageStates.Looted)
-                    this.SlaveDecline(land);
+                    SlaveDecline(land);
             }
         }
 
@@ -286,7 +289,7 @@ namespace AgricultureEstate
                     if (Settings.Instance?.SlaveDeclineModifier == 0)
                         return;
                     if(troopRosterElement.Character != null && land.Prisoners != null)
-                        if (this.rng.Next(1000) < ((double)land.SlaveDeclineRate() * Settings.Instance?.SlaveDeclineModifier) * 10.0)
+                        if (rng.Next(1000) < land.SlaveDeclineRate() * 10.0)
                             land.Prisoners.AddToCounts(troopRosterElement.Character, -1, false, 0, 0, true, -1);
                 }
             }
@@ -306,13 +309,13 @@ namespace AgricultureEstate
                         {
                             float productionChance = production.Item2 * 10f;
                             if ((village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("grain") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("olives") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("fish") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("date_fruit")) && Hero.MainHero.GetPerkValue(DefaultPerks.Trade.GranaryAccountant))
-                                this.produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
+                                produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
                             else if ((village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("clay") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("iron") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("cotton") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("silver")) && Hero.MainHero.GetPerkValue(DefaultPerks.Trade.TradeyardForeman))
-                                this.produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
+                                produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
                             else if (village.VillageType.PrimaryProduction.Type == ItemObject.ItemTypeEnum.Horse && Hero.MainHero.GetPerkValue(DefaultPerks.Riding.Breeder))
-                                this.produce(land.Prisoners.TotalManCount, production.Item1, 1.1f * productionChance, land);
+                                produce(land.Prisoners.TotalManCount, production.Item1, 1.1f * productionChance, land);
                             else
-                                this.produce(land.Prisoners.TotalManCount, production.Item1, productionChance, land);
+                                produce(land.Prisoners.TotalManCount, production.Item1, productionChance, land);
                         }
                     }
                 } catch(Exception)
@@ -333,7 +336,7 @@ namespace AgricultureEstate
                 return;
             for (int index = 0; index < slaves; ++index)
             {
-                if ((double)productionChance > this.rng.Next((int)(10000.0 / SubModule.SlaveProductionScale)))
+                if ((double)productionChance > rng.Next((int)(10000.0 / SubModule.SlaveProductionScale)))
                 {
                     if (land.SellToMarket)
                     {
