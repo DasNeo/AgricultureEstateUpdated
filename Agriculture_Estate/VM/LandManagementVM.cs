@@ -1,4 +1,5 @@
 ﻿using AgricultureEstate.l18n;
+using Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -290,9 +291,6 @@ namespace AgricultureEstate
                 PartyScreenLogic partyScreenLogic = new PartyScreenLogic();
                 try
                 {
-                    FieldInfo field1 = PartyScreenManager.Instance.GetType().GetField("_currentMode", BindingFlags.Instance | BindingFlags.NonPublic);
-                    if (field1 != null)
-                        field1.SetValue(PartyScreenManager.Instance, (PartyScreenMode)4);
                     TroopRoster dummyTroopRoster = TroopRoster.CreateDummyTroopRoster();
                     foreach (TroopRosterElement troopRosterElement in _village_land.Prisoners.GetTroopRoster())
                         dummyTroopRoster.AddToCounts(troopRosterElement.Character, troopRosterElement.Number, false, 0, 0, true, -1);
@@ -326,14 +324,13 @@ namespace AgricultureEstate
                         ShowProgressBar = false,
                         MemberTransferState = PartyScreenLogic.TransferState.Transferable,
                         PrisonerTransferState = PartyScreenLogic.TransferState.Transferable,
-                        AccompanyingTransferState = PartyScreenLogic.TransferState.NotTransferable
+                        AccompanyingTransferState = PartyScreenLogic.TransferState.NotTransferable,
+                        PartyScreenMode = PartyScreenHelper.PartyScreenMode.PrisonerManage
                     };
                     partyScreenLogic.Initialize(initializationData);
                     PartyState state = Game.Current.GameStateManager.CreateState<PartyState>();
-                    state.InitializeLogic(partyScreenLogic);
-                    FieldInfo field2 = PartyScreenManager.Instance.GetType().GetField("_partyScreenLogic", BindingFlags.Instance | BindingFlags.NonPublic);
-                    if (field2 != null)
-                        field2.SetValue(PartyScreenManager.Instance, partyScreenLogic);
+                    state.PartyScreenLogic = partyScreenLogic;
+                    state.Initialize();
                     Game.Current.GameStateManager.PushState(state);
                 }
                 catch (Exception)
@@ -401,7 +398,7 @@ namespace AgricultureEstate
             }
             else
             {
-                InventoryManager.OpenScreenAsStash(this._village_land.Stockpile);
+                InventoryScreenHelper.OpenScreenAsStash(this._village_land.Stockpile);
             }
         }
 

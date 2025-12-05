@@ -24,10 +24,15 @@ namespace AgricultureEstate
     public class AgricultureEstateBehavior : CampaignBehaviorBase
     {
         private static GauntletLayer? layer;
-        private static GauntletMovie? gauntletMovie;
+        private static IGauntletMovie? gauntletMovie;
+        private static GauntletMovieIdentifier? gauntletMovieIdentifier;
+
         private static LandManagementVM? landManagementVM;
         private static GauntletLayer? layer2;
-        private static GauntletMovie? gauntletMovie2;
+        private static IGauntletMovie? gauntletMovie2;
+
+        private static GauntletMovieIdentifier? gauntletMovie2Identifier;
+
         public static EstateListVM? estateListVM;
         public static Dictionary<Settlement, VillageLand> VillageLands = new Dictionary<Settlement, VillageLand>();
         public static int LastDayTotalSales;
@@ -196,8 +201,10 @@ namespace AgricultureEstate
                 VillageLand villageLand2 = villageLand1.Value;
                 if (villageLand2.Prisoners.TotalManCount >= 20 && rng.Next(1000) <= 10.0 * (double)villageLand2.SlaveRevoltRisk)
                 {
-                    MobileParty banditParty = BanditPartyComponent.CreateBanditParty(village.Name.ToString() + " slave revolt", Clan.BanditFactions.First<Clan>(), SettlementHelper.FindNearestHideout(x => x.IsActive).Hideout, false);
-                    banditParty.InitializeMobilePartyAroundPosition(new TroopRoster(banditParty.Party), new TroopRoster(banditParty.Party), village.Settlement.Position2D, 1f, 0.0f);
+                    PartyTemplateObject partyTemplateObject = new PartyTemplateObject();
+                    MobileParty banditParty = BanditPartyComponent.CreateBanditParty(village.Name.ToString() + " slave revolt", Clan.BanditFactions.First<Clan>(), 
+                        SettlementHelper.FindNearestHideoutToSettlement(village.Settlement, MobileParty.NavigationType.Default), false, null, village.Settlement.Position);
+                    banditParty.InitializeMobilePartyAroundPosition(new TroopRoster(banditParty.Party), new TroopRoster(banditParty.Party), village.Settlement.Position, 1f, 0.0f);
                     banditParty.IsVisible = true;
                     while (banditParty.MemberRoster.TotalManCount < 20 && villageLand2.Prisoners.TotalManCount > 0)
                     {
@@ -210,7 +217,7 @@ namespace AgricultureEstate
                         new KeyValuePair<string, string?>("SETTLEMENT_NAME", village.Name.ToString())).ToString(),
                         true, false, new TextObject("{=agricultureestate_slave_revolt_button_text}Not Good").ToString(), "", null, null), false);
                     
-                    banditParty.Ai.SetMoveRaidSettlement(village.Settlement);
+                    banditParty.SetMoveRaidSettlement(village.Settlement, MobileParty.NavigationType.Default);
                 }
             }
         }
@@ -366,11 +373,12 @@ namespace AgricultureEstate
             {
                 if (layer != null)
                     return;
-                layer = new GauntletLayer(1000, "GauntletLayer", false);
+                layer = new GauntletLayer("GauntletLayer", 1000, false);
                 if (landManagementVM == null)
                     landManagementVM = new LandManagementVM(village);
                 landManagementVM.RefreshValues();
-                gauntletMovie = (GauntletMovie)layer.LoadMovie("LandManagement", landManagementVM);
+                gauntletMovieIdentifier = layer.LoadMovie("LandManagement", landManagementVM);
+                gauntletMovie = gauntletMovieIdentifier.Movie;
                 layer.InputRestrictions.SetInputRestrictions(true, (InputUsageMask)7);
                 ScreenManager.TopScreen.AddLayer(layer);
                 layer.IsFocusLayer = true;
@@ -391,7 +399,7 @@ namespace AgricultureEstate
                 layer.InputRestrictions.ResetInputRestrictions();
                 layer.IsFocusLayer = false;
                 if (gauntletMovie != null)
-                    layer.ReleaseMovie(gauntletMovie);
+                    layer.ReleaseMovie(gauntletMovieIdentifier);
                 topScreen.RemoveLayer(layer);
             }
             layer = null;
@@ -405,11 +413,13 @@ namespace AgricultureEstate
             {
                 if (layer2 != null)
                     return;
-                layer2 = new GauntletLayer(1200, "GauntletLayer", false);
+                layer2 = new GauntletLayer("GauntletLayer", 1200, false);
                 if (estateListVM == null)
                     estateListVM = new EstateListVM();
                 estateListVM.RefreshValues();
-                gauntletMovie2 = (GauntletMovie)layer2.LoadMovie("EstateList", estateListVM);
+                gauntletMovie2Identifier = layer2.LoadMovie("EstateList", estateListVM);
+                gauntletMovie2 = gauntletMovie2Identifier.Movie;
+
                 layer2.InputRestrictions.SetInputRestrictions(true, (InputUsageMask)7);
                 ScreenManager.TopScreen.AddLayer(layer2);
                 layer2.IsFocusLayer = true;
@@ -430,7 +440,7 @@ namespace AgricultureEstate
                 layer2.InputRestrictions.ResetInputRestrictions();
                 layer2.IsFocusLayer = false;
                 if (gauntletMovie2 != null)
-                    layer2.ReleaseMovie(gauntletMovie2);
+                    layer2.ReleaseMovie(gauntletMovie2Identifier);
                 topScreen.RemoveLayer(layer2);
             }
             layer2 = null;
