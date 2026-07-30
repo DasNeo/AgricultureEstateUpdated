@@ -155,7 +155,9 @@ namespace AgricultureEstate
             set => this._last_day_income = value;
         }
 
-        public float SlaveDeclineRate() => (float)((5.0 - 0.5 * PatrolLevel) * (Hero.MainHero.GetPerkValue(DefaultPerks.Riding.MountedPatrols) ? 0.800000011920929 : 1.0));
+        public float SlaveDeclineRate() => (float)((5.0 - 0.5 * PatrolLevel) 
+                                                   * (Hero.MainHero.GetPerkValue(DefaultPerks.Riding.MountedPatrols) ? 0.800000011920929 : 1.0)) 
+                                           * (Settings.Instance?.SlaveDeclineModifier ?? 1);
 
         public float SlaveRevoltRisk => Prisoners.TotalManCount < 5.0 * ((double?)this.Village?.Militia ?? 0d) ? 0.0f : (10.0 * ((double?)this.Village?.Militia ?? 0d) < Prisoners.TotalManCount ? 3f : 1f) * (float)(1.0 - 0.10000000149011612 * PatrolLevel);
 

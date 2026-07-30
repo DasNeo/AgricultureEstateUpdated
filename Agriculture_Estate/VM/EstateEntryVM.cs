@@ -15,13 +15,13 @@ namespace AgricultureEstate
             this._is_title = Title;
         }
 
-        public string Name => this._is_title ? new TextObject("{=agricultureestate_estate_village}Village").ToString() : (this._village_land?.Village?.Name ?? new TextObject()).ToString();
+        public string Name => this._is_title ? new TextObject("{=agricultureestate_estate_village}Village").ToString() : (this._village_land?.Village?.Name ?? new TextObject("")).ToString();
 
-        public string OwnedPlots => this._is_title ? new TextObject("{=agricultureestate_owned_plots}Owned Plots").ToString() : this._village_land?.OwnedPlots.ToString() ?? new TextObject().ToString();
+        public string OwnedPlots => this._is_title ? new TextObject("{=agricultureestate_owned_plots}Owned Plots").ToString() : this._village_land?.OwnedPlots.ToString() ?? new TextObject("").ToString();
 
-        public string OwnedUndevelopedPlots => this._is_title ? new TextObject("{=agricultureestate_owned_undev_plots}Owned Undeveloped Plots").ToString() : this._village_land?.OwnedUndevelopedPlots.ToString() ?? new TextObject().ToString();
+        public string OwnedUndevelopedPlots => this._is_title ? new TextObject("{=agricultureestate_owned_undev_plots}Owned Undeveloped Plots").ToString() : this._village_land?.OwnedUndevelopedPlots.ToString() ?? new TextObject("").ToString();
 
-        public string LastDayIncome => this._is_title ? new TextObject("{=agricultureestate_last_day_income}Last Day Income").ToString() : this._village_land?.LastDayIncome.ToString() ?? new TextObject().ToString();
+        public string LastDayIncome => this._is_title ? new TextObject("{=agricultureestate_last_day_income}Last Day Income").ToString() : this._village_land?.LastDayIncome.ToString() ?? new TextObject("").ToString();
 
         public string Slaves
         {
@@ -53,7 +53,7 @@ namespace AgricultureEstate
             }
         }
 
-        public string PrimaryProduction => this._is_title ? new TextObject("{=agricultureestate_primary_production}Primary Production").ToString() : (_village_land?.Village?.VillageType.PrimaryProduction.Name ?? new TextObject()).ToString();
+        public string PrimaryProduction => this._is_title ? new TextObject("{=agricultureestate_primary_production}Primary Production").ToString() : (_village_land?.Village?.VillageType.PrimaryProduction.Name ?? new TextObject("")).ToString();
 
         public string CurrentProject => this._is_title ? new TextObject("{=agricultureestate_current_project}Current Project").ToString() : _village_land?.CurrentProjectL18N.ToString() ?? "";
 

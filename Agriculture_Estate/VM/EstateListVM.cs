@@ -75,7 +75,7 @@ namespace AgricultureEstate
                 case "Owned Undeveloped Plots":
                     return IntCompare(x._village_land.OwnedPlots, y._village_land.OwnedPlots);
                 case "Primary Production":
-                    return string.Compare((x._village_land?.Village?.VillageType.PrimaryProduction.Name ?? new TextObject()).ToString(), (y._village_land?.Village?.VillageType.PrimaryProduction.Name ?? new TextObject()).ToString());
+                    return string.Compare((x._village_land?.Village?.VillageType.PrimaryProduction.Name ?? new TextObject("")).ToString(), (y._village_land?.Village?.VillageType.PrimaryProduction.Name ?? new TextObject("")).ToString());
                 case "Slaves":
                     return IntCompare(x._village_land.Prisoners.TotalManCount, y._village_land.Prisoners.TotalManCount);
                 case "Stockpile":

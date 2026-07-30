@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Attributes.v2;
+﻿using HarmonyLib;
+using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Base.Global;
 
 namespace AgricultureEstate
@@ -24,6 +25,8 @@ namespace AgricultureEstate
         public float SlaveProductionScale { get; set; } = 1f;
         [SettingPropertyFloatingInteger("{=agricultureestate_mcm_slave_decline}Slave decline rate modifier", 0, 2, RequireRestart = false, Order = 8, HintText = "{=agricultureestate_mcm_slave_decline_hint}Setting the modifier to 0 disables slave decline.")]
         public float SlaveDeclineModifier { get; set; } = 1f;
+        [SettingPropertyBool("{=agricultureestate_war_plots_destroy}Whether or not your bought plots should be destroyed when entering war with the owning faction)", RequireRestart = false, Order = 9)]
+        public bool DestroyPlotsOnWar { get; set; } = true;
 
         public override string Id => "AgricultureEstate";
 
