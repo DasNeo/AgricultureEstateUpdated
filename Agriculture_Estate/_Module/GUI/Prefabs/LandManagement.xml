@@ -425,7 +425,7 @@
 						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
 								SuggestedWidth="200" SuggestedHeight="200" PositionXOffset="540"
 								PositionYOffset="290" HorizontalAlignment="Left" VerticalAlignment="Top"
-								Sprite="building_irrigation" Command.HoverBegin="ExecuteBeginHint12"
+								Sprite="ae_irrigation" Command.HoverBegin="ExecuteBeginHint12"
 								Command.HoverEnd="ExecuteEndHint">
 						</Widget>
 						<RichTextWidget WidthSizePolicy="CoverChildren"
@@ -449,7 +449,7 @@
 						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
 								SuggestedWidth="200" SuggestedHeight="200" PositionXOffset="840"
 								PositionYOffset="290" HorizontalAlignment="Left" VerticalAlignment="Top"
-								Sprite="building_patrols" Command.HoverBegin="ExecuteBeginHint13"
+								Sprite="ae_patrols" Command.HoverBegin="ExecuteBeginHint13"
 								Command.HoverEnd="ExecuteEndHint" Command.Click="Click7">
 						</Widget>
 						<RichTextWidget WidthSizePolicy="CoverChildren"
@@ -473,7 +473,7 @@
 						<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
 								SuggestedWidth="200" SuggestedHeight="200" PositionXOffset="1140"
 								PositionYOffset="290" HorizontalAlignment="Left" VerticalAlignment="Top"
-								Sprite="building_storehouse" Command.HoverBegin="ExecuteBeginHint14"
+								Sprite="ae_storehouse" Command.HoverBegin="ExecuteBeginHint14"
 								Command.HoverEnd="ExecuteEndHint" Command.Click="Click8">
 						</Widget>
 						<RichTextWidget WidthSizePolicy="CoverChildren"
