@@ -91,10 +91,10 @@ namespace AgricultureEstate
             get
             {
                 if (this._village_land.CurrentProject == "Land Clearance")
-                    return "building_daily_irrigation";
+                    return "ae_irrigation";
                 if (this._village_land.CurrentProject == "Increase Patrols")
-                    return "building_daily_train_militia";
-                return this._village_land.CurrentProject == "Expand Storehouse" ? "building_lime_kilns" : "building_default";
+                    return "ae_patrols";
+                return this._village_land.CurrentProject == "Expand Storehouse" ? "ae_storehouse" : "ae_storehouse"; // TODO: Add default image back in
             }
         }
         [DataSourceProperty]
