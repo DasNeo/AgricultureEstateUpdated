@@ -136,9 +136,44 @@ namespace AgricultureEstate
         [DataSourceProperty]
         public string LedgerString => new TextObject("{=agricultureestate_ui_ledger}Ledger").ToString();
         [DataSourceProperty]
+        // Matches the 242-unit inner width of ProjectProgressTrack in LandManagement.xml.
+        public float CurrentProjectProgressWidth => this._village_land.CurrentProject == EstateProjects.None
+            ? 0f
+            : 242f * Math.Max(0f, Math.Min(1f,
+                (float)this._village_land.ProjectProgress / Math.Max(1, EstateConfiguration.ProjectDurationHours)));
+        [DataSourceProperty]
+        public float BuySlavesKnobOffset => this.BuySlaves ? 70f : 8f;
+        [DataSourceProperty]
+        public float BuySlavesTextOffset => this.BuySlaves ? 4f : 30f;
+        [DataSourceProperty]
+        public float SellToMarketKnobOffset => this.SellToMarket ? 82f : 8f;
+        [DataSourceProperty]
+        public float SellToMarketTextOffset => this.SellToMarket ? 8f : 38f;
+        [DataSourceProperty]
+        public string UpgradeCostString
+        {
+            get
+            {
+                int cost = EstateEconomy.CalculateProjectCost(ProjectCost,
+                    Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors));
+                return new TextObject("{=agricultureestate_ui_upgrade_cost}{COST} gold")
+                    .SetTextVariable("COST", cost.ToString()).ToString();
+            }
+        }
+        [DataSourceProperty]
+        public string UpgradeBuildTimeString => new TextObject("{=agricultureestate_ui_upgrade_build_time}{DAYS} days")
+            .SetTextVariable("DAYS", EstateConfiguration.ProjectDurationHours / 24)
+            .ToString();
+        [DataSourceProperty]
+        public string LandClearanceDescription => new TextObject("{=agricultureestate_ui_clearance_description}Converts undeveloped land into usable plots.").ToString();
+        [DataSourceProperty]
+        public string PatrolsDescription => new TextObject("{=agricultureestate_ui_patrols_description}Reduces slave decline and revolt risk.").ToString();
+        [DataSourceProperty]
+        public string StorehouseDescription => new TextObject("{=agricultureestate_ui_storehouse_description}Increases stockpile capacity.").ToString();
+        [DataSourceProperty]
         public string CurrentProjecProgressString => this._village_land.CurrentProject == EstateProjects.None ? "0/0" : this._village_land.ProjectProgress.ToString() + "/" + EstateConfiguration.ProjectDurationHours;
         [DataSourceProperty]
-        public string UpgradeString => this._village_land.CurrentProject == EstateProjects.None ? $"      {new TextObject("{=agricultureestate_upgrade_string}Upgrade")}      " : $"  {new TextObject("{=agricultureestate_add_to_queue}Add to Queue")}  ";
+        public string UpgradeString => this._village_land.CurrentProject == EstateProjects.None ? new TextObject("{=agricultureestate_upgrade_string}Upgrade").ToString() : new TextObject("{=agricultureestate_add_to_queue}Add to Queue").ToString();
         [DataSourceProperty]
         public string CurrentProjectString => this._village_land.CurrentProjectL18N.ToString();
         [DataSourceProperty]
@@ -559,19 +594,22 @@ namespace AgricultureEstate
         public void ExecuteBeginHint11() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_sell_goods_to_village}Goods produce can be set to be automatically sold to the village market.\nBe aware the the village market tend to pay less for goods than town markets\nClick to turn {STATUS}").SetTextVariable("STATUS", (this.SellToMarket ? new TextObject("{=agricultureestate_off}Off").ToString() : new TextObject("{=agricultureestate_on}On").ToString())).ToString());
 
         public void ExecuteBeginHint12() => MBInformationManager.ShowHint(
-            Localization.SetTextVariables("{=agricultureestate_hint_land_clearing}Land Clearance will convert 1 owned undeveloped plot into a normal plot\nCost: {LAND_CLEARING_COST}{GOLD_ICON}\nEach additional plot of land cleared provides a small increase to village growth rate\nTime: 240 hours",
+            Localization.SetTextVariables("{=agricultureestate_hint_land_clearing}Land Clearance will convert 1 owned undeveloped plot into a normal plot\nCost: {LAND_CLEARING_COST}{GOLD_ICON}\nEach additional plot of land cleared provides a small increase to village growth rate\nTime: {PROJECT_DURATION_HOURS} hours",
                 new KeyValuePair<string, string?>("LAND_CLEARING_COST", (EstateEconomy.CalculateProjectCost(ProjectCost, Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors))).ToString()),
-                new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
+                new KeyValuePair<string, string?>("GOLD_ICON", null),
+                new KeyValuePair<string, string?>("PROJECT_DURATION_HOURS", EstateConfiguration.ProjectDurationHours.ToString())).ToString());
 
         public void ExecuteBeginHint13() => MBInformationManager.ShowHint(
-            Localization.SetTextVariables("{=agricultureestate_hint_patrol_upgrade}Increasing patrol decreases escape chance by 0.5% and revolt risk by 0.1% per level.  This Upgrade can be done a max of 8 times\nCost: {PATROL_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours",
+            Localization.SetTextVariables("{=agricultureestate_hint_patrol_upgrade}Increasing patrol decreases escape chance by 0.5% and revolt risk by 0.1% per level.  This Upgrade can be done a max of 8 times\nCost: {PATROL_UPGRADE_COST}{GOLD_ICON}\nTime: {PROJECT_DURATION_HOURS} hours",
                 new KeyValuePair<string, string?>("PATROL_UPGRADE_COST", (EstateEconomy.CalculateProjectCost(ProjectCost, Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors))).ToString()),
-                new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
+                new KeyValuePair<string, string?>("GOLD_ICON", null),
+                new KeyValuePair<string, string?>("PROJECT_DURATION_HOURS", EstateConfiguration.ProjectDurationHours.ToString())).ToString());
 
         public void ExecuteBeginHint14() => MBInformationManager.ShowHint(
-            Localization.SetTextVariables("{=agricultureestate_hint_storehouse_upgrade}Expanding Storehouse increases storage capacity by 500\nCost: {STOREHOUSE_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours",
+            Localization.SetTextVariables("{=agricultureestate_hint_storehouse_upgrade}Expanding Storehouse increases storage capacity by 500\nCost: {STOREHOUSE_UPGRADE_COST}{GOLD_ICON}\nTime: {PROJECT_DURATION_HOURS} hours",
                 new KeyValuePair<string, string?>("STOREHOUSE_UPGRADE_COST", (EstateEconomy.CalculateProjectCost(ProjectCost, Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors))).ToString()),
-                new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
+                new KeyValuePair<string, string?>("GOLD_ICON", null),
+                new KeyValuePair<string, string?>("PROJECT_DURATION_HOURS", EstateConfiguration.ProjectDurationHours.ToString())).ToString());
 
         public void ExecuteBeginHint15() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_abort_upgrade}All progress will be lost and gold cost will not be refunded").ToString());
 
