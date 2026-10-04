@@ -406,7 +406,8 @@ namespace AgricultureEstate
         {
             if (Hero.MainHero.Gold < this.PlotBuyPrice || this.AvaliblePlots <= 0)
                 return;
-            GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, this.PlotBuyPrice, false);
+            GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
+            //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, this.PlotBuyPrice, false);
             
             if (_village_land?.AvaliblePlots is not null)
                 --this._village_land.AvaliblePlots;
@@ -427,7 +428,9 @@ namespace AgricultureEstate
             else
             {
                 _village_land?.Village?.Settlement.Village.ChangeGold(this.PlotSellPrice);
-                GiveGoldAction.ApplyForSettlementToCharacter(this._village_land?.Village?.Settlement, Hero.MainHero, this.PlotSellPrice, false);
+                GiveGoldAction.ApplyBetweenCharacters(null, Hero.MainHero, this.PlotBuyPrice, false);
+
+                //GiveGoldAction.ApplyForSettlementToCharacter(this._village_land?.Village?.Settlement, Hero.MainHero, this.PlotSellPrice, false);
                 
                 if(_village_land?.AvaliblePlots is not null)
                     ++_village_land.AvaliblePlots;
@@ -443,8 +446,8 @@ namespace AgricultureEstate
         {
             if (Hero.MainHero.Gold < this.UndevelopedPlotBuyPrice || this.AvalibleUndevelopedPlots <= 0)
                 return;
-            GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, this.UndevelopedPlotBuyPrice, false);
-            
+            GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
+            //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, this.UndevelopedPlotBuyPrice, false);
             if (_village_land?.AvalibleUndevelopedPlots is not null)
                 --this._village_land.AvalibleUndevelopedPlots;
             if (_village_land?.OwnedUndevelopedPlots is not null)
@@ -473,7 +476,9 @@ namespace AgricultureEstate
             else
             {
                 this._village_land?.Village?.ChangeGold(UndevelopedPlotSellPrice);
-                GiveGoldAction.ApplyForSettlementToCharacter(_village_land?.Village?.Settlement, Hero.MainHero, this.UndevelopedPlotSellPrice, false);
+                GiveGoldAction.ApplyBetweenCharacters(null, Hero.MainHero, this.PlotBuyPrice, false);
+                
+                //GiveGoldAction.ApplyForSettlementToCharacter(_village_land?.Village?.Settlement, Hero.MainHero, this.UndevelopedPlotSellPrice, false);
                 
                 if (_village_land?.AvalibleUndevelopedPlots is not null)
                     ++this._village_land.AvalibleUndevelopedPlots;
@@ -534,7 +539,9 @@ namespace AgricultureEstate
                             this._village_land.CurrentProject = "Land Clearance";
                         else
                             this._village_land.ProjectQueue.Enqueue("Land Clearance");
-                        GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, _village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
+                        
+                        GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
+                        //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, _village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
                         AgricultureEstateBehavior.DeleteVMLayer();
                         AgricultureEstateBehavior.CreateVMLayer(_village_land);
                     }
@@ -577,7 +584,9 @@ namespace AgricultureEstate
                             this._village_land.CurrentProject = "Increase Patrols";
                         else
                             this._village_land.ProjectQueue.Enqueue("Increase Patrols");
-                        GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
+                        
+                        GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
+                        //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
                         AgricultureEstateBehavior.DeleteVMLayer();
                         AgricultureEstateBehavior.CreateVMLayer(_village_land);
                     }
@@ -606,7 +615,9 @@ namespace AgricultureEstate
                         this._village_land.CurrentProject = "Expand Storehouse";
                     else
                         this._village_land.ProjectQueue.Enqueue("Expand Storehouse");
-                    GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
+                    
+                    GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
+                    //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
                     AgricultureEstateBehavior.DeleteVMLayer();
                     AgricultureEstateBehavior.CreateVMLayer(_village_land);
                 }

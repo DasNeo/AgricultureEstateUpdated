@@ -7,7 +7,7 @@ namespace AgricultureEstate
 {
     class ClanFiancePatch
     {
-        private static void Postfix(Clan clan, ref ExplainedNumber goldChange, bool applyWithdrawals = false)
+        private static void Postfix(Clan clan, ref ExplainedNumber goldChange, bool applyWithdrawals = false, bool includeDetails = false)
         {
             if (clan == Hero.MainHero.Clan)
             {
