@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Id value="$modulename$" />
-  <Name value="$modulename$" />
-  <Version value="v1.3.4.1" />
+  <Id value="AgricultureEstate" />
+  <Name value="AgricultureEstate" />
+  <Version value="v1.4.7.2" />
   <Official value="false" />
   <DefaultModule value="false" />
   <!-- e1.7.1 -->
@@ -31,9 +31,9 @@
   <!-- Community Dependency Metadata -->
   <SubModules>
     <SubModule>
-      <Name value="$modulename$" />
-      <DLLName value="$modulename$.dll" />
-      <SubModuleClassType value="$modulename$.SubModule" />
+      <Name value="AgricultureEstate" />
+      <DLLName value="AgricultureEstate.dll" />
+      <SubModuleClassType value="AgricultureEstate.SubModule" />
       <Tags />
     </SubModule>
   </SubModules>

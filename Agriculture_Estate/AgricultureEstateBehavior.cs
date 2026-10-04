@@ -217,7 +217,7 @@ namespace AgricultureEstate
                         new KeyValuePair<string, string?>("SETTLEMENT_NAME", village.Name.ToString())).ToString(),
                         true, false, new TextObject("{=agricultureestate_slave_revolt_button_text}Not Good").ToString(), "", null, null), false);
                     
-                    banditParty.SetMoveRaidSettlement(village.Settlement, MobileParty.NavigationType.Default);
+                    banditParty.SetMoveRaidSettlement(village.Settlement, MobileParty.NavigationType.Default, false);
                 }
             }
         }
