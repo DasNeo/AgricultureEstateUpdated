@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem.Roster;
@@ -102,7 +102,7 @@ namespace AgricultureEstate
             return x > y ? -1 : 0;
         }
 
-        public void Close() => AgricultureEstateBehavior.DeleteVMLayer2();
+        public void Close() => EstateScreenController.DeleteVMLayer2();
 
         public void Sort()
         {
@@ -135,9 +135,9 @@ namespace AgricultureEstate
                         return;
                     InformationManager.HideInquiry();
                     SortType = (args).Select(element => element?.Identifier.ToString() ?? "").First<string>();
-                    if (AgricultureEstateBehavior.estateListVM == null)
+                    if (EstateScreenController.estateListVM == null)
                         return;
-                    AgricultureEstateBehavior.estateListVM.sort();
+                    EstateScreenController.estateListVM.sort();
                 })), false);
         }
     }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.Roster;
@@ -29,6 +29,8 @@ namespace AgricultureEstate
 
         public VillageLand(Village village)
         {
+            this._village = village;
+            this._storage_capacity = 500;
             this._avalible_plots = 10;
             this._avalible_undeveloped_plots = 20;
             this._owned_plots = 0;
@@ -155,12 +157,11 @@ namespace AgricultureEstate
             set => this._last_day_income = value;
         }
 
-        public float SlaveDeclineRate() => (float)((5.0 - 0.5 * PatrolLevel) 
-                                                   * (Hero.MainHero.GetPerkValue(DefaultPerks.Riding.MountedPatrols) ? 0.800000011920929 : 1.0)) 
-                                           * (Settings.Instance?.SlaveDeclineModifier ?? 1);
+        public float SlaveDeclineRate() => AgricultureEstate.Domain.EstateEconomy.CalculateDecline(
+            PatrolLevel, Hero.MainHero.GetPerkValue(DefaultPerks.Riding.MountedPatrols), Settings.Instance?.SlaveDeclineModifier ?? 1f);
 
-        public float SlaveRevoltRisk => Prisoners.TotalManCount < 5.0 * ((double?)this.Village?.Militia ?? 0d) ? 0.0f : (10.0 * ((double?)this.Village?.Militia ?? 0d) < Prisoners.TotalManCount ? 3f : 1f) * (float)(1.0 - 0.10000000149011612 * PatrolLevel);
-
+        public float SlaveRevoltRisk => AgricultureEstate.Domain.EstateEconomy.CalculateRevoltRisk(
+            Prisoners.TotalManCount, Village?.Militia ?? 0f, PatrolLevel);
         public TextObject CurrentProjectL18N
         {
             get => new (this.ProjectName2L18N(this._current_project));

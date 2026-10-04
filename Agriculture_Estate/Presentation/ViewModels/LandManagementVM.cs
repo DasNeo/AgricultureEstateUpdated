@@ -1,4 +1,6 @@
-﻿using AgricultureEstate.l18n;
+using AgricultureEstate.Application;
+using AgricultureEstate.Domain;
+using AgricultureEstate.l18n;
 using Helpers;
 using System;
 using System.Collections.Generic;
@@ -21,11 +23,11 @@ namespace AgricultureEstate
 {
     internal class LandManagementVM : ViewModel
     {
-        private int PlotBuyPrice = SubModule.PlotBuyPrice;
-        private int PlotSellPrice = SubModule.PlotSellPrice;
-        private int UndevelopedPlotBuyPrice = SubModule.UndevelopedPlotBuyPrice;
-        private int UndevelopedPlotSellPrice = SubModule.UndevelopedPlotSellPrice;
-        private int ProjectCost = SubModule.ProjectCost;
+        private int PlotBuyPrice => EstateConfiguration.PlotBuyPrice;
+        private int PlotSellPrice => EstateConfiguration.PlotSellPrice;
+        private int UndevelopedPlotBuyPrice => EstateConfiguration.UndevelopedPlotBuyPrice;
+        private int UndevelopedPlotSellPrice => EstateConfiguration.UndevelopedPlotSellPrice;
+        private int ProjectCost => EstateConfiguration.ProjectCost;
         private string? _settlementImageID;
         private VillageLand _village_land;
 
@@ -134,9 +136,9 @@ namespace AgricultureEstate
         [DataSourceProperty]
         public string LedgerString => new TextObject("{=agricultureestate_ui_ledger}Ledger").ToString();
         [DataSourceProperty]
-        public string CurrentProjecProgressString => this._village_land.CurrentProject == "None" ? "0/0" : this._village_land.ProjectProgress.ToString() + "/" + (Settings.Instance?.ProjectTime * 24);
+        public string CurrentProjecProgressString => this._village_land.CurrentProject == EstateProjects.None ? "0/0" : this._village_land.ProjectProgress.ToString() + "/" + EstateConfiguration.ProjectDurationHours;
         [DataSourceProperty]
-        public string UpgradeString => this._village_land.CurrentProject == "None" ? $"      {new TextObject("{=agricultureestate_upgrade_string}Upgrade")}      " : $"  {new TextObject("{=agricultureestate_add_to_queue}Add to Queue")}  ";
+        public string UpgradeString => this._village_land.CurrentProject == EstateProjects.None ? $"      {new TextObject("{=agricultureestate_upgrade_string}Upgrade")}      " : $"  {new TextObject("{=agricultureestate_add_to_queue}Add to Queue")}  ";
         [DataSourceProperty]
         public string CurrentProjectString => this._village_land.CurrentProjectL18N.ToString();
         [DataSourceProperty]
@@ -270,7 +272,7 @@ namespace AgricultureEstate
         [DataSourceProperty]
         public string OwnedUndevelopedPlotsString => this.OwnedUndevelopedPlots.ToString();
 
-        public void Close() => AgricultureEstateBehavior.DeleteVMLayer();
+        public void Close() => EstateScreenController.DeleteVMLayer();
 
         public void ManageSlaves()
         {
@@ -283,8 +285,8 @@ namespace AgricultureEstate
                     this._village_land.Prisoners.AddToCounts(bandit, 1, false, 0, 0, true, -1);
                     bandit = this.getBandit(MobileParty.MainParty);
                 }
-                AgricultureEstateBehavior.DeleteVMLayer();
-                AgricultureEstateBehavior.CreateVMLayer(_village_land);
+                EstateScreenController.DeleteVMLayer();
+                EstateScreenController.CreateVMLayer(_village_land);
             }
             else
             {
@@ -393,8 +395,8 @@ namespace AgricultureEstate
                     itemRoster.AddToCounts(itemObject, amount);
                 }
                 this._village_land.Stockpile = new ItemRoster();
-                AgricultureEstateBehavior.DeleteVMLayer();
-                AgricultureEstateBehavior.CreateVMLayer(_village_land);
+                EstateScreenController.DeleteVMLayer();
+                EstateScreenController.CreateVMLayer(_village_land);
             }
             else
             {
@@ -402,94 +404,34 @@ namespace AgricultureEstate
             }
         }
 
-        public void Click1()
-        {
-            if (Hero.MainHero.Gold < this.PlotBuyPrice || this.AvaliblePlots <= 0)
-                return;
-            GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
-            //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, this.PlotBuyPrice, false);
-            
-            if (_village_land?.AvaliblePlots is not null)
-                --this._village_land.AvaliblePlots;
-            if (_village_land?.OwnedPlots is not null)
-                ++this._village_land.OwnedPlots;
-            AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer(_village_land);
-        }
+        public void Click1() => ExecuteCommand(EstateComposition.CreateManagement(_village_land).BuyPlot(false));
+        public void Click2() => ExecuteCommand(EstateComposition.CreateManagement(_village_land).SellPlot(false));
+        public void Click3() => ExecuteCommand(EstateComposition.CreateManagement(_village_land).BuyPlot(true));
+        public void Click4() => ExecuteCommand(EstateComposition.CreateManagement(_village_land).SellPlot(true));
 
-        public void Click2()
+        private void ExecuteCommand(EstateCommandResult result)
         {
-            if (this.OwnedPlots <= 0)
-                return;
-            if (this._village_land.Prisoners.TotalManCount > (this._village_land.OwnedPlots - 1) * 10)
+            string? message = result switch
             {
-                InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=agricultureestate_slave_capacity_exceed_when_land_sold}Selling land will cause slaves to exceede capacity. Remove slaves before selling").ToString()));
+                EstateCommandResult.NotEnoughGold => "{=agricultureestate_not_enough_gold}Not enough gold",
+                EstateCommandResult.PrisonerCapacityExceeded => "{=agricultureestate_slave_capacity_exceed_when_land_sold}Selling land will cause slaves to exceede capacity. Remove slaves before selling",
+                EstateCommandResult.LandReservedForClearance => "{=agricultureestate_tried_selling_clearing_land}All owned land is being cleared.\nCancel land clearance project before selling",
+                EstateCommandResult.NotEnoughUndevelopedPlots => "{=agricultureestate_not_enough_undev_plots}Not enough owned undeveloped plots",
+                EstateCommandResult.MaximumPatrolLevel => "{=agricultureestate_max_patrol_upgrade}Can only be upgraded a max of 8 times",
+                EstateCommandResult.QueueFull => "{=agricultureestate_project_queue_limit}Project queue limit {QUEUE_LIMIT}\nIncrease steward skill to increase project queue limit",
+                _ => null
+            };
+            if (message != null)
+            {
+                InformationManager.DisplayMessage(new InformationMessage(new TextObject(message)
+                    .SetTextVariable("QUEUE_LIMIT", EstateManagement.QueueLimit(Hero.MainHero.GetSkillValue(DefaultSkills.Steward))).ToString()));
             }
-            else
+            if (result == EstateCommandResult.Success)
             {
-                _village_land?.Village?.Settlement.Village.ChangeGold(this.PlotSellPrice);
-                GiveGoldAction.ApplyBetweenCharacters(null, Hero.MainHero, this.PlotBuyPrice, false);
-
-                //GiveGoldAction.ApplyForSettlementToCharacter(this._village_land?.Village?.Settlement, Hero.MainHero, this.PlotSellPrice, false);
-                
-                if(_village_land?.AvaliblePlots is not null)
-                    ++_village_land.AvaliblePlots;
-                if (_village_land?.OwnedPlots is not null)
-                    --_village_land.OwnedPlots;
-
-                AgricultureEstateBehavior.DeleteVMLayer();
-                AgricultureEstateBehavior.CreateVMLayer(_village_land);
+                EstateScreenController.DeleteVMLayer();
+                EstateScreenController.CreateVMLayer(_village_land);
             }
         }
-
-        public void Click3()
-        {
-            if (Hero.MainHero.Gold < this.UndevelopedPlotBuyPrice || this.AvalibleUndevelopedPlots <= 0)
-                return;
-            GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
-            //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, this.UndevelopedPlotBuyPrice, false);
-            if (_village_land?.AvalibleUndevelopedPlots is not null)
-                --this._village_land.AvalibleUndevelopedPlots;
-            if (_village_land?.OwnedUndevelopedPlots is not null)
-                ++this._village_land.OwnedUndevelopedPlots;
-
-            AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer(_village_land);
-        }
-
-        public void Click4()
-        {
-            if (this.OwnedUndevelopedPlots <= 0)
-                return;
-            int num = 0;
-            if (this._village_land.CurrentProject == "Land Clearance")
-                ++num;
-            foreach (string str in this._village_land.ProjectQueue.ToArray())
-            {
-                if (str == "Land Clearance")
-                    ++num;
-            }
-            if (num >= this.OwnedUndevelopedPlots)
-            {
-                InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=agricultureestate_tried_selling_clearing_land}All owned land is being cleared.\nCancel land clearance project before selling").ToString()));
-            }
-            else
-            {
-                this._village_land?.Village?.ChangeGold(UndevelopedPlotSellPrice);
-                GiveGoldAction.ApplyBetweenCharacters(null, Hero.MainHero, this.PlotBuyPrice, false);
-                
-                //GiveGoldAction.ApplyForSettlementToCharacter(_village_land?.Village?.Settlement, Hero.MainHero, this.UndevelopedPlotSellPrice, false);
-                
-                if (_village_land?.AvalibleUndevelopedPlots is not null)
-                    ++this._village_land.AvalibleUndevelopedPlots;
-                if (_village_land?.OwnedUndevelopedPlots is not null)
-                    --this._village_land.OwnedUndevelopedPlots;
-
-                AgricultureEstateBehavior.DeleteVMLayer();
-                AgricultureEstateBehavior.CreateVMLayer(_village_land);
-            }
-        }
-
         public void Click5()
         {
             if (Input.IsKeyDown(InputKey.LeftShift))
@@ -499,140 +441,24 @@ namespace AgricultureEstate
             }
             else
                 SellToMarket = !SellToMarket;
-            AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer(_village_land);
+            EstateScreenController.DeleteVMLayer();
+            EstateScreenController.CreateVMLayer(_village_land);
         }
 
-        public void Click6()
-        {
-            if (Hero.MainHero.Gold < (Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost)
-            {
-                InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=agricultureestate_not_enough_gold}Not enough gold").ToString()));
-            }
-            else
-            {
-                int num1 = 10 + Hero.MainHero.GetSkillValue(DefaultSkills.Steward) / 10;
-                if (this._village_land.ProjectQueue.Count >= num1)
-                {
+        public void Click6() => StartProject(EstateProjects.LandClearance);
+        public void Click7() => StartProject(EstateProjects.IncreasePatrols);
+        public void Click8() => StartProject(EstateProjects.ExpandStorehouse);
 
-                    InformationManager.DisplayMessage(new InformationMessage(
-                        Localization.SetTextVariables("{=agricultureestate_project_queue_limit}Project queue limit {QUEUE_LIMIT}\nIncrease steward skill to increase project queue limit",
-                        new KeyValuePair<string, string?>("QUEUE_LIMIT", num1.ToString())).ToString()));
-                }
-                else
-                {
-                    int num2 = 0;
-                    if (this._village_land.CurrentProject == "Land Clearance")
-                        ++num2;
-                    foreach (string str in this._village_land.ProjectQueue.ToArray())
-                    {
-                        if (str == "Land Clearance")
-                            ++num2;
-                    }
-                    if (num2 >= this._village_land.OwnedUndevelopedPlots)
-                    {
-                        InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=agricultureestate_not_enough_undev_plots}Not enough owned undeveloped plots").ToString()));
-                    }
-                    else
-                    {
-                        if (this._village_land.CurrentProject == "None")
-                            this._village_land.CurrentProject = "Land Clearance";
-                        else
-                            this._village_land.ProjectQueue.Enqueue("Land Clearance");
-                        
-                        GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
-                        //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, _village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
-                        AgricultureEstateBehavior.DeleteVMLayer();
-                        AgricultureEstateBehavior.CreateVMLayer(_village_land);
-                    }
-                }
-            }
-        }
-
-        public void Click7()
-        {
-            if (Hero.MainHero.Gold < (Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost)
-            {
-                InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=agricultureestate_not_enough_gold}Not enough gold").ToString()));
-            }
-            else
-            {
-                int num = 10 + Hero.MainHero.GetSkillValue(DefaultSkills.Steward) / 10;
-                if (this._village_land.ProjectQueue.Count >= num)
-                {
-                    InformationManager.DisplayMessage(new InformationMessage(
-                        Localization.SetTextVariables("{=agricultureestate_project_queue_limit}Project queue limit {QUEUE_LIMIT}\nIncrease steward skill to increase project queue limit",
-                        new KeyValuePair<string, string?>("QUEUE_LIMIT", num.ToString())).ToString()));
-                }
-                else
-                {
-                    int patrolLevel = this._village_land.PatrolLevel;
-                    if (this._village_land.CurrentProject == "Increase Patrols")
-                        ++patrolLevel;
-                    foreach (string str in this._village_land.ProjectQueue.ToArray())
-                    {
-                        if (str == "Increase Patrols")
-                            ++patrolLevel;
-                    }
-                    if (patrolLevel >= 8)
-                    {
-                        InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=agricultureestate_max_patrol_upgrade}Can only be upgraded a max of 8 times").ToString()));
-                    }
-                    else
-                    {
-                        if (this._village_land.CurrentProject == "None")
-                            this._village_land.CurrentProject = "Increase Patrols";
-                        else
-                            this._village_land.ProjectQueue.Enqueue("Increase Patrols");
-                        
-                        GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
-                        //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
-                        AgricultureEstateBehavior.DeleteVMLayer();
-                        AgricultureEstateBehavior.CreateVMLayer(_village_land);
-                    }
-                }
-            }
-        }
-
-        public void Click8()
-        {
-            if (Hero.MainHero.Gold < (Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost)
-            {
-                InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=agricultureestate_not_enough_gold}Not enough gold").ToString()));
-            }
-            else
-            {
-                int num = 10 + Hero.MainHero.GetSkillValue(DefaultSkills.Steward) / 10;
-                if (this._village_land.ProjectQueue.Count >= num)
-                {
-                    InformationManager.DisplayMessage(new InformationMessage(
-                        Localization.SetTextVariables("{=agricultureestate_project_queue_limit}Project queue limit {QUEUE_LIMIT}\nIncrease steward skill to increase project queue limit",
-                        new KeyValuePair<string, string?>("QUEUE_LIMIT", num.ToString())).ToString()));
-                }
-                else
-                {
-                    if (this._village_land.CurrentProject == "None")
-                        this._village_land.CurrentProject = "Expand Storehouse";
-                    else
-                        this._village_land.ProjectQueue.Enqueue("Expand Storehouse");
-                    
-                    GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, this.PlotBuyPrice, false);
-                    //GiveGoldAction.ApplyForCharacterToSettlement(Hero.MainHero, this._village_land?.Village?.Settlement, (int)((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85000002384185791 : 1.0) * ProjectCost), false);
-                    AgricultureEstateBehavior.DeleteVMLayer();
-                    AgricultureEstateBehavior.CreateVMLayer(_village_land);
-                }
-            }
-        }
+        private void StartProject(string project) => ExecuteCommand(
+            EstateComposition.CreateManagement(_village_land).StartProject(project,
+                Hero.MainHero.GetSkillValue(DefaultSkills.Steward),
+                Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors)));
 
         public void Click9()
         {
-            this._village_land.CurrentProject = "None";
-            if (!TaleWorlds.Core.Extensions.IsEmpty<string>(_village_land.ProjectQueue))
-                this._village_land.CurrentProject = this._village_land.ProjectQueue.Dequeue();
-            AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer(_village_land);
+            EstateComposition.CreateManagement(_village_land).CancelProject();
+            ExecuteCommand(EstateCommandResult.Success);
         }
-
         public void Click10()
         {
             if (this.BuySlaves)
@@ -652,14 +478,14 @@ namespace AgricultureEstate
             }
             else
                 this.BuySlaves = true;
-            AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.CreateVMLayer(_village_land);
+            EstateScreenController.DeleteVMLayer();
+            EstateScreenController.CreateVMLayer(_village_land);
         }
 
         public void Click11()
         {
             this.ExecuteEndHint();
-            AgricultureEstateBehavior.CreateVMLayer2();
+            EstateScreenController.CreateVMLayer2();
         }
 
         public override void RefreshValues() => base.RefreshValues();
@@ -711,12 +537,12 @@ namespace AgricultureEstate
                         str += new TextObject("{=agricultureestate_estimated_daily_output_entry}{NEWLINE}{MULTIPLIER} X {ITEM}",
                             new Dictionary<string, object>()
                             {
-                                { "MULTIPLIER", string.Format("{0:0.00}", (float)((double)num * 24.0 * SubModule.SlaveProductionScale * _village_land.Prisoners.TotalManCount * production.Item2 / 1000.0)) },
+                                { "MULTIPLIER", string.Format("{0:0.00}", (float)((double)num * 24.0 * EstateConfiguration.SlaveProductionScale * _village_land.Prisoners.TotalManCount * production.Item2 / 1000.0)) },
                                 { "ITEM",  production.Item1.Name }
                             }).ToString();
                     }
                 }
-                float num1 = (float)(_village_land.Village.TradeTaxAccumulated * (this._village_land.OwnedPlots == 0 ? 0.0 : (double)Math.Max(0.0f, (float)((10.0 * _village_land.OwnedPlots - _village_land.Prisoners.TotalManCount) / (10.0 * _village_land.OwnedPlots)))) / 100.0) * _village_land.OwnedPlots * SubModule.LandRentScale;
+                float num1 = (float)(_village_land.Village.TradeTaxAccumulated * (this._village_land.OwnedPlots == 0 ? 0.0 : (double)Math.Max(0.0f, (float)((10.0 * _village_land.OwnedPlots - _village_land.Prisoners.TotalManCount) / (10.0 * _village_land.OwnedPlots)))) / 100.0) * _village_land.OwnedPlots * EstateConfiguration.LandRentScale;
                 MBInformationManager.ShowHint(str + "\n" + new TextObject(
                     "{=agricultureestate_estimated_daily_output_rent}{MULTIPLIER}{GOLD_ICON} X Land Rent",
                     new Dictionary<string, object>() {
@@ -731,17 +557,17 @@ namespace AgricultureEstate
 
         public void ExecuteBeginHint12() => MBInformationManager.ShowHint(
             Localization.SetTextVariables("{=agricultureestate_hint_land_clearing}Land Clearance will convert 1 owned undeveloped plot into a normal plot\nCost: {LAND_CLEARING_COST}{GOLD_ICON}\nEach additional plot of land cleared provides a small increase to village growth rate\nTime: 240 hours",
-                new KeyValuePair<string, string?>("LAND_CLEARING_COST", ((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85f : 1f) * ProjectCost).ToString()),
+                new KeyValuePair<string, string?>("LAND_CLEARING_COST", (EstateEconomy.CalculateProjectCost(ProjectCost, Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors))).ToString()),
                 new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
 
         public void ExecuteBeginHint13() => MBInformationManager.ShowHint(
             Localization.SetTextVariables("{=agricultureestate_hint_patrol_upgrade}Increasing patrol decreases escape chance by 0.5% and revolt risk by 0.1% per level.  This Upgrade can be done a max of 8 times\nCost: {PATROL_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours",
-                new KeyValuePair<string, string?>("PATROL_UPGRADE_COST", ((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85f : 1f) * ProjectCost).ToString()),
+                new KeyValuePair<string, string?>("PATROL_UPGRADE_COST", (EstateEconomy.CalculateProjectCost(ProjectCost, Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors))).ToString()),
                 new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
 
         public void ExecuteBeginHint14() => MBInformationManager.ShowHint(
             Localization.SetTextVariables("{=agricultureestate_hint_storehouse_upgrade}Expanding Storehouse increases storage capacity by 500\nCost: {STOREHOUSE_UPGRADE_COST}{GOLD_ICON}\nTime: 240 hours",
-                new KeyValuePair<string, string?>("STOREHOUSE_UPGRADE_COST", ((Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors) ? 0.85f : 1f) * ProjectCost).ToString()),
+                new KeyValuePair<string, string?>("STOREHOUSE_UPGRADE_COST", (EstateEconomy.CalculateProjectCost(ProjectCost, Hero.MainHero.GetPerkValue(DefaultPerks.Steward.Contractors))).ToString()),
                 new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
 
         public void ExecuteBeginHint15() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_abort_upgrade}All progress will be lost and gold cost will not be refunded").ToString());

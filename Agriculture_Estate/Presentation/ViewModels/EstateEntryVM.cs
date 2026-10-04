@@ -1,4 +1,4 @@
-﻿using TaleWorlds.Core;
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
@@ -57,13 +57,13 @@ namespace AgricultureEstate
 
         public string CurrentProject => this._is_title ? new TextObject("{=agricultureestate_current_project}Current Project").ToString() : _village_land?.CurrentProjectL18N.ToString() ?? "";
 
-        public string CurrentProjectProgress => this._is_title ? new TextObject("{=agricultureestate_current_project_progress}Current Project Progress").ToString() : this._village_land?.ProjectProgress.ToString() + "/240";
+        public string CurrentProjectProgress => this._is_title ? new TextObject("{=agricultureestate_current_project_progress}Current Project Progress").ToString() : this._village_land?.ProjectProgress.ToString() + "/" + EstateConfiguration.ProjectDurationHours;
 
         public void Click()
         {
-            AgricultureEstateBehavior.DeleteVMLayer();
-            AgricultureEstateBehavior.DeleteVMLayer2();
-            AgricultureEstateBehavior.CreateVMLayer(this._village_land);
+            EstateScreenController.DeleteVMLayer();
+            EstateScreenController.DeleteVMLayer2();
+            EstateScreenController.CreateVMLayer(this._village_land);
             //Campaign.Current.EncyclopediaManager.GoToLink(_village_land?.Village?.Settlement.EncyclopediaLink);
         }
     }

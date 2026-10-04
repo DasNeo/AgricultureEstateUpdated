@@ -1,4 +1,4 @@
-﻿using AgricultureEstate.l18n;
+using AgricultureEstate.l18n;
 using HarmonyLib;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;

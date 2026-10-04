@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using SandBox.ViewModelCollection.Nameplate;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

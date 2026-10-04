@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Localization;
@@ -15,7 +15,7 @@ namespace AgricultureEstate
                 float slaveIncome = 0f;
                 foreach (KeyValuePair<Settlement, VillageLand> villageLand1 in AgricultureEstateBehavior.VillageLands)
                 {
-                    num1 += AgricultureEstateBehavior.CalculateGold(villageLand1.Value);
+                    num1 += EstateIncome.CalculateRent(villageLand1.Value);
                     slaveIncome += villageLand1.Value.LastDayIncome;
                 }
                 slaveIncome -= num1;

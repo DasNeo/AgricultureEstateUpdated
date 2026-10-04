@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
@@ -13,13 +13,13 @@ namespace AgricultureEstate
     public class SubModule : MBSubModuleBase
     {
         private static readonly List<Action> ActionsToExecuteNextTick = new List<Action>();
-        public static int PlotBuyPrice => Settings.Instance?.PlotBuyPrice ?? 800;
-        public static int PlotSellPrice => Settings.Instance?.PlotSellPrice ?? 200;
-        public static int UndevelopedPlotBuyPrice => Settings.Instance?.UndevelopedPlotBuyPrice ?? 400;
-        public static int UndevelopedPlotSellPrice => Settings.Instance?.UndevelopedPlotSellPrice ?? 100;
-        public static int ProjectCost => Settings.Instance?.ProjectCost ?? 20000;
-        public static float LandRentScale => Settings.Instance?.LandRentScale ?? 1;
-        public static float SlaveProductionScale => Settings.Instance?.SlaveProductionScale ?? 1;
+        public static int PlotBuyPrice => EstateConfiguration.PlotBuyPrice;
+        public static int PlotSellPrice => EstateConfiguration.PlotSellPrice;
+        public static int UndevelopedPlotBuyPrice => EstateConfiguration.UndevelopedPlotBuyPrice;
+        public static int UndevelopedPlotSellPrice => EstateConfiguration.UndevelopedPlotSellPrice;
+        public static int ProjectCost => EstateConfiguration.ProjectCost;
+        public static float LandRentScale => EstateConfiguration.LandRentScale;
+        public static float SlaveProductionScale => EstateConfiguration.SlaveProductionScale;
         private Harmony harmony = new Harmony("AgricultureEstate");
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot() => base.OnBeforeInitialModuleScreenSetAsRoot();

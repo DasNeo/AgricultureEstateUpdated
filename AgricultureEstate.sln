@@ -1,9 +1,15 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgricultureEstate", "Agriculture_Estate\AgricultureEstate.csproj", "{10230EC6-642F-441C-B3DF-68A7F1D55D38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgricultureEstate.Domain", "AgricultureEstate.Domain\AgricultureEstate.Domain.csproj", "{5989114B-9DA5-4C30-9D8A-5138E73FDCD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgricultureEstate.Application", "AgricultureEstate.Application\AgricultureEstate.Application.csproj", "{1465D44D-294E-4018-BD5E-CB3A113ED8E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgricultureEstate.Tests", "AgricultureEstate.Tests\AgricultureEstate.Tests.csproj", "{213F1BAB-23B5-4B8E-B2DF-786213D58FAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{10230EC6-642F-441C-B3DF-68A7F1D55D38}.Debug|x64.Build.0 = Debug|x64
 		{10230EC6-642F-441C-B3DF-68A7F1D55D38}.Release|x64.ActiveCfg = Release|x64
 		{10230EC6-642F-441C-B3DF-68A7F1D55D38}.Release|x64.Build.0 = Release|x64
+		{5989114B-9DA5-4C30-9D8A-5138E73FDCD3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5989114B-9DA5-4C30-9D8A-5138E73FDCD3}.Debug|x64.Build.0 = Debug|Any CPU
+		{5989114B-9DA5-4C30-9D8A-5138E73FDCD3}.Release|x64.ActiveCfg = Release|Any CPU
+		{5989114B-9DA5-4C30-9D8A-5138E73FDCD3}.Release|x64.Build.0 = Release|Any CPU
+		{1465D44D-294E-4018-BD5E-CB3A113ED8E7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1465D44D-294E-4018-BD5E-CB3A113ED8E7}.Debug|x64.Build.0 = Debug|Any CPU
+		{1465D44D-294E-4018-BD5E-CB3A113ED8E7}.Release|x64.ActiveCfg = Release|Any CPU
+		{1465D44D-294E-4018-BD5E-CB3A113ED8E7}.Release|x64.Build.0 = Release|Any CPU
+		{213F1BAB-23B5-4B8E-B2DF-786213D58FAC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{213F1BAB-23B5-4B8E-B2DF-786213D58FAC}.Debug|x64.Build.0 = Debug|Any CPU
+		{213F1BAB-23B5-4B8E-B2DF-786213D58FAC}.Release|x64.ActiveCfg = Release|Any CPU
+		{213F1BAB-23B5-4B8E-B2DF-786213D58FAC}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
