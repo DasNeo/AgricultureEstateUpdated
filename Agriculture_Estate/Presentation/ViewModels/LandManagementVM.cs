@@ -345,7 +345,7 @@ namespace AgricultureEstate
         {
             foreach (TroopRosterElement troopRosterElement in party.PrisonRoster.GetTroopRoster())
             {
-                if ((troopRosterElement.Character.Occupation == Occupation.Bandit || Hero.MainHero.GetPerkValue(DefaultPerks.Steward.ForcedLabor)) && !(troopRosterElement.Character).IsHero)
+                if ((EstateConfiguration.AllowAllPrisonersAsSlaves || troopRosterElement.Character.Occupation == Occupation.Bandit || Hero.MainHero.GetPerkValue(DefaultPerks.Steward.ForcedLabor)) && !(troopRosterElement.Character).IsHero)
                     return troopRosterElement.Character;
             }
             return null;
@@ -357,7 +357,7 @@ namespace AgricultureEstate
           PartyScreenLogic.PartyRosterSide side,
           PartyBase LeftOwnerParty)
         {
-            return !character.IsHero && type != PartyScreenLogic.TroopType.Member && type == PartyScreenLogic.TroopType.Prisoner && (character.Occupation == Occupation.Bandit || Hero.MainHero.GetPerkValue(DefaultPerks.Steward.ForcedLabor));
+            return !character.IsHero && type != PartyScreenLogic.TroopType.Member && type == PartyScreenLogic.TroopType.Prisoner && (EstateConfiguration.AllowAllPrisonersAsSlaves || character.Occupation == Occupation.Bandit || Hero.MainHero.GetPerkValue(DefaultPerks.Steward.ForcedLabor));
         }
 
         private bool ManageDone(
@@ -514,7 +514,10 @@ namespace AgricultureEstate
                 new KeyValuePair<string, string?>("PLOT_UNDEV_SELL_PRICE", UndevelopedPlotSellPrice.ToString()),
                 new KeyValuePair<string, string?>("GOLD_ICON", null)).ToString());
 
-        public void ExecuteBeginHint7() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_prisoner_as_slaves}Bandits prisoners can be used as labor.\nCapacity for slaves determined by number of owned plots\nShift click to quick deposit").ToString());
+        public void ExecuteBeginHint7() => MBInformationManager.ShowHint(new TextObject(
+            EstateConfiguration.AllowAllPrisonersAsSlaves || Hero.MainHero.GetPerkValue(DefaultPerks.Steward.ForcedLabor)
+                ? "{=agricultureestate_hint_all_prisoners_as_slaves}All non-hero prisoners can be used as labor.\nCapacity for slaves determined by number of owned plots\nShift click to quick deposit"
+                : "{=agricultureestate_hint_prisoner_as_slaves}Bandits prisoners can be used as labor.\nCapacity for slaves determined by number of owned plots\nShift click to quick deposit").ToString());
 
         public void ExecuteBeginHint8() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_slave_decline}Slave decline is daily chance for each slaves to escape.\nRevolt risk is daily chance for slaves to violently rebel in mass.\nRevolt risk is increase if slaves outnumber the village militia\nBuilding upgrades can improve these number.\nLand not used by slave labor will generate a small amount of land rent every day").ToString());
 
@@ -590,7 +593,10 @@ namespace AgricultureEstate
             MBInformationManager.ShowHint(str);
         }
 
-        public void ExecuteBeginHint17() => MBInformationManager.ShowHint(new TextObject("{=agricultureestate_hint_auto_buy_prisoners}Automatically buy bandits prisoners from any party that visits this village\nClick to turn {STATUS}")
+        public void ExecuteBeginHint17() => MBInformationManager.ShowHint(new TextObject(
+            EstateConfiguration.AllowAllPrisonersAsSlaves
+                ? "{=agricultureestate_hint_auto_buy_all_prisoners}Automatically buy non-hero prisoners from any party that visits this village\nClick to turn {STATUS}"
+                : "{=agricultureestate_hint_auto_buy_prisoners}Automatically buy bandits prisoners from any party that visits this village\nClick to turn {STATUS}")
           .SetTextVariable("STATUS", (this.BuySlaves ? new TextObject("{=agricultureestate_off}Off").ToString() : new TextObject("{=agricultureestate_on}On").ToString())).ToString()
           + new TextObject("{=agricultureestate_shift_click_hint}{NEWLINE}Shift click will set all estates").ToString());
 

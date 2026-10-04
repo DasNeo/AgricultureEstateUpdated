@@ -119,6 +119,14 @@
     <string id="agricultureestate_mcm_scale_production" text="Scaling of slave production" />
     <string id="agricultureestate_mcm_slave_decline" text="Slave decline rate modifier" />
     <string id="agricultureestate_mcm_slave_decline_hint" text="Setting the modifier to 0 disables slave decline." />
+    <string id="agricultureestate_mcm_all_prisoners" text="Allow all prisoners as slaves" />
+    <string id="agricultureestate_mcm_available_plots" text="Available developed plots per village" />
+    <string id="agricultureestate_mcm_available_plots_hint" text="Number of developed plots per village. Changes also adjust plots available in existing estates without removing owned land." />
+    <string id="agricultureestate_mcm_available_undeveloped_plots" text="Available undeveloped plots per village" />
+    <string id="agricultureestate_mcm_available_undeveloped_plots_hint" text="Number of undeveloped plots per village. Changes also adjust plots available in existing estates without removing owned land." />
+    <string id="agricultureestate_mcm_all_prisoners_hint" text="Allow non-bandit prisoners as slave labor without the Forced Labor perk. Applies to transfers and automatic purchases. Heroes remain excluded." />
+    <string id="agricultureestate_hint_all_prisoners_as_slaves" text="All non-hero prisoners can be used as labor.\nCapacity for slaves determined by number of owned plots\nShift click to quick deposit" />
+    <string id="agricultureestate_hint_auto_buy_all_prisoners" text="Automatically buy non-hero prisoners from any party that visits this village\nClick to turn {STATUS}" />
 
     <string id="agricultureestate_ui_income_unused_land" text="Rent from unused owned land" />
     <string id="agricultureestate_ui_income_slave_production" text="Sales from slave production" />

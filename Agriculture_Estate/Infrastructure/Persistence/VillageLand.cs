@@ -27,12 +27,22 @@ namespace AgricultureEstate
         private bool _buy_slaves;
         private int _last_day_income;
 
+        [SaveableField(17)]
+        private int _applied_plot_setting;
+        [SaveableField(18)]
+        private int _applied_undeveloped_plot_setting;
+        [SaveableField(19)]
+        private bool _plot_settings_initialized;
+
         public VillageLand(Village village)
         {
             this._village = village;
             this._storage_capacity = 500;
-            this._avalible_plots = 10;
-            this._avalible_undeveloped_plots = 20;
+            this._avalible_plots = EstateConfiguration.InitialAvailablePlots;
+            this._avalible_undeveloped_plots = EstateConfiguration.InitialAvailableUndevelopedPlots;
+            this._applied_plot_setting = EstateConfiguration.InitialAvailablePlots;
+            this._applied_undeveloped_plot_setting = EstateConfiguration.InitialAvailableUndevelopedPlots;
+            this._plot_settings_initialized = true;
             this._owned_plots = 0;
             this._owned_undeveloped_plots = 0;
             this._prisoners = TroopRoster.CreateDummyTroopRoster();
@@ -48,7 +58,11 @@ namespace AgricultureEstate
         [SaveableProperty(1)]
         public int AvaliblePlots
         {
-            get => this._avalible_plots;
+            get
+            {
+                ApplyPlotAvailabilitySettings();
+                return this._avalible_plots;
+            }
             set => this._avalible_plots = value;
         }
 
@@ -62,7 +76,11 @@ namespace AgricultureEstate
         [SaveableProperty(3)]
         public int AvalibleUndevelopedPlots
         {
-            get => this._avalible_undeveloped_plots;
+            get
+            {
+                ApplyPlotAvailabilitySettings();
+                return this._avalible_undeveloped_plots;
+            }
             set => this._avalible_undeveloped_plots = value;
         }
 
@@ -155,6 +173,26 @@ namespace AgricultureEstate
         {
             get => this._last_day_income;
             set => this._last_day_income = value;
+        }
+
+        private void ApplyPlotAvailabilitySettings()
+        {
+            // Saves predating these settings used 10 developed and 20 undeveloped plots.
+            if (!_plot_settings_initialized)
+            {
+                _applied_plot_setting = 10;
+                _applied_undeveloped_plot_setting = 20;
+                _plot_settings_initialized = true;
+            }
+
+            int plots = EstateConfiguration.InitialAvailablePlots;
+            int undevelopedPlots = EstateConfiguration.InitialAvailableUndevelopedPlots;
+            _avalible_plots = AgricultureEstate.Domain.EstatePlotAvailability.Adjust(
+                _avalible_plots, _applied_plot_setting, plots);
+            _avalible_undeveloped_plots = AgricultureEstate.Domain.EstatePlotAvailability.Adjust(
+                _avalible_undeveloped_plots, _applied_undeveloped_plot_setting, undevelopedPlots);
+            _applied_plot_setting = plots;
+            _applied_undeveloped_plot_setting = undevelopedPlots;
         }
 
         public float SlaveDeclineRate() => AgricultureEstate.Domain.EstateEconomy.CalculateDecline(

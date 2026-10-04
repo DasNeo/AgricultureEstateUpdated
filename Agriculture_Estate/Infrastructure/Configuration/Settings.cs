@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Base.Global;
 
@@ -27,6 +27,14 @@ namespace AgricultureEstate
         public float SlaveDeclineModifier { get; set; } = 1f;
         [SettingPropertyBool("{=agricultureestate_war_plots_destroy}Whether or not your bought plots should be destroyed when entering war with the owning faction)", RequireRestart = false, Order = 9)]
         public bool DestroyPlotsOnWar { get; set; } = true;
+
+        [SettingPropertyBool("{=agricultureestate_mcm_all_prisoners}Allow all prisoners as slaves", RequireRestart = false, Order = 10, HintText = "{=agricultureestate_mcm_all_prisoners_hint}Allow non-bandit prisoners as slave labor without the Forced Labor perk. Applies to transfers and automatic purchases. Heroes remain excluded.")]
+        public bool AllowAllPrisonersAsSlaves { get; set; } = false;
+
+        [SettingPropertyInteger("{=agricultureestate_mcm_available_plots}Available developed plots per village", 0, 1000, RequireRestart = false, Order = 11, HintText = "{=agricultureestate_mcm_available_plots_hint}Number of developed plots per village. Changes also adjust plots available in existing estates without removing owned land.")]
+        public int InitialAvailablePlots { get; set; } = 10;
+        [SettingPropertyInteger("{=agricultureestate_mcm_available_undeveloped_plots}Available undeveloped plots per village", 0, 1000, RequireRestart = false, Order = 12, HintText = "{=agricultureestate_mcm_available_undeveloped_plots_hint}Number of undeveloped plots per village. Changes also adjust plots available in existing estates without removing owned land.")]
+        public int InitialAvailableUndevelopedPlots { get; set; } = 20;
 
         public override string Id => "AgricultureEstate";
 

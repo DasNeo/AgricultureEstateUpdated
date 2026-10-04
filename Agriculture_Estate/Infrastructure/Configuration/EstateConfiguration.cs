@@ -10,5 +10,8 @@ namespace AgricultureEstate
         public static int ProjectDurationHours => (Settings.Instance?.ProjectTime ?? 10) * 24;
         public static float LandRentScale => Settings.Instance?.LandRentScale ?? 1;
         public static float SlaveProductionScale => Settings.Instance?.SlaveProductionScale ?? 1;
+        public static bool AllowAllPrisonersAsSlaves => Settings.Instance?.AllowAllPrisonersAsSlaves ?? false;
+        public static int InitialAvailablePlots => Settings.Instance?.InitialAvailablePlots ?? 10;
+        public static int InitialAvailableUndevelopedPlots => Settings.Instance?.InitialAvailableUndevelopedPlots ?? 20;
     }
 }

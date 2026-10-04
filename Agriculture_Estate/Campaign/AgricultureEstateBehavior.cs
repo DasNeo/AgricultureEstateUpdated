@@ -95,7 +95,7 @@ namespace AgricultureEstate
                 return null;
             foreach (TroopRosterElement troopRosterElement in party.PrisonRoster.GetTroopRoster())
             {
-                if (troopRosterElement.Character.Occupation == Occupation.Bandit && !troopRosterElement.Character.IsHero)
+                if ((EstateConfiguration.AllowAllPrisonersAsSlaves || troopRosterElement.Character.Occupation == Occupation.Bandit) && !troopRosterElement.Character.IsHero)
                     return troopRosterElement.Character;
             }
             return null;
