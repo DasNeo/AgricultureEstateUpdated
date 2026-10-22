@@ -24,6 +24,7 @@ jobs:
     outputs:
       commit: ${{ steps.pr.outputs.commit }}
       url: ${{ steps.pr.outputs.url }}
+      number: ${{ steps.pr.outputs.number }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -74,7 +75,7 @@ jobs:
 
           Pin Bannerlord reference assemblies to $BANNERLORD_VERSION.
 
-          Prepare version → build and test → review/fix this PR → merge → build and publish release.
+          Prepare version → build and test → publish/update PR prerelease → review/fix this PR → merge → publish release.
 
           ## Evidence
 
@@ -82,6 +83,7 @@ jobs:
             **After:** BannerlordVersion.props pins the resolved NuGet version. No gameplay code is changed.
           - The initial build and test results will appear as the **Bannerlord initial compatibility** commit status: [workflow run]($run_url).
           - If compilation fails, fix the API changes in this PR. No automatic source repairs are performed.
+          - Successful builds publish one rolling test prerelease for this PR. Failed builds leave the previous successful preview in place.
 
           ## Merge Danger
 
@@ -93,11 +95,13 @@ jobs:
           EOF
           url=$(gh pr create --base "$BASE_BRANCH" --head "$branch" \
             --title "Support Bannerlord $BANNERLORD_VERSION" --body-file artifacts/pr-body.md)
+          number=$(gh pr view "$url" --json number --jq .number)
           gh api --method POST "repos/$GH_REPO/statuses/$commit" \
             -f state=pending -f context='Bannerlord initial compatibility' \
             -f description='Building and testing the version update' -f target_url="$run_url"
           echo "commit=$commit" >> "$GITHUB_OUTPUT"
           echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "number=$number" >> "$GITHUB_OUTPUT"
           echo "Pull request: $url" >> "$GITHUB_STEP_SUMMARY"
 
   validate:
@@ -120,7 +124,16 @@ jobs:
         shell: pwsh
         env:
           BANNERLORD_VERSION: ${{ steps.target.outputs.package }}
-        run: ./scripts/Build-Release.ps1 -BannerlordVersion $env:BANNERLORD_VERSION
+          PR_NUMBER: ${{ needs.create-pr.outputs.number }}
+        run: ./scripts/Build-Release.ps1 -BannerlordVersion $env:BANNERLORD_VERSION -Package -PullRequestNumber $env:PR_NUMBER
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pr-preview
+          path: |
+            artifacts/preview.json
+            artifacts/AgricultureEstate-pr-*-preview.zip
+            artifacts/AgricultureEstate-pr-*-preview.zip.sha256
+          if-no-files-found: error
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

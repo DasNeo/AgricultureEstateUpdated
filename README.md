@@ -14,7 +14,15 @@ The workflow creates a branch and PR that pins the exact NuGet reference version
 
 **Check Bannerlord compatibility** checks subsequent PR updates using the pinned references. Depending on GitHub's policy, a bot-created PR's automatic checks may require approval; the manual preparation workflow performs its own initial validation regardless.
 
-Merging the generated version PR into the default branch triggers **Release merged Bannerlord update**. It checks that the PR changed `BannerlordVersion.props`, checks out the exact merge commit, builds and tests again, then publishes a GitHub release. Closing without merging does not publish. Ordinary PRs, direct pushes, and merges to other branches do not publish through this workflow. Keep the generated `codex/bannerlord-...` branch name until merging. Merge using your GitHub account; merges performed with a workflow's `GITHUB_TOKEN` do not trigger the closed-PR release event.
+Successful builds also create or update **one GitHub prerelease per open version PR**, tagged `pr-<number>-preview`. Download its ZIP from Releases to test before merging. The tag, ZIP, checksum, and notes are updated for each successful build; notes identify the exact PR commit and source workflow. Failed builds leave the previous successful preview available, so check its commit before testing. Previews never become the latest release.
+
+The build jobs have read-only repository access. A separate **Manage Bannerlord PR prerelease** workflow, running trusted publisher code from the default branch, validates the source run, PR, pinned version, archive paths, and checksum before publishing. It skips builds for outdated PR commits. Publication and cleanup are serialized per PR.
+
+After installing these changes, existing PRs can stay open. Run **Actions → Check Bannerlord compatibility → Run workflow**, select the default branch and enter the existing PR number (for example `18`). This builds the PR's current source using the default branch's packaging helpers, so recreating the PR or updating its branch is not required just to get a preview.
+
+Closing a version PR removes its temporary prerelease and tag. Merging also removes the preview; the separate merged-release workflow still rebuilds and publishes the reviewed merge commit. Release immutability must remain disabled for rolling previews. If a preview has been made immutable, cleanup/update stops instead of modifying it.
+
+Merging the generated version PR into the default branch triggers **Release merged Bannerlord update**. It checks that the PR changed `BannerlordVersion.props`, checks out the exact merge commit, builds and tests again, then publishes a GitHub release (still marked as a prerelease when targeting a beta game package). Closing without merging does not publish a merged release. Ordinary PRs, direct pushes, and merges to other branches do not publish through this workflow. Keep the generated `codex/bannerlord-...` branch name until merging. Merge using your GitHub account; merges performed with a workflow's `GITHUB_TOKEN` do not trigger the closed-PR release event.
 
 Accepted inputs:
 
@@ -30,7 +38,7 @@ Successful merged builds publish a ZIP and SHA-256 checksum. The tag points dire
 
 The ZIP installs as `Modules/AgricultureEstate/` and contains all module assets plus the mod's three DLLs and debug symbols. Install Harmony and MCM v5 separately. Game assemblies, reference assemblies, and third-party mod DLLs are not bundled.
 
-Failing builds/tests and infrastructure failures stop publication. Compilation and the existing domain/application tests do not establish in-game, Harmony patch, or save compatibility. Release notes state this limitation. GitHub actions are pinned to commit SHAs, build jobs have read-only repository permissions, and only the publishing job receives repository write permission for releases.
+Failing builds/tests and infrastructure failures stop publication. Compilation and the existing domain/application tests do not establish in-game, Harmony patch, or save compatibility. Release notes state this limitation. GitHub actions are pinned to commit SHAs, build jobs have read-only repository permissions, and only the publishing/cleanup jobs receive repository write permission for releases.
 
 ## Build locally
 

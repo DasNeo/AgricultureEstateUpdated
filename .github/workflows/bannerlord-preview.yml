@@ -1,0 +1,100 @@
+name: Manage Bannerlord PR prerelease
+
+on:
+  workflow_run:
+    workflows: [Prepare Bannerlord update PR, Check Bannerlord compatibility]
+    types: [completed]
+  pull_request_target:
+    types: [closed]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+
+jobs:
+  identify:
+    if: >-
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_repository.full_name == github.repository) ||
+      (github.event_name == 'pull_request_target' &&
+       github.event.pull_request.head.repo.full_name == github.repository &&
+       github.event.pull_request.base.ref == github.event.repository.default_branch &&
+       startsWith(github.event.pull_request.head.ref, 'codex/bannerlord-'))
+    runs-on: ubuntu-latest
+    outputs:
+      number: ${{ steps.closed.outputs.number || steps.metadata.outputs.number }}
+    steps:
+      - name: Identify closed PR
+        id: closed
+        if: github.event_name == 'pull_request_target'
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: echo "number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+      - name: Look for a successful preview artifact
+        id: artifact
+        if: github.event_name == 'workflow_run'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          id=$(gh api --paginate "repos/$GH_REPO/actions/runs/$RUN_ID/artifacts" \
+            --jq '.artifacts[] | select(.name == "pr-preview" and .expired == false) | .id')
+          if [ -n "$id" ]; then echo 'exists=true' >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: steps.artifact.outputs.exists == 'true'
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: pr-preview
+          path: preview
+      - name: Read PR number without executing artifact contents
+        id: metadata
+        if: steps.artifact.outputs.exists == 'true'
+        shell: pwsh
+        run: |
+          $metadata = Get-Content preview/preview.json -Raw | ConvertFrom-Json
+          $number = 0
+          if (-not [int]::TryParse([string]$metadata.pull_request, [ref]$number) -or $number -lt 1) { throw 'Invalid preview PR number.' }
+          "number=$number" >> $env:GITHUB_OUTPUT
+
+  manage:
+    needs: identify
+    if: needs.identify.outputs.number != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+    concurrency:
+      group: bannerlord-preview-pr-${{ needs.identify.outputs.number }}
+      cancel-in-progress: false
+    steps:
+      # Privileged jobs use publisher code from the default branch, never PR code.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: github.event_name == 'workflow_run'
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: pr-preview
+          path: preview
+      - name: Publish, update, or remove the PR prerelease
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ needs.identify.outputs.number }}
+          SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if ($env:EVENT_NAME -eq 'pull_request_target') {
+            ./scripts/Manage-Prerelease.ps1 -PullRequestNumber $env:PR_NUMBER -Cleanup
+          } else {
+            ./scripts/Manage-Prerelease.ps1 -PullRequestNumber $env:PR_NUMBER -RunId $env:SOURCE_RUN_ID -ArtifactDirectory preview
+          }

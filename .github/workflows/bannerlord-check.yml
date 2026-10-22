@@ -3,18 +3,66 @@ name: Check Bannerlord compatibility
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Existing version-update PR to rebuild and preview (e.g. 18)'
+        required: true
+        type: string
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    outputs:
+      commit: ${{ steps.pr.outputs.commit }}
+      number: ${{ steps.pr.outputs.number }}
+      preview: ${{ steps.pr.outputs.preview }}
+    steps:
+      - name: Resolve PR source
+        id: pr
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_HEAD: ${{ github.event.pull_request.head.sha }}
+          RUN_BRANCH: ${{ github.ref_name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          $number = 0
+          if (-not [int]::TryParse($env:PR_NUMBER, [ref]$number) -or $number -lt 1) { throw 'Enter a valid PR number.' }
+          $json = & gh api "repos/$env:GH_REPO/pulls/$number"
+          if ($LASTEXITCODE -ne 0) { throw 'Could not read PR.' }
+          $pr = $json | ConvertFrom-Json
+          $preview = $pr.state -eq 'open' -and $pr.base.ref -eq $env:DEFAULT_BRANCH -and
+            $pr.head.repo.full_name -eq $env:GH_REPO -and $pr.head.ref.StartsWith('codex/bannerlord-')
+          if ($env:EVENT_NAME -eq 'workflow_dispatch' -and ($env:RUN_BRANCH -ne $env:DEFAULT_BRANCH -or -not $preview)) {
+            throw 'Manual previews require the default branch and an open version PR from this repository.'
+          }
+          $commit = if ($env:EVENT_NAME -eq 'pull_request') { $env:EVENT_HEAD } else { $pr.head.sha }
+          "commit=$commit" >> $env:GITHUB_OUTPUT
+          "number=$number" >> $env:GITHUB_OUTPUT
+          "preview=$($preview.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+
   compatibility:
     name: Bannerlord compatibility
+    needs: resolve
     runs-on: windows-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          ref: ${{ needs.resolve.outputs.commit }}
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: _automation
           persist-credentials: false
       - name: Check for a pinned Bannerlord version
         id: pinned
@@ -29,13 +77,29 @@ jobs:
         id: target
         if: steps.pinned.outputs.exists == 'true'
         shell: pwsh
-        run: ./scripts/Read-ReleaseTarget.ps1
+        run: ./_automation/scripts/Read-ReleaseTarget.ps1
       - name: Build and test
         if: steps.pinned.outputs.exists == 'true'
         shell: pwsh
         env:
           BANNERLORD_VERSION: ${{ steps.target.outputs.package }}
-        run: ./scripts/Build-Release.ps1 -BannerlordVersion $env:BANNERLORD_VERSION
+          PR_NUMBER: ${{ needs.resolve.outputs.number }}
+          PREVIEW: ${{ needs.resolve.outputs.preview }}
+        run: |
+          if ($env:PREVIEW -eq 'true') {
+            ./_automation/scripts/Build-Release.ps1 -BuildRoot $env:GITHUB_WORKSPACE -BannerlordVersion $env:BANNERLORD_VERSION -Package -PullRequestNumber $env:PR_NUMBER
+          } else {
+            ./_automation/scripts/Build-Release.ps1 -BuildRoot $env:GITHUB_WORKSPACE -BannerlordVersion $env:BANNERLORD_VERSION
+          }
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: success() && steps.pinned.outputs.exists == 'true' && needs.resolve.outputs.preview == 'true'
+        with:
+          name: pr-preview
+          path: |
+            artifacts/preview.json
+            artifacts/AgricultureEstate-pr-*-preview.zip
+            artifacts/AgricultureEstate-pr-*-preview.zip.sha256
+          if-no-files-found: error
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always() && steps.pinned.outputs.exists == 'true'
         with:

@@ -1,7 +1,12 @@
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$BannerlordVersion, [switch]$Package)
+param(
+    [Parameter(Mandatory)][string]$BannerlordVersion,
+    [switch]$Package,
+    [ValidateRange(0, 2147483647)][int]$PullRequestNumber = 0,
+    [string]$BuildRoot = (Split-Path $PSScriptRoot)
+)
 $ErrorActionPreference = 'Stop'
-$root = Split-Path $PSScriptRoot
+$root = (Resolve-Path -LiteralPath $BuildRoot).Path
 Push-Location $root
 try {
     New-Item -ItemType Directory -Force artifacts | Out-Null
@@ -12,7 +17,7 @@ try {
         Tee-Object artifacts/tests.log | Out-Host
     if ($LASTEXITCODE -ne 0) { throw 'Tests failed; see artifacts/tests.log.' }
     if (-not $Package) { return }
-    # Release jobs build the reviewed merge commit in a fresh checkout.
+    # Release and preview jobs build the exact source commit in a fresh checkout.
     $staging = Join-Path $root 'artifacts/package'
     if (Test-Path $staging) { throw 'Packaging requires a fresh artifacts/package directory.' }
     $module = Join-Path $staging 'Modules/AgricultureEstate'
@@ -34,7 +39,7 @@ try {
     if ($target.package -ne $BannerlordVersion) { throw 'Resolved target does not match build target.' }
     $run = if ($env:GITHUB_RUN_NUMBER) { $env:GITHUB_RUN_NUMBER } else { '0' }
     $attempt = if ($env:GITHUB_RUN_ATTEMPT) { $env:GITHUB_RUN_ATTEMPT } else { '1' }
-    $tag = "bannerlord-$BannerlordVersion-run-$run-$attempt"
+    $tag = if ($PullRequestNumber) { "pr-$PullRequestNumber-preview" } else { "bannerlord-$BannerlordVersion-run-$run-$attempt" }
     $name = "AgricultureEstate-$tag.zip"
     Copy-Item artifacts/target.json (Join-Path $module 'build-target.json')
     Compress-Archive -Path "$staging/Modules" -DestinationPath "artifacts/$name"
@@ -42,13 +47,22 @@ try {
     "$hash  $name" | Set-Content -Encoding utf8 "artifacts/$name.sha256"
     $sourceCommit = & git rev-parse HEAD
     if ($LASTEXITCODE -ne 0) { throw 'Could not determine release source commit.' }
+    $reviewStatus = 'Source changes were reviewed and merged through a version-update pull request.'
+    if ($PullRequestNumber) {
+        $reviewStatus = "Unmerged test build for PR #$PullRequestNumber. This preview is replaced after successful PR builds."
+        [ordered]@{
+            pull_request = $PullRequestNumber
+            source_commit = $sourceCommit
+            package = $BannerlordVersion
+        } | ConvertTo-Json | Set-Content -Encoding utf8 artifacts/preview.json
+    }
     @"
 AgricultureEstate for Bannerlord $($target.game)
 
 Reference package: $BannerlordVersion
 Source commit: $sourceCommit
 Validation: Release build and automated domain/application tests passed.
-Source changes were reviewed and merged through a version-update pull request.
+$reviewStatus
 Gameplay and save compatibility have not been tested by this workflow.
 
 Installation: extract the ZIP into your Bannerlord game folder so Modules/AgricultureEstate exists.
