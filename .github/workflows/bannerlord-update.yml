@@ -1,0 +1,149 @@
+name: Prepare Bannerlord update PR
+run-name: Prepare Bannerlord ${{ inputs.bannerlord_version }} update
+
+on:
+  workflow_dispatch:
+    inputs:
+      bannerlord_version:
+        description: 'Bannerlord version, e.g. 1.4.8, 1.4.8.119303, or 1.5.4-beta'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  create-pr:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+      statuses: write
+    outputs:
+      commit: ${{ steps.pr.outputs.commit }}
+      url: ${{ steps.pr.outputs.url }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Resolve requested version
+        id: target
+        shell: pwsh
+        env:
+          REQUESTED_VERSION: ${{ inputs.bannerlord_version }}
+        run: ./scripts/Resolve-BannerlordVersion.ps1 -Version $env:REQUESTED_VERSION
+      - name: Pin the requested game references
+        shell: pwsh
+        env:
+          BANNERLORD_VERSION: ${{ steps.target.outputs.package }}
+        run: |
+          $template = @'
+          <Project>
+            <PropertyGroup>
+              <BannerlordVersion Condition="'$(BannerlordVersion)' == ''">__VERSION__</BannerlordVersion>
+            </PropertyGroup>
+          </Project>
+          '@
+          $template.Replace('__VERSION__', $env:BANNERLORD_VERSION) | Set-Content -Encoding utf8 BannerlordVersion.props
+      - name: Open version-update PR
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+          BANNERLORD_VERSION: ${{ steps.target.outputs.package }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add BannerlordVersion.props
+          if git diff --cached --quiet; then
+            echo '::error::This reference version is already pinned on the default branch.'
+            exit 1
+          fi
+          branch="codex/bannerlord-$BANNERLORD_VERSION-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          git switch -c "$branch"
+          git commit -m "Target Bannerlord $BANNERLORD_VERSION"
+          commit=$(git rev-parse HEAD)
+          gh auth setup-git
+          git push origin "HEAD:refs/heads/$branch"
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          cat > artifacts/pr-body.md <<EOF
+          ## Summary
+
+          Pin Bannerlord reference assemblies to $BANNERLORD_VERSION.
+
+          Prepare version → build and test → review/fix this PR → merge → build and publish release.
+
+          ## Evidence
+
+          - **Before:** the default branch's existing reference selection.
+            **After:** BannerlordVersion.props pins the resolved NuGet version. No gameplay code is changed.
+          - The initial build and test results will appear as the **Bannerlord initial compatibility** commit status: [workflow run]($run_url).
+          - If compilation fails, fix the API changes in this PR. No automatic source repairs are performed.
+
+          ## Merge Danger
+
+          **Door:** two-way for source changes; merging publishes a release if the merged build and tests pass.
+
+          **Blast Radius:** compatibility
+
+          Review the target version and any manual fixes before merging. Gameplay/save compatibility requires in-game testing.
+          EOF
+          url=$(gh pr create --base "$BASE_BRANCH" --head "$branch" \
+            --title "Support Bannerlord $BANNERLORD_VERSION" --body-file artifacts/pr-body.md)
+          gh api --method POST "repos/$GH_REPO/statuses/$commit" \
+            -f state=pending -f context='Bannerlord initial compatibility' \
+            -f description='Building and testing the version update' -f target_url="$run_url"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Pull request: $url" >> "$GITHUB_STEP_SUMMARY"
+
+  validate:
+    needs: create-pr
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.create-pr.outputs.commit }}
+          persist-credentials: false
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Read pinned target
+        id: target
+        shell: pwsh
+        run: ./scripts/Read-ReleaseTarget.ps1
+      - name: Build and test
+        shell: pwsh
+        env:
+          BANNERLORD_VERSION: ${{ steps.target.outputs.package }}
+        run: ./scripts/Build-Release.ps1 -BannerlordVersion $env:BANNERLORD_VERSION
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: initial-validation
+          path: artifacts/
+
+  report:
+    needs: [create-pr, validate]
+    if: always() && needs.create-pr.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      statuses: write
+    steps:
+      - name: Attach build result to the PR commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          COMMIT: ${{ needs.create-pr.outputs.commit }}
+          RESULT: ${{ needs.validate.result }}
+        run: |
+          state=failure
+          if [ "$RESULT" = success ]; then state=success; fi
+          gh api --method POST "repos/$GH_REPO/statuses/$COMMIT" \
+            -f state="$state" -f context='Bannerlord initial compatibility' \
+            -f description="Initial build and tests: $RESULT" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"

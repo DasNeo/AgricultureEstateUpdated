@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="$(MSBuildThisFileDirectory)BannerlordVersion.props" Condition="Exists('$(MSBuildThisFileDirectory)BannerlordVersion.props')" />
   <PropertyGroup>
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>

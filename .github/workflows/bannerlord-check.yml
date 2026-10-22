@@ -1,0 +1,43 @@
+name: Check Bannerlord compatibility
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  compatibility:
+    name: Bannerlord compatibility
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check for a pinned Bannerlord version
+        id: pinned
+        shell: pwsh
+        run: |
+          "exists=$((Test-Path BannerlordVersion.props).ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        if: steps.pinned.outputs.exists == 'true'
+        with:
+          dotnet-version: '10.0.x'
+      - name: Read pinned target
+        id: target
+        if: steps.pinned.outputs.exists == 'true'
+        shell: pwsh
+        run: ./scripts/Read-ReleaseTarget.ps1
+      - name: Build and test
+        if: steps.pinned.outputs.exists == 'true'
+        shell: pwsh
+        env:
+          BANNERLORD_VERSION: ${{ steps.target.outputs.package }}
+        run: ./scripts/Build-Release.ps1 -BannerlordVersion $env:BANNERLORD_VERSION
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always() && steps.pinned.outputs.exists == 'true'
+        with:
+          name: pr-validation
+          path: artifacts/

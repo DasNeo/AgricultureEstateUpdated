@@ -14,21 +14,22 @@
   <ItemGroup>
     <ProjectReference Include="..\AgricultureEstate.Application\AgricultureEstate.Application.csproj" />
     <ProjectReference Include="..\AgricultureEstate.Domain\AgricultureEstate.Domain.csproj" />
-    <Reference Include="$(BannerlordAssemblyDir)\TaleWorlds*.dll;$(BannerlordAssemblyDir)\SandBox*.dll;$(BannerlordAssemblyDir)\StoryMode*.dll;$(BannerlordAssemblyDir)\Newtonsoft.Json.dll">
+    <Reference Include="$(BannerlordAssemblyDir)\TaleWorlds*.dll;$(BannerlordAssemblyDir)\SandBox*.dll;$(BannerlordAssemblyDir)\StoryMode*.dll;$(BannerlordAssemblyDir)\Newtonsoft.Json.dll" Condition="'$(BannerlordVersion)' == ''">
       <HintPath>%(Identity)</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="$(GameFolder)\Modules\SandBoxCore\bin\Win64_Shipping_Client\*.dll;$(GameFolder)\Modules\SandBox\bin\Win64_Shipping_Client\*.dll;$(GameFolder)\Modules\StoryMode\bin\Win64_Shipping_Client\*.dll" Condition="'$(GameFolder)' != ''">
+    <Reference Include="$(GameFolder)\Modules\SandBoxCore\bin\Win64_Shipping_Client\*.dll;$(GameFolder)\Modules\SandBox\bin\Win64_Shipping_Client\*.dll;$(GameFolder)\Modules\StoryMode\bin\Win64_Shipping_Client\*.dll" Condition="'$(GameFolder)' != '' and '$(BannerlordVersion)' == ''">
       <HintPath>%(Identity)</HintPath>
       <Private>false</Private>
     </Reference>
     <PackageReference Include="Bannerlord.MCM" Version="5.11.3" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies" Version="$(BannerlordVersion)" PrivateAssets="all" IncludeAssets="compile;build;buildtransitive" Condition="'$(BannerlordVersion)' != ''" />
     <PackageReference Include="Lib.Harmony" Version="2.3.5" />
     <PackageReference Include="Nullable" Version="1.3.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="IsExternalInit" Version="1.0.2" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" PrivateAssets="all" IncludeAssets="compile" />
   </ItemGroup>
-  <Target Name="ValidateBannerlordReferences" BeforeTargets="ResolveAssemblyReferences">
+  <Target Name="ValidateBannerlordReferences" BeforeTargets="ResolveAssemblyReferences" Condition="'$(BannerlordVersion)' == ''">
     <Error Condition="!Exists('$(BannerlordAssemblyDir)\TaleWorlds.CampaignSystem.dll')" Text="Bannerlord assemblies not found. Set BANNERLORD_GAME_DIR or pass -p:BannerlordAssemblyDir=path-to-compatible-assemblies." />
   </Target>
   <Target Name="DeployMod" AfterTargets="Build" Condition="'$(DeployToGame)' == 'true'">
