@@ -156,12 +156,14 @@ namespace AgricultureEstate
             {
                 Village village = villageLand.Key.Village;
                 VillageLand land = villageLand.Value;
+                ItemObject? productionItem = null;
                 try
                 {
                     if (land.Prisoners.TotalManCount > 0 && village.VillageState != Village.VillageStates.BeingRaided && village.VillageState != Village.VillageStates.Looted)
                     {
                         foreach ((ItemObject, float) production in (IEnumerable<(ItemObject, float)>)village.VillageType.Productions)
                         {
+                            productionItem = production.Item1;
                             float productionChance = production.Item2 * 10f;
                             if ((village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("grain") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("olives") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("fish") || village.VillageType.PrimaryProduction == MBObjectManager.Instance.GetObject<ItemObject>("date_fruit")) && Hero.MainHero.GetPerkValue(DefaultPerks.Trade.GranaryAccountant))
                                 Produce(land.Prisoners.TotalManCount, production.Item1, 1.2f * productionChance, land);
@@ -173,11 +175,16 @@ namespace AgricultureEstate
                                 Produce(land.Prisoners.TotalManCount, production.Item1, productionChance, land);
                         }
                     }
-                } catch(Exception)
+                }
+                catch (Exception ex)
                 {
-                    InformationManager.DisplayMessage(new InformationMessage($"village: {village.Name}"));
-                    InformationManager.DisplayMessage(new InformationMessage($"village.VillageType: {village.VillageType}"));
-                    InformationManager.DisplayMessage(new InformationMessage($"village.VillageType.Productions: {village.VillageType.Productions}"));
+                    string diagnostic = $"[AgricultureEstate] Hourly production failed. "
+                        + $"Village: {village?.Name} ({villageLand.Key.StringId}); "
+                        + $"VillageType: {village?.VillageType}; Item: {productionItem?.StringId ?? "none"}; "
+                        + $"Prisoners: {land.Prisoners?.TotalManCount}; SellToMarket: {land.SellToMarket}; "
+                        + $"SlaveProductionScale: {EstateConfiguration.SlaveProductionScale}{Environment.NewLine}{ex}";
+                    InformationManager.DisplayMessage(new InformationMessage(diagnostic));
+                    Console.WriteLine(diagnostic);
                 }
             }
         }

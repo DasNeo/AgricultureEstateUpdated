@@ -370,8 +370,14 @@ namespace AgricultureEstate
                     state.Initialize();
                     Game.Current.GameStateManager.PushState(state);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    string diagnostic = $"[AgricultureEstate] Opening slave management failed. "
+                        + $"Village: {_village_land.Village?.Name} ({_village_land.Village?.Settlement.StringId}); "
+                        + $"OwnedPlots: {_village_land.OwnedPlots}; Prisoners: {_village_land.Prisoners?.TotalManCount}"
+                        + $"{Environment.NewLine}{ex}";
+                    InformationManager.DisplayMessage(new InformationMessage(diagnostic));
+                    Console.WriteLine(diagnostic);
                 }
             }
         }
