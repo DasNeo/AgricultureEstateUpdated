@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.4.7.2</Version>
+    <TargetFramework>net48</TargetFramework>
+    <Platforms>x64</Platforms>
+    <ModuleId>$(MSBuildProjectName)</ModuleId>
+    <ModuleName>$(MSBuildProjectName)</ModuleName>
+    <GameFolder>$(BANNERLORD_GAME_DIR)</GameFolder>
+    <BannerlordAssemblyDir Condition="'$(BannerlordAssemblyDir)' == '' and '$(GameFolder)' != ''">$(GameFolder)\bin\Win64_Shipping_Client</BannerlordAssemblyDir>
+    <BannerlordAssemblyDir Condition="'$(BannerlordAssemblyDir)' == ''">$(MSBuildProjectDirectory)\..\..\BannerlordVersionSwitcher\current</BannerlordAssemblyDir>
+    <DeployToGame Condition="'$(DeployToGame)' == ''">false</DeployToGame>
+    <GameModuleBinDir Condition="'$(GameModuleBinDir)' == '' and '$(GameFolder)' != ''">$(GameFolder)\Modules\$(ModuleId)\bin\Win64_Shipping_Client</GameModuleBinDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgricultureEstate.Application\AgricultureEstate.Application.csproj" />
+    <ProjectReference Include="..\AgricultureEstate.Domain\AgricultureEstate.Domain.csproj" />
+    <Reference Include="$(BannerlordAssemblyDir)\TaleWorlds*.dll;$(BannerlordAssemblyDir)\SandBox*.dll;$(BannerlordAssemblyDir)\StoryMode*.dll;$(BannerlordAssemblyDir)\Newtonsoft.Json.dll" Condition="'$(BannerlordVersion)' == ''">
+      <HintPath>%(Identity)</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\SandBoxCore\bin\Win64_Shipping_Client\*.dll;$(GameFolder)\Modules\SandBox\bin\Win64_Shipping_Client\*.dll;$(GameFolder)\Modules\StoryMode\bin\Win64_Shipping_Client\*.dll" Condition="'$(GameFolder)' != '' and '$(BannerlordVersion)' == ''">
+      <HintPath>%(Identity)</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <PackageReference Include="Bannerlord.MCM" Version="5.11.3" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies" Version="$(BannerlordVersion)" PrivateAssets="all" IncludeAssets="compile;build;buildtransitive" Condition="'$(BannerlordVersion)' != ''" />
+    <PackageReference Include="Lib.Harmony" Version="2.3.5" />
+    <PackageReference Include="Nullable" Version="1.3.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="IsExternalInit" Version="1.0.2" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" PrivateAssets="all" IncludeAssets="compile" />
+  </ItemGroup>
+  <Target Name="ValidateBannerlordReferences" BeforeTargets="ResolveAssemblyReferences" Condition="'$(BannerlordVersion)' == ''">
+    <Error Condition="!Exists('$(BannerlordAssemblyDir)\TaleWorlds.CampaignSystem.dll')" Text="Bannerlord assemblies not found. Set BANNERLORD_GAME_DIR or pass -p:BannerlordAssemblyDir=path-to-compatible-assemblies." />
+  </Target>
+  <Target Name="DeployMod" AfterTargets="Build" Condition="'$(DeployToGame)' == 'true'">
+    <Error Condition="'$(GameModuleBinDir)' == ''" Text="Deployment requires GameFolder (or BANNERLORD_GAME_DIR), or an explicit GameModuleBinDir." />
+    <ItemGroup>
+      <ModDebugArtifacts Include="$(TargetDir)AgricultureEstate.dll;$(TargetDir)AgricultureEstate.pdb;$(TargetDir)AgricultureEstate.Application.dll;$(TargetDir)AgricultureEstate.Application.pdb;$(TargetDir)AgricultureEstate.Domain.dll;$(TargetDir)AgricultureEstate.Domain.pdb" />
+    </ItemGroup>
+    <Error Condition="!Exists('%(ModDebugArtifacts.Identity)')" Text="Missing mod artifact: %(ModDebugArtifacts.Identity). Build with debug symbols enabled before deployment." />
+    <MakeDir Directories="$(GameModuleBinDir)" />
+    <Copy SourceFiles="@(ModDebugArtifacts)" DestinationFolder="$(GameModuleBinDir)" SkipUnchangedFiles="true" />
+    <Message Importance="high" Text="Deployed matching mod DLLs and PDBs to $(GameModuleBinDir). Restart Bannerlord to load this build." />
+  </Target>
+</Project>
