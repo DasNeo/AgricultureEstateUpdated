@@ -17,12 +17,14 @@ try {
         Tee-Object artifacts/tests.log | Out-Host
     if ($LASTEXITCODE -ne 0) { throw 'Tests failed; see artifacts/tests.log.' }
     if (-not $Package) { return }
+    & (Join-Path $PSScriptRoot 'Test-ModuleAssets.ps1') -ModulePath (Join-Path $root 'AgricultureEstate/_Module')
     # Release and preview jobs build the exact source commit in a fresh checkout.
     $staging = Join-Path $root 'artifacts/package'
     if (Test-Path $staging) { throw 'Packaging requires a fresh artifacts/package directory.' }
     $module = Join-Path $staging 'Modules/AgricultureEstate'
     New-Item -ItemType Directory -Force $module | Out-Null
     Copy-Item AgricultureEstate/_Module/* $module -Recurse
+    & (Join-Path $PSScriptRoot 'Test-ModuleAssets.ps1') -ModulePath $module
     $bin = Join-Path $module 'bin/Win64_Shipping_Client'
     New-Item -ItemType Directory -Force $bin | Out-Null
     foreach ($assembly in 'AgricultureEstate', 'AgricultureEstate.Application', 'AgricultureEstate.Domain') {

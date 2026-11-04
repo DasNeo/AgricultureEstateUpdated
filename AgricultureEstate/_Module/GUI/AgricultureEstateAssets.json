@@ -1,0 +1,18 @@
+{
+  "files": [
+    {
+      "path": "Assets/GauntletUI/ui_agriculture_estate_1_tex.tpac",
+      "sha256": "a4d8b349a69422faf3d8fa50d2c44038632bb4257f6de702e8660d027d83a3ab"
+    },
+    {
+      "path": "AssetSources/GauntletUI/ui_agriculture_estate_1.png",
+      "sha256": "836eacde44bad5c362980cbc763bc6048830271ad24dda2294cd3f70868589bb"
+    },
+    {
+      "path": "RuntimeDataCache/26EA12E2-B1F1-4B8B-AB8B-1E7989CA5E9F.rdc",
+      "sha256": "45230f018cdd0713d67f6dd6081ffa6048884922f6d03abb4da326407980d9c9"
+    }
+  ],
+  "texture": "ui_agriculture_estate_1",
+  "schema": 1
+}
