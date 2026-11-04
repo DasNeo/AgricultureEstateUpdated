@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       pr_number:
-        description: 'Existing version-update PR to rebuild and preview (e.g. 18)'
+        description: 'Existing version-update PR to update from the default branch, rebuild, and preview (e.g. 18)'
         required: true
         type: string
 
@@ -15,7 +15,36 @@ permissions:
   pull-requests: read
 
 jobs:
+  sync:
+    name: Update PR from the default branch
+    if: github.event_name == 'workflow_dispatch' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    concurrency:
+      group: bannerlord-sync-pr-${{ inputs.pr_number }}
+      cancel-in-progress: false
+    steps:
+      # Only trusted default-branch automation runs with write permission.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - name: Merge the latest default branch into the PR
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+        run: ./scripts/Sync-PrereleaseBranch.ps1 -PullRequestNumber $env:PR_NUMBER
+
   resolve:
+    needs: sync
+    if: >-
+      always() && !cancelled() &&
+      (github.event_name == 'pull_request' || needs.sync.result == 'success')
     runs-on: ubuntu-latest
     outputs:
       commit: ${{ steps.pr.outputs.commit }}
@@ -52,6 +81,7 @@ jobs:
   compatibility:
     name: Bannerlord compatibility
     needs: resolve
+    if: ${{ !cancelled() && needs.resolve.result == 'success' }}
     runs-on: windows-latest
     timeout-minutes: 20
     steps:
