@@ -42,6 +42,27 @@ Failing builds/tests and infrastructure failures stop publication. Compilation a
 
 ## Build locally
 
+### Custom UI textures
+
+The sprite sheet is distributed as a complete loose-asset set: its PNG in `AssetSources/GauntletUI`, its definition in `Assets/GauntletUI`, and the matching generated `.rdc` in `RuntimeDataCache`. The cache contains the compiled texture pixels; omitting it can make images work locally but disappear for users. This is an [officially documented distribution option](https://moddocs.bannerlord.com/asset-management/asset-types/overriding_assets/).
+
+`GUI/AgricultureEstateAssets.json` records the SHA-256 checksums of these three files. Release packaging validates their checksums and verifies that the cache filename matches the texture package GUID, both before and after staging. When changing the artwork, regenerate the texture/cache together and update all three manifest checksums. Do not update just the PNG or reuse a cache from different artwork. Verify the final module on a clean game installation.
+
+A packed client export is an alternative when the toolkit is available. To switch to this format, follow the procedure below and omit the loose `Assets` and `AssetSources` folders from the runtime module so the engine uses the packed route.
+
+After changing the sprite sheet, use the [official module export procedure](https://moddocs.bannerlord.com/steam-workshop/uploading_updating_mod/):
+
+1. Enable AgricultureEstate in the Modding Kit launcher and open the Editor.
+2. Select **File → Publish Module**, choose **AgricultureEstate**, and enable **Client**.
+3. Export to a separate directory, such as `artifacts/published`.
+4. Copy the exported module's `AssetPackages` folder into `AgricultureEstate/_Module/AssetPackages` and commit the generated `.tpac` files alongside the updated source images and sprite XML.
+5. Run `./scripts/Test-ModuleAssets.ps1 -ModulePath AgricultureEstate/_Module`.
+6. Verify the packaged module on a clean game installation without the authoring module or its local runtime cache. Check the land clearance, patrol, storehouse, workers, and stockpile icons in Land Management.
+
+Release packaging checks both the source module and staged module for either the complete loose-asset set or a client package containing the custom sprite sheet. This catches missing data; it does not replace the clean-install check. Exporting a module locally does not upload it to Steam Workshop.
+
+### Compile and package
+
 Before a version PR is merged, local builds default to the existing game/version-switcher references. Once `BannerlordVersion.props` exists, it also pins local builds to NuGet references. An explicit command-line version overrides the pinned version:
 
 ```powershell
