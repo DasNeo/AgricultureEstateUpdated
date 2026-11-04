@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <BannerlordVersion Condition="'$(BannerlordVersion)' == ''">1.4.8.119303</BannerlordVersion>
+  </PropertyGroup>
+</Project>
