@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../AgricultureEstate/Infrastructure/Patches/SellPrisonersPatch.cs" Link="GameBoundary/SellPrisonersPatch.cs" />
     <ProjectReference Include="../AgricultureEstate.Application/AgricultureEstate.Application.csproj" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />

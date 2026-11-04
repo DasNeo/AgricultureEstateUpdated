@@ -1,59 +1,102 @@
 # AgricultureEstate
 
-## Release for a Bannerlord update
+Buy land in Bannerlord villages and build an estate that earns rent or produces goods with prisoner labor. Manage plots, workers, storage, and upgrades from the village's **Land Management** menu.
 
-One-time setup:
+![AgricultureEstate Land Management screen in Bannerlord](docs/images/land-management.png)
 
-1. Push the workflows and supporting files to the repository's default branch.
-2. In **Settings → Actions → General → Workflow permissions**, enable **Allow GitHub Actions to create and approve pull requests**. Organization policy must permit this too. The workflow only creates PRs; it does not approve or merge them.
-3. Ensure repository/organization policy permits the requested job permissions for creating branches/PRs, reporting commit statuses, and publishing tags/releases. No API keys or additional secrets are required.
+## Installation
 
-Open **Actions → Prepare Bannerlord update PR → Run workflow**, select the default branch, enter a version, and run it.
+1. Download the mod ZIP for your Bannerlord version from [Releases](https://github.com/DasNeo/AgricultureEstateUpdated/releases). Check the release notes for the target game version and known limitations. Preview releases are intended for testing.
+2. Install **Bannerlord.Harmony** and **Mod Configuration Menu (MCM v5)**, including their required dependencies, separately.
+3. Extract the mod ZIP into your Bannerlord game folder. The resulting folder should be `Mount & Blade II Bannerlord/Modules/AgricultureEstate/`, with `SubModule.xml` directly inside it.
+4. Enable AgricultureEstate and its dependencies in the launcher. Load Harmony and MCM before AgricultureEstate, and place AgricultureEstate after the base game modules.
+5. Start a single-player campaign or load your campaign, then visit a village and select **Land Management**.
 
-The workflow creates a branch and PR that pins the exact NuGet reference version in `BannerlordVersion.props`. It then builds and tests that PR commit and attaches a **Bannerlord initial compatibility** status with a link to the logs. The PR remains open even if compilation fails. Fix any API changes manually on the PR branch, review the changes, and merge when ready. There are no AI actions or automatic source patches.
+Keep a backup of your campaign save before updating the mod or changing your mod list. Check the release notes for compatibility information.
 
-**Check Bannerlord compatibility** checks subsequent PR updates using the pinned references. Depending on GitHub's policy, a bot-created PR's automatic checks may require approval; the manual preparation workflow performs its own initial validation regardless.
+## Getting started
 
-Successful builds also create or update **one GitHub prerelease per open version PR**, tagged `pr-<number>-preview`. Download its ZIP from Releases to test before merging. The tag, ZIP, checksum, and notes are updated for each successful build; notes identify the exact PR commit and source workflow. Failed builds leave the previous successful preview available, so check its commit before testing. Previews never become the latest release.
+1. **Buy developed plots** to start earning rent. Undeveloped plots must be cleared before they can earn rent or support workers.
+2. **Choose rent or production.** Leave land unused for rent, or transfer eligible prisoners to produce the village's goods. Each developed plot supports up to **10 prisoners**.
+3. **Collect or sell your goods.** Withdraw goods from the estate stockpile to sell yourself, or enable automatic sales to the village market.
+4. **Improve your estate.** Clear more land, expand storage, and increase patrols as your estate grows.
 
-The build jobs have read-only repository access. A separate **Manage Bannerlord PR prerelease** workflow, running trusted publisher code from the default branch, validates the source run, PR, pinned version, archive paths, and checksum before publishing. It skips builds for outdated PR commits. Publication and cleanup are serialized per PR.
+Open the estate ledger to review your estates and their income. Hover over controls for costs, output estimates, and other details. Several controls support Shift-click shortcuts described in their tooltips.
 
-After installing these changes, existing PRs can stay open. Run **Actions → Check Bannerlord compatibility → Run workflow**, select the default branch and enter the existing PR number (for example `18`). This builds the PR's current source using the default branch's packaging helpers, so recreating the PR or updating its branch is not required just to get a preview.
+## Rent and production
 
-Closing a version PR removes its temporary prerelease and tag. Merging also removes the preview; the separate merged-release workflow still rebuilds and publishes the reviewed merge commit. Release immutability must remain disabled for rolling previews. If a preview has been made immutable, cleanup/update stops instead of modifying it.
+### Why does rent differ between villages?
 
-Merging the generated version PR into the default branch triggers **Release merged Bannerlord update**. It checks that the PR changed `BannerlordVersion.props`, checks out the exact merge commit, builds and tests again, then publishes a GitHub release (still marked as a prerelease when targeting a beta game package). Closing without merging does not publish a merged release. Ordinary PRs, direct pushes, and merges to other branches do not publish through this workflow. Keep the generated `codex/bannerlord-...` branch name until merging. Merge using your GitHub account; merges performed with a workflow's `GITHUB_TOKEN` do not trigger the closed-PR release event.
+Rent depends on the village's accumulated trade-tax revenue, your developed plots, and how much land is unused by prisoner labor. It is not a fixed payment per plot. Village trade activity changes that revenue over time, so a high-paying estate may not keep paying the same amount every day.
 
-Accepted inputs:
+With the default rent setting, 10 plots and no workers earn 10% of the village's accumulated trade-tax revenue. Filling half the estate's worker capacity halves the rent; filling it completely reduces rent to zero. Looted villages pay no rent.
 
-- `1.4.8` or `v1.4.8`: select the highest published stable reference build for that game version.
-- `1.4.8.119303`: select exactly that reference package.
-- `1.5.4-beta` or `1.5.4.123627-beta`: select a beta build. The release is marked as a prerelease.
+Use the estimated output tooltip to compare estates, but treat it as an estimate. Total estate income can include both land rent and goods sales.
 
-Versions must be available in [Bannerlord.ReferenceAssemblies on NuGet](https://www.nuget.org/packages/Bannerlord.ReferenceAssemblies). This targets Windows Steam/GOG/Epic game builds. Early-access `e...` packages and Xbox/Game Pass builds are not supported by this workflow.
+### How does prisoner labor work?
 
-The reference package must exist before a PR can be created. Requesting the version already pinned on the default branch stops without creating another PR. A version PR changes only the reference selection; it does not claim game compatibility until you review and test it.
+Bandit prisoners can be transferred to an estate as workers. The **Forced Labor** Steward perk also allows manual transfers of non-bandit prisoners. Enable **Allow all prisoners as slaves** in the mod settings to use non-bandit prisoners without that perk. Hero prisoners are always excluded.
 
-Successful merged builds publish a ZIP and SHA-256 checksum. The tag points directly to the reviewed merge commit. Tags include the target version, workflow run number, and attempt number, so reruns do not overwrite existing releases. If publishing fails after the merge, rerun the failed release workflow from Actions. Build/test logs are retained as workflow artifacts.
+Workers produce goods associated with the village. Production pauses while the village is being raided or is looted. Goods are stored at the estate unless automatic selling is enabled; production stops when storage is over capacity. Village sale prices can be lower than prices you find in towns.
 
-The ZIP installs as `Modules/AgricultureEstate/` and contains all module assets plus the mod's three DLLs and debug symbols. Install Harmony and MCM v5 separately. Game assemblies, reference assemblies, and third-party mod DLLs are not bundled.
+Workers can escape or revolt. Monitor the escape and revolt figures in Land Management, improve patrols, and consider the village militia when deciding how many prisoners to keep.
 
-Failing builds/tests and infrastructure failures stop publication. Compilation and the existing domain/application tests do not establish in-game, Harmony patch, or save compatibility. Release notes state this limitation. GitHub actions are pinned to commit SHAs, build jobs have read-only repository permissions, and only the publishing/cleanup jobs receive repository write permission for releases.
+### How does automatic buying work?
 
-## Build locally
+Enable **Buy Slaves** for the estate. Purchases require an eligible visiting party carrying suitable prisoners, free worker capacity, and enough gold in your character's purse. This is not a daily purchase from an unlimited market.
 
-Before a version PR is merged, local builds default to the existing game/version-switcher references. Once `BannerlordVersion.props` exists, it also pins local builds to NuGet references. An explicit command-line version overrides the pinned version:
+By default, automatic purchases accept bandit prisoners. Enable **Allow all prisoners as slaves** to include other non-hero prisoners; automatic buying currently does not use the Forced Labor perk to expand eligibility.
 
-```powershell
-dotnet build AgricultureEstate.sln -c Release -p:Platform=x64 -p:BannerlordVersion=1.4.8.119303
-dotnet test AgricultureEstate.Tests/AgricultureEstate.Tests.csproj -c Release --no-build
-```
+Estates can also buy eligible prisoners when a party sells them at the village's bound town or castle. Only prisoners offered in that sale are considered, and purchases still require free capacity and enough gold. You can also transfer eligible prisoners manually.
 
-To reproduce a tagged release, check out the tag and build with its `BannerlordVersion.props`. Reference assemblies are compile-time metadata; running the mod still requires the corresponding installed game.
+## Estate upgrades
 
-On Windows, create the same release ZIP locally in a fresh `artifacts/package` directory:
+| Project | Effect |
+| --- | --- |
+| Land Clearance | Converts one owned undeveloped plot into a developed plot. |
+| Expand Storehouse | Adds 500 storage capacity. |
+| Increase Patrols | Reduces escape and revolt risk; up to eight upgrades. |
 
-```powershell
-./scripts/Read-ReleaseTarget.ps1
-./scripts/Build-Release.ps1 -BannerlordVersion 1.4.8.119303 -Package
-```
+Projects cost gold and take time. Costs and duration can be changed in the mod settings. Cancelling a project does not refund its cost.
+
+## Skills and perks
+
+AgricultureEstate adds the following estate benefits to your character's perks. These effects are also described in the in-game perk tooltips.
+
+| Skill | Perk | Estate benefit |
+| --- | --- | --- |
+| Riding | Mounted Patrols | Reduces prisoner escape chance by 20%. |
+| Riding | Breeder | Increases prisoner production by 10% in villages whose primary production is horses. |
+| Steward | Forced Labor | Allows manual transfers of non-bandit prisoners for estate labor. Heroes remain excluded; automatic buying still requires the setting described above. |
+| Steward | Contractors | Reduces estate project costs by 15%. |
+| Roguery | Manhunter | Reduces automatic prisoner purchase costs by 20%. |
+| Trade | Insurance Plans | Compensates for plots lost during war: currently 80% of their configured sale value. |
+| Trade | Rapid Development | Provides the same wartime land compensation as Insurance Plans. Having both perks does not increase the refund. |
+| Trade | Tradeyard Foreman | Increases prisoner production by 20% in villages whose primary production is clay, iron, cotton, or silver. |
+| Trade | Granary Accountant | Increases prisoner production by 20% in villages whose primary production is grain, olives, fish, or dates. |
+| Engineering | Foreman | Adds 30 hearths to the village when a Land Clearance project finishes. |
+
+## Settings
+
+Open **Mod Options** and select **Agriculture Estate** through MCM to adjust:
+
+- Developed and undeveloped plot purchase and sale prices.
+- Project cost and duration.
+- Rent and prisoner production multipliers.
+- Prisoner decline rate; set its modifier to **0** to disable decline.
+- Whether non-bandit prisoners can be used without Forced Labor.
+- Available developed and undeveloped plots per village. Changes adjust availability in existing estates without removing owned land.
+- Whether land is lost when its owning faction is at war with yours. This is **enabled by default**.
+
+## Troubleshooting and reports
+
+- **Land Management is missing:** check that AgricultureEstate is enabled, its dependencies are installed, and you are visiting a village in a single-player campaign.
+- **No goods are being produced:** check that you have developed plots and workers, storage is not over capacity, and the village is not being raided or looted.
+- **Rent has fallen:** village trade revenue fluctuates, and adding workers reduces the land available for rent.
+- **Land was lost during war:** check the setting that removes plots in hostile territory.
+
+Report problems through [GitHub Issues](https://github.com/DasNeo/AgricultureEstateUpdated/issues). Include your Bannerlord version, AgricultureEstate release, other enabled mods, and steps to reproduce the issue. For crashes, include the crash report or relevant log.
+
+## For contributors
+
+Build instructions and the release workflow are documented in [Building and releasing](docs/BUILDING.md).
